@@ -1,9 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class LineaDeTransporte {
-
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +27,4 @@ public class LineaDeTransporte {
 	public void aniadirTrayecto(Trayecto t) {
 		this.trayectos.add(t);
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 }

@@ -1,8 +1,5 @@
 package clases;
 
-<<<<<<< HEAD
-public class Boleto {
-=======
 import java.time.LocalDate;
 
 public class Boleto {
@@ -23,6 +20,5 @@ public class Boleto {
 		this.costo = c;
 		this.recorrido = r;
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 
 }

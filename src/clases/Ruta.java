@@ -1,9 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class Ruta {
-
-=======
 import enums.EstadoRuta;
 
 public class Ruta {
@@ -26,5 +21,4 @@ public class Ruta {
 		this.estado = e;
 		this.costo = c;
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 }

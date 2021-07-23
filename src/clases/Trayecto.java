@@ -1,8 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class Trayecto {
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +21,5 @@ public class Trayecto {
 	public void aniadirEstacion(Estacion e) {
 		this.estaciones.add(e);
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 
 }

@@ -1,8 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class Recorrido {
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +17,5 @@ public class Recorrido {
 	public void aniadirRuta(Ruta r) {
 		this.rutas.add(r);
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 
 }
