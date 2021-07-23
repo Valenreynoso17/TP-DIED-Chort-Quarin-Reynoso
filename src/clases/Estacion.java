@@ -1,8 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class Estacion {
-=======
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,5 @@ public class Estacion {
 	public void aniadirMantenimiento(Mantenimiento m) {
 		this.mantenimientos.add(m);
 	}
-	
->>>>>>> 4676fe1 (Atributos y generadores)
 
 }

@@ -1,8 +1,4 @@
 package clases;
-
-<<<<<<< HEAD
-public class Mantenimiento {
-=======
 import java.time.LocalDate;
 
 public class Mantenimiento {
@@ -16,6 +12,5 @@ public class Mantenimiento {
 		this.fechaFin = fF;
 		this.observaciones = o;
 	}
->>>>>>> 4676fe1 (Atributos y generadores)
 
 }
