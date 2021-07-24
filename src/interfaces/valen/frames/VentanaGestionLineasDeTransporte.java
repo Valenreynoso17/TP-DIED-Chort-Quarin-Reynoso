@@ -6,7 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import interfaces.valen.paneles.PanelListadoGestionLineas;
-import interfaces.ventaBoleto.PanelGrafico;
+import interfaces.fede.ventaBoleto.PanelGrafico;
 
 public class VentanaGestionLineasDeTransporte extends JFrame{
 
