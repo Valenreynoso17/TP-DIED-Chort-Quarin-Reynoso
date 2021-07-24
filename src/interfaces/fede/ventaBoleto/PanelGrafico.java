@@ -50,12 +50,12 @@ public class PanelGrafico extends JPanel {
 
 	}
 	
-	private void dibujarGrafo(Graphics2D g2d) {
+	protected void dibujarGrafo(Graphics2D g2d) {
 		List<Estacion> estaciones = gestorEstaciones.getEstaciones();
 		List<Ruta> rutas = gestorRutas.getRutas();
 
 		for (Estacion e : estaciones) {
-			if (e.disponible()) {
+			if (e.operativa()) {
 				boolean cambios = false;
 				
 				if (e.getPosicion().x + radioEstaciones >= anchoVentana) {
@@ -78,13 +78,13 @@ public class PanelGrafico extends JPanel {
 		}
 		
 		for (Ruta r : rutas) {
-			if (r.disponible()) {
+			if (r.activa()) {
 				dibujarRuta(g2d, r);
 			}
 		}		
 	}
 	
-	private void dibujarEstacion(Graphics2D g2d, Estacion e) {
+	protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
 		Point posicion = e.getPosicion();
 		
 		
@@ -94,14 +94,14 @@ public class PanelGrafico extends JPanel {
 	}
 	
 	//Dibuja la flecha que simboliza una ruta entre dos estaciones, con su respectivo color
-	private void dibujarRuta(Graphics2D g2d, Ruta e) {
+	protected void dibujarRuta(Graphics2D g2d, Ruta r) {
 		Point posEstOrigen, posEstDestino, origenFlecha, destinoFlecha;
 		Double anguloFlecha;
 		Integer descX, descY;
 		
 		// Se obtiene la posicion de las estaciones origen y destino
-		posEstOrigen = e.getOrigen().getPosicion();
-		posEstDestino = e.getDestino().getPosicion();
+		posEstOrigen = r.getOrigen().getPosicion();
+		posEstDestino = r.getDestino().getPosicion();
 		
 		// Se obtiene la direccion de la flecha
 		anguloFlecha = Math.atan((posEstDestino.getY()-posEstOrigen.getY())/(posEstDestino.getX()-posEstOrigen.getX()));
@@ -120,10 +120,10 @@ public class PanelGrafico extends JPanel {
 		origenFlecha = new Point(posEstOrigen.x + descX, posEstOrigen.y + descY);
 		destinoFlecha = new Point(posEstDestino.x - descX, posEstDestino.y - descY);
 		
-		dibujarFlecha(g2d, origenFlecha, destinoFlecha, e.getColorLinea(), anguloFlecha);
+		dibujarFlecha(g2d, origenFlecha, destinoFlecha, r.getColorLinea(), anguloFlecha);
 	}
 	
-	private void dibujarFlecha(Graphics2D g2d, Point inicio, Point fin, Color color, Double angulo) {
+	protected void dibujarFlecha(Graphics2D g2d, Point inicio, Point fin, Color color, Double angulo) {
 		Point aux1, aux2;
 		Double apertura = Math.atan(anchoFlecha/largoFlecha);
 		Double hipotenusa = Math.sqrt(largoFlecha*largoFlecha + anchoFlecha*anchoFlecha);

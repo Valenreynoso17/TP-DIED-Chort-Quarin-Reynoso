@@ -1,4 +1,6 @@
 package clases;
+import java.awt.Color;
+
 import enums.EstadoRuta;
 
 public class Ruta {
@@ -21,4 +23,22 @@ public class Ruta {
 		this.estado = e;
 		this.costo = c;
 	}
+	
+	public Boolean activa() {
+		return estado == EstadoRuta.ACTIVA;
+	}
+	
+	public Estacion getOrigen() {
+		return origen;
+	}
+	
+	public Estacion getDestino() {
+		return destino;
+	}
+	
+	// Capaz lo termine sacando - FEDE
+	public Color getColorLinea() {
+		return Color.RED;
+	}
+	
 }
