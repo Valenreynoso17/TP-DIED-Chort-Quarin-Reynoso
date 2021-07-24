@@ -12,6 +12,7 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 
 	GridBagLayout gbLayout;
 	GridBagConstraints gbc;
+	
 	public VentanaGestionLineasDeTransporte() {
 		
 		gbLayout = new GridBagLayout();
@@ -44,7 +45,7 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		JButton botonSiguiente = new JButton("Siguiente");
+		JButton botonSiguiente = new JButton("Dar de alta una nueva línea");
 		this.add(botonSiguiente, gbc);
 		
 		this.setVisible(true);

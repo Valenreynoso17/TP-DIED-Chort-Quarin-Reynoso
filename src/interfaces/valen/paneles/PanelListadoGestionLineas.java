@@ -54,7 +54,7 @@ public class PanelListadoGestionLineas extends JPanel{
 		panelGridLista.add(e5);
 		
 		JScrollPane panelScrollLista = new JScrollPane(panelGridLista);
-		panelScrollLista.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		//panelScrollLista.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		
 		this.add(panelScrollLista);
 	}
