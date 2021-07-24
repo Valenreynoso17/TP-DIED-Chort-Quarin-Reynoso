@@ -54,20 +54,20 @@ public class VentanaVentaBoleto extends JFrame {
 		GestorEstacion gestor = GestorEstacion.getInstance();
 		GestorRuta gestor2 = GestorRuta.getInstance();
 		
-		gestor.agregarEstacion("123", "A", null, null, new Point(50, 50));
-		gestor.agregarEstacion("124", "B", null, null, new Point(100, 50));
-		gestor.agregarEstacion("125", "C", null, null, new Point(678, 500));
-		gestor.agregarEstacion("125", "C", null, null, new Point(500, 100));
-		gestor.agregarEstacion("125", "C", null, null, new Point(100, 400));
-		gestor.agregarEstacion("125", "C", null, null, new Point(100, 300));
-		List<Estacion> estaciones = gestor.getEstaciones();
-		
-		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, null, 2);
-		gestor2.agregarRuta(estaciones.get(1), estaciones.get(2), 2, 2, 2, null, 2);
-		//gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, null, 2);
-		gestor2.agregarRuta(estaciones.get(2), estaciones.get(0), 2, 2, 2, null, 2);
-		//gestor2.agregarRuta(estaciones.get(3), estaciones.get(4), 2, 2, 2, null, 2);
-		gestor2.agregarRuta(estaciones.get(4), estaciones.get(3), 2, 2, 2, null, 2);
-		gestor2.agregarRuta(estaciones.get(5), estaciones.get(4), 2, 2, 2, null, 2);
+//		gestor.agregarEstacion("123", "A", null, null, new Point(50, 50));
+//		gestor.agregarEstacion("124", "B", null, null, new Point(100, 50));
+//		gestor.agregarEstacion("125", "C", null, null, new Point(678, 500));
+//		gestor.agregarEstacion("125", "C", null, null, new Point(500, 100));
+//		gestor.agregarEstacion("125", "C", null, null, new Point(100, 400));
+//		gestor.agregarEstacion("125", "C", null, null, new Point(100, 300));
+//		List<Estacion> estaciones = gestor.getEstaciones();
+//		
+//		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, null, 2);
+//		gestor2.agregarRuta(estaciones.get(1), estaciones.get(2), 2, 2, 2, null, 2);
+//		//gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, null, 2);
+//		gestor2.agregarRuta(estaciones.get(2), estaciones.get(0), 2, 2, 2, null, 2);
+//		//gestor2.agregarRuta(estaciones.get(3), estaciones.get(4), 2, 2, 2, null, 2);
+//		gestor2.agregarRuta(estaciones.get(4), estaciones.get(3), 2, 2, 2, null, 2);
+//		gestor2.agregarRuta(estaciones.get(5), estaciones.get(4), 2, 2, 2, null, 2);
 	}
 }
