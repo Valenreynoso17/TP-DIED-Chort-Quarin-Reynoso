@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import java.awt.GridBagConstraints;
@@ -41,6 +42,7 @@ public class EstacionAlta extends JFrame {
 		setBounds(100, 100, 1024, 600);
 		contentPane = new PanelEstacionAlta(this);
 		setContentPane(contentPane);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		//this.setLayout(new GridBagLayout());
 		//GridBagConstraints c = new GridBagConstraints();

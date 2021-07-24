@@ -5,7 +5,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalTime;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +34,9 @@ public class EstacionTablaResultado extends JPanel{
 	
 	private EstacionEditar frameEdicion;
 	
+	private Vector filaSeleccionada;
+	private Integer nroFilaSeleccionada;
+	
 	//PopUp borrarEstacion;?
 	
 	public EstacionTablaResultado(EstacionGestionar frame) {
@@ -44,6 +51,21 @@ public class EstacionTablaResultado extends JPanel{
 		tabla = new JTable(miModelo);
 		JScrollPane tableContainer = new JScrollPane(tabla);
 		
+		tabla.setRowSelectionAllowed(true);
+		tabla.setColumnSelectionAllowed(false);
+		
+		prueba(miModelo);
+		
+		tabla.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(miModelo.getDataVector().elementAt(tabla.getSelectedRow()));
+				
+				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
+				nroFilaSeleccionada = tabla.getSelectedRow();
+			}
+		});
+		
+
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -64,15 +86,22 @@ public class EstacionTablaResultado extends JPanel{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
-		prueba(miModelo);
 		
 		button = new JButton("Editar Estación");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if(filaSeleccionada == null) {
+					JOptionPane.showMessageDialog(frame,
+						    "Debe seleccionar una fila a ser editada.",
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}else {
+				
 				frame.dispose();
-				frameEdicion = new EstacionEditar();
+				frameEdicion = new EstacionEditar(filaSeleccionada);
 				frameEdicion.setVisible(true);
+			}
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -83,17 +112,35 @@ public class EstacionTablaResultado extends JPanel{
 		button = new JButton("Borrar Estación");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(filaSeleccionada == null) {
+					JOptionPane.showMessageDialog(frame,
+						    "Debe seleccionar una fila a ser borrada.",
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}else {
 					
 				Object[] options = {"Cancelar", "Borrar"};
 				
 				int n = JOptionPane.showOptionDialog(frame,
-				"¿Realmente desea borrar la estación X del sistema?",
+				"¿Realmente desea borrar la estación "+filaSeleccionada.elementAt(1)+" del sistema?",
 				"Borrar Estación",
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE,
 				null,     //do not use a custom Icon
 				options,  //the titles of buttons
 				options[0]); //default button title
+				
+				//System.out.println(n);
+				
+				if(n == 1) {
+					System.out.println("Apretó borrar");
+					miModelo.removeRow(nroFilaSeleccionada);
+				}
+				else {
+					System.out.println("Apretó cancelar o cerró la ventana");
+				}
+			}
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

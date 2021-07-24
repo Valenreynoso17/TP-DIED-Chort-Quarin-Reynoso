@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -21,8 +22,15 @@ public class PanelEstacionAlta extends JPanel{
 	
 	private JComboBox<String> comboBox;
 	private JButton button;
-	private JTextField field;
 	private JLabel label;
+	
+	private JTextField id;
+	private JTextField nombre;
+	private JTextField horaApertura;
+	private JTextField minutoApertura;
+	private JTextField horaCierre;
+	private JTextField minutoCierre;
+	private JTextField estado;
 	
 	private EstacionGestionar frameAnterior;
 	
@@ -41,11 +49,11 @@ public class PanelEstacionAlta extends JPanel{
 		c.weighty = 0.1;
 		this.add(label, c);
 		
-		field = new JTextField();
+		id = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
-		this.add(field, c);
+		this.add(id, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -55,11 +63,11 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 1;
 		this.add(label, c);
 		
-		field = new JTextField();
+		nombre = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
-		this.add(field, c);
+		this.add(nombre, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -69,11 +77,11 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 2;
 		this.add(label, c);
 		
-		field = new JTextField();
+		horaApertura = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		this.add(field, c);
+		this.add(horaApertura, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -83,11 +91,11 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 2;
 		this.add(label, c);
 		
-		field = new JTextField();
+		minutoApertura = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridy = 2;
-		this.add(field, c);
+		this.add(minutoApertura, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -97,11 +105,11 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 3;
 		this.add(label, c);
 		
-		field = new JTextField();
+		horaCierre = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
-		this.add(field, c);
+		this.add(horaCierre, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -112,12 +120,12 @@ public class PanelEstacionAlta extends JPanel{
 		c.weightx = 0.1;
 		this.add(label, c);
 		
-		field = new JTextField();
+		minutoCierre = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridy = 3;
 		c.weightx = 0.3;
-		this.add(field, c);
+		this.add(minutoCierre, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
@@ -136,7 +144,7 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 4;
 		this.add(comboBox, c);
 		
-		button = new JButton("Salir");
+		button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -151,7 +159,46 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 5;
 		this.add(button, c);
 		
+//		yourJTextField.getDocument().addDocumentListener(new DocumentListener() {  //Interesante para implementar!!
+//			  public void changedUpdate(DocumentEvent e) {
+//			    changed();
+//			  }
+//			  public void removeUpdate(DocumentEvent e) {
+//			    changed();
+//			  }
+//			  public void insertUpdate(DocumentEvent e) {
+//			    changed();
+//			  }
+//
+//			  public void changed() {
+//			     if (yourJTextField.getText().equals("")){
+//			       loginButton.setEnabled(false);
+//			     }
+//			     else {
+//			       loginButton.setEnabled(true);
+//			    }
+//
+//			  }
+//			});
+		
 		button = new JButton("Crear");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(id.getText().isEmpty() || nombre.getText().isEmpty() || horaApertura.getText().isEmpty() ||
+				   minutoApertura.getText().isEmpty() || horaCierre.getText().isEmpty() || minutoCierre.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame,
+						    "Debe completar todos los campos correctamente.",
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}else {
+				
+				//frame.dispose();
+				//frameEdicion = new EstacionEditar(filaSeleccionada);
+				//frameEdicion.setVisible(true);
+			}
+			}
+		});
 		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.5;
 		c.gridx = 4;
