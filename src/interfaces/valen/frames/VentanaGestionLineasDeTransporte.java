@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import interfaces.valen.paneles.PanelListadoGestionLineas;
+import interfaces.ventaBoleto.PanelGrafico;
 
 public class VentanaGestionLineasDeTransporte extends JFrame{
 
@@ -30,9 +31,11 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		JPanel panelGrafo = new JPanel();
-		panelGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
-		this.add(panelGrafo, gbc);
+		//PanelGrafico panelGrafo = new PanelGrafico();
+		//JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
+		JScrollPane panelScrollGrafo = new JScrollPane();
+		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
+		this.add(panelScrollGrafo, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
