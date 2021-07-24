@@ -21,7 +21,7 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 		this.setSize(1024, 600);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Gestión de líneas de transporte");
-//		this.add(new PanelListadoGestionLineas());
+		//this.add(new PanelListadoGestionLineas());
 		this.setLayout(gbLayout);		
 		
 		gbc.gridx = 0;
