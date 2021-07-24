@@ -1,5 +1,7 @@
 package gestores;
 
+import java.awt.Point;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import clases.Estacion;
@@ -22,5 +24,9 @@ public class GestorEstacion {
 	
 	public List<Estacion> getEstaciones() {
 		return estaciones;
+	}
+	
+	public void agregarEstacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
+		estaciones.add(new Estacion(i, n, hA, hC, pos));
 	}
 }

@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.fede.frames;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -12,9 +12,9 @@ import javax.swing.border.EmptyBorder;
 import clases.Estacion;
 import gestores.GestorEstacion;
 import gestores.GestorRuta;
-import interfaces.ventaBoleto.PanelVentaBoleto;
+import interfaces.fede.ventaBoleto.PanelVentaBoleto;
 
-public class VentanaVentaBoleto extends JFrame {
+public class FrameVentaBoleto extends JFrame {
 
 	private JPanel contentPane;
 
@@ -26,7 +26,7 @@ public class VentanaVentaBoleto extends JFrame {
 			public void run() {
 				try {
 					pruebaGrafico();
-					VentanaVentaBoleto frame = new VentanaVentaBoleto();
+					FrameVentaBoleto frame = new FrameVentaBoleto();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class VentanaVentaBoleto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaVentaBoleto() {
+	public FrameVentaBoleto() {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);

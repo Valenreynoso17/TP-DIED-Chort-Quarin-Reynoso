@@ -2,7 +2,9 @@ package gestores;
 
 import java.util.ArrayList;
 import java.util.List;
+import clases.Estacion;
 import clases.Ruta;
+import enums.EstadoRuta;
 
 public class GestorRuta {
 	private List<Ruta> rutas;
@@ -24,4 +26,7 @@ public class GestorRuta {
 		return rutas;
 	}
 	
+	public void agregarRuta(Estacion o, Estacion des,Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
+		rutas.add(new Ruta(o, des, d, du, mP, e, c));
+	}
 }

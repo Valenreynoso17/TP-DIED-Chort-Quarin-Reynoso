@@ -1,4 +1,6 @@
 package clases;
+import java.awt.Color;
+import java.awt.Point;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Estacion {
 	
 	private List<Mantenimiento> mantenimientos;
 	
-	//private Point posicion; //VER
+	private Point posicion; //VER 
 	
 	public Estacion(String i, String n, LocalTime hA, LocalTime hC) {
 		this.id = i;
@@ -24,6 +26,12 @@ public class Estacion {
 		this.horarioCierre = hC;
 		this.estado = EstadoEstacion.OPERATIVA;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
+	}
+	
+	// ver si lo dejamos
+	public Estacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
+		this(i, n, hA, hC);
+		this.posicion = pos;
 	}
 	
 	public String getId() {
@@ -73,6 +81,19 @@ public class Estacion {
 	public void setMantenimientos(List<Mantenimiento> mantenimientos) {
 		this.mantenimientos = mantenimientos;
 	}
+	
+	public void setPosicion(Point posicion) {
+		this.posicion = posicion;
+	}
+	
+	public Point getPosicion() {
+		return posicion;
+	}
+	
+	public Boolean operativa() {
+		return estado == EstadoEstacion.OPERATIVA;
+	}
+	
 
 	public void aniadirMantenimiento(Mantenimiento m) {
 		this.mantenimientos.add(m);
