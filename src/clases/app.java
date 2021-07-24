@@ -1,14 +1,13 @@
 package clases;
 
-import interfaces.frames.VentanaPrincipal;
+import interfaces.frames.VentanaGestionLineasDeTransporte;
 
 public class app {
 
 	public static void main(String[] args) {
 		
-		VentanaPrincipal miVentana = new VentanaPrincipal();
+		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
 		
-		miVentana.setVisible(true);
 		
 	}
 
