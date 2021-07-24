@@ -1,4 +1,4 @@
-package interfaces.ventaBoleto;
+package interfaces.fede.ventaBoleto;
 
 import java.awt.Color;
 import javax.swing.JPanel;

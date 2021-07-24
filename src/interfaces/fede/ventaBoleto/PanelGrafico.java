@@ -1,4 +1,4 @@
-package interfaces.ventaBoleto;
+package interfaces.fede.ventaBoleto;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
