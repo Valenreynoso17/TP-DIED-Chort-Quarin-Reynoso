@@ -1,4 +1,4 @@
-package interfaces.paneles;
+package interfaces.valen.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import interfaces.otros.ElementoListaGestionTransporte;
+import interfaces.valen.otros.ElementoListaGestionTransporte;
 
 public class PanelListadoGestionLineas extends JPanel{
 	

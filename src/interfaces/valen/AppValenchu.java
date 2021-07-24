@@ -1,14 +1,13 @@
-package clases;
+package interfaces.valen;
 
-import interfaces.frames.VentanaGestionLineasDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 
-public class app {
+public class AppValenchu {
 
 	public static void main(String[] args) {
 		
 		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
-		
-		
+
 	}
 
 }

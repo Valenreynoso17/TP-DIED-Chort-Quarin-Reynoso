@@ -1,11 +1,11 @@
-package interfaces.frames;
+package interfaces.valen.frames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import interfaces.paneles.PanelListadoGestionLineas;
+import interfaces.valen.paneles.PanelListadoGestionLineas;
 
 public class VentanaGestionLineasDeTransporte extends JFrame{
 
@@ -43,9 +43,6 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 		gbc.gridy = 1;
 		JButton botonSiguiente = new JButton("Siguiente");
 		this.add(botonSiguiente, gbc);
-		
-		
-		
 		
 		this.setVisible(true);
 	}

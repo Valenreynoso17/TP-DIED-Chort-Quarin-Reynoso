@@ -1,4 +1,4 @@
-package interfaces.otros;
+package interfaces.valen.otros;
 
 import java.awt.Color;
 
