@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +26,9 @@ public class PanelEstacionEditar extends JPanel{
 	
 	private EstacionGestionar frameAnterior;
 	
-	public PanelEstacionEditar(EstacionEditar frame) {
+	private LocalTime horarioAux;
+	
+	public PanelEstacionEditar(EstacionEditar frame, Vector filaSeleccionada) {
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 5), "Editar Estación"));
 		
@@ -39,7 +43,7 @@ public class PanelEstacionEditar extends JPanel{
 		c.weighty = 0.1;
 		this.add(label, c);
 		
-		field = new JTextField();
+		field = new JTextField((String) filaSeleccionada.elementAt(0));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
@@ -53,7 +57,7 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 1;
 		this.add(label, c);
 		
-		field = new JTextField();
+		field = new JTextField((String) filaSeleccionada.elementAt(1));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
@@ -67,7 +71,11 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 2;
 		this.add(label, c);
 		
-		field = new JTextField();
+		horarioAux = (LocalTime) filaSeleccionada.elementAt(2);
+		
+		//String hola = Integer.toString(horario.getHour());
+		
+		field = new JTextField(Integer.toString(horarioAux.getHour()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
@@ -81,7 +89,7 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 2;
 		this.add(label, c);
 		
-		field = new JTextField();
+		field = new JTextField(Integer.toString(horarioAux.getMinute()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridy = 2;
@@ -95,7 +103,9 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 3;
 		this.add(label, c);
 		
-		field = new JTextField();
+		horarioAux = (LocalTime) filaSeleccionada.elementAt(3);
+		
+		field = new JTextField(Integer.toString(horarioAux.getHour()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
@@ -109,12 +119,13 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 3;
 		c.weightx = 0.1;
 		this.add(label, c);
+		c.weightx = 0.0;
 		
-		field = new JTextField();
+		field = new JTextField(Integer.toString(horarioAux.getMinute()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridy = 3;
-		c.weightx = 0.3;
+		//c.weightx = 0.2;
 		this.add(field, c);
 		
 		c.fill = GridBagConstraints.NONE;
@@ -126,13 +137,30 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridy = 4;
 		this.add(label, c);
 		
-		comboBox = new JComboBox<String>();
-		comboBox.addItem("OPERATIVA");
-		comboBox.addItem("EN MANTENIMIENTO");
-		c.anchor = GridBagConstraints.CENTER;
+		field = new JTextField(filaSeleccionada.elementAt(4).toString());
+		//field.setHighlighter(null);
+		//field.setEnabled(false);
+		field.setEditable(false);
+		//c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 1;
 		c.gridy = 4;
-		this.add(comboBox, c);
+		c.weightx = 0.2;
+		this.add(field, c);
+		c.weightx = 0.0;
+		
+		button = new JButton("Inicio de tarea de mantenimiento");
+		c.anchor = GridBagConstraints.CENTER;
+		//c.weightx = 0.5;
+		c.gridx = 3;
+		c.gridy = 4;
+		this.add(button, c);
+		
+		button = new JButton("Fin de tarea de mantenimiento");
+		c.anchor = GridBagConstraints.CENTER;
+		//c.weightx = 0.5;
+		c.gridx = 4;
+		c.gridy = 4;
+		this.add(button, c);
 		
 		button = new JButton("Cancelar");
 		button.addActionListener(new ActionListener() {

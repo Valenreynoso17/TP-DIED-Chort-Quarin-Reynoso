@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class EstacionGestionar extends JFrame {
@@ -36,6 +37,7 @@ public class EstacionGestionar extends JFrame {
 		setBounds(100, 100, 1024, 600);
 		contentPane = new PanelEstacionGestionar(this);
 		setContentPane(contentPane);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 }
