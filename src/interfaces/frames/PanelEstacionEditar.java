@@ -3,12 +3,9 @@ package interfaces.frames;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,7 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class PanelEstacionAlta extends JPanel{
+public class PanelEstacionEditar extends JPanel{
+
 	
 	private JComboBox<String> comboBox;
 	private JButton button;
@@ -26,9 +24,9 @@ public class PanelEstacionAlta extends JPanel{
 	
 	private EstacionGestionar frameAnterior;
 	
-	public PanelEstacionAlta(EstacionAlta frame) {
+	public PanelEstacionEditar(EstacionEditar frame) {
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 5), "Dar de alta Estación"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 5), "Editar Estación"));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -136,7 +134,7 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 4;
 		this.add(comboBox, c);
 		
-		button = new JButton("Salir");
+		button = new JButton("Cancelar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -151,7 +149,7 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 5;
 		this.add(button, c);
 		
-		button = new JButton("Crear");
+		button = new JButton("Confirmar edición");
 		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.5;
 		c.gridx = 4;
@@ -160,4 +158,5 @@ public class PanelEstacionAlta extends JPanel{
 		
 	}
 
+	
 }
