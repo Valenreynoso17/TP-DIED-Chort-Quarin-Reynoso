@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -13,13 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class EstacionPanelBusqueda extends JPanel {
+public class PanelEstacionBusqueda extends JPanel {
 	
 	private JLabel label;
 	private JButton button;
 	private JTextField field;
 	
-	public EstacionPanelBusqueda() {
+	public PanelEstacionBusqueda() {
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 2), "Búsqueda de Estaciones"));
 		

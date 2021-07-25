@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -23,8 +23,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import clases.Estacion;
+import interfaces.julio.frames.EstacionEditar;
+import interfaces.julio.frames.EstacionGestionar;
+import interfaces.julio.otros.ModeloTabla;
 
-public class EstacionTablaResultado extends JPanel{
+public class PanelEstacionTablaResultado extends JPanel{
 
 	private JLabel label;
 	private JButton button;
@@ -39,7 +42,7 @@ public class EstacionTablaResultado extends JPanel{
 	
 	//PopUp borrarEstacion;?
 	
-	public EstacionTablaResultado(EstacionGestionar frame) {
+	public PanelEstacionTablaResultado(EstacionGestionar frame) {
 	
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 2), "Resultado"));
 		

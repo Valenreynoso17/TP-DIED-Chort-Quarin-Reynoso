@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.julio.frames;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+
+import interfaces.julio.paneles.PanelEstacionAlta;
+
 import javax.swing.JComboBox;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,22 +19,6 @@ public class EstacionAlta extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EstacionAlta frame = new EstacionAlta();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
