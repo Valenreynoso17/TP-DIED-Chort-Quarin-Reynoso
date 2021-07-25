@@ -1,16 +1,12 @@
 package interfaces.valen.frames;
 
-import java.awt.GridBagLayout;
-
 import javax.swing.JFrame;
 
 import interfaces.valen.paneles.PanelPrincipalSiguienteAltaLineaDeTransporte;
-import interfaces.valen.paneles.PanelResumenAltaLinea;
 
 public class VentanaSiguienteAltaLineaDeTransporte extends JFrame{
 
 	PanelPrincipalSiguienteAltaLineaDeTransporte panelPrincipal;
-	
 	
 	public VentanaSiguienteAltaLineaDeTransporte() {
 	

@@ -7,11 +7,14 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import interfaces.valen.otros.ColorPicker;
 import interfaces.valen.otros.ElementoListaGestionTransporte;
 
 public class PanelListadoGestionLineas extends JPanel{
@@ -37,8 +40,10 @@ public class PanelListadoGestionLineas extends JPanel{
 		panel.add(checkBoxNoActiva);
 		
 		// TODO: Ver el tema del color
-//		JColorChooser colorChooser = new JColorChooser();
-//		panel.add(colorChooser);
+		JLabel labelColor = new JLabel("Color:");
+		panel.add(labelColor);
+		ColorPicker colorPicker = new ColorPicker((JFrame) this.getTopLevelAncestor());
+		panel.add(colorPicker);
 		this.add(panel);
 		
 		// Tercer componente - Lista
