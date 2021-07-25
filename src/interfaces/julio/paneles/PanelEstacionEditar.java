@@ -30,8 +30,8 @@ public class PanelEstacionEditar extends JPanel{
 	private JTextField field;
 	private JLabel label;
 	
-	private EstacionGestionar frameAnterior;
-	private PopUpMantenimiento popUpMantenimiento;
+	private EstacionGestionar frameAnterior = new EstacionGestionar();
+	private PopUpMantenimiento popUpMantenimiento = new PopUpMantenimiento();
 	
 	private LocalTime horarioAux;
 	
@@ -159,8 +159,6 @@ public class PanelEstacionEditar extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				popUpMantenimiento = new PopUpMantenimiento();
-				
 				popUpMantenimiento.setVisible(true);
 		}
 		});
@@ -184,7 +182,6 @@ public class PanelEstacionEditar extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameAnterior = new EstacionGestionar();
 				frameAnterior.setVisible(true);
 			}
 		});

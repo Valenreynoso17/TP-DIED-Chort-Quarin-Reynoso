@@ -35,10 +35,10 @@ public class PanelEstacionTablaResultado extends JPanel{
 	private JPanel panelBusqueda;
 	private JTable tabla;
 	
-	private EstacionEditar frameEdicion;
-	
 	private Vector filaSeleccionada;
 	private Integer nroFilaSeleccionada;
+	
+	private EstacionEditar frameEdicion = new EstacionEditar(filaSeleccionada);
 	
 	//PopUp borrarEstacion;?
 	
@@ -102,7 +102,6 @@ public class PanelEstacionTablaResultado extends JPanel{
 				}else {
 				
 				frame.dispose();
-				frameEdicion = new EstacionEditar(filaSeleccionada);
 				frameEdicion.setVisible(true);
 			}
 			}
