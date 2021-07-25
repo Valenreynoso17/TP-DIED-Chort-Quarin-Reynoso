@@ -29,8 +29,8 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
 		
 		// Componentes del panel
 		labelNombre = new JLabel("Nombre:");
