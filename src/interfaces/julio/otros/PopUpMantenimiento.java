@@ -2,6 +2,7 @@ package interfaces.julio.otros;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -10,12 +11,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
 import interfaces.julio.frames.EstacionAlta;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.paneles.PanelEstacionAlta;
@@ -27,7 +33,14 @@ public class PopUpMantenimiento extends JFrame {
 	
 	private JLabel label;
 	private JButton button;
-	private JTextField field;
+	
+	private JTextField diaFechaInicio;
+	private JTextField mesFechaInicio;
+	private JTextField anioFechaInicio;
+	private JTextField diaFechaFin;
+	private JTextField mesFechaFin;
+	private JTextField anioFechaFin;
+	private JTextArea texto;
 
 	/**
 	 * Create the frame.
@@ -35,7 +48,7 @@ public class PopUpMantenimiento extends JFrame {
 	public PopUpMantenimiento() {
 		super("Registrar tarea de mantenimiento");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 250);
+		setBounds(100, 100, 400, 420);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -47,7 +60,6 @@ public class PopUpMantenimiento extends JFrame {
 		
 		
 		label = new JLabel("Fecha de inicio: ");
-		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.EAST;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -55,12 +67,12 @@ public class PopUpMantenimiento extends JFrame {
 		
 		//c.anchor = GridBagConstraints.NONE;
 		
-		field = new JTextField();
+		diaFechaInicio = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 1;
 		c.gridy = 0;
-		contentPane.add(field, c);
+		contentPane.add(diaFechaInicio, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
@@ -71,12 +83,12 @@ public class PopUpMantenimiento extends JFrame {
 		c.gridy = 0;
 		contentPane.add(label, c);
 		
-		field = new JTextField();
+		mesFechaInicio = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 3;
 		c.gridy = 0;
-		contentPane.add(field, c);
+		contentPane.add(mesFechaInicio, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
@@ -87,28 +99,29 @@ public class PopUpMantenimiento extends JFrame {
 		c.gridy = 0;
 		contentPane.add(label, c);
 		
-		field = new JTextField();
+		anioFechaInicio = new JTextField();
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 5;
 		c.gridy = 0;
-		contentPane.add(field, c);
+		contentPane.add(anioFechaInicio, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
 		
 		label = new JLabel("Fecha de fin: ");
+		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.EAST;
 		c.gridx = 0;
 		c.gridy = 1;
 		contentPane.add(label, c);
 		
-		field = new JTextField();
+		diaFechaFin = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 1;
 		c.gridy = 1;
-		contentPane.add(field, c);
+		contentPane.add(diaFechaFin, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.1;
@@ -120,49 +133,48 @@ public class PopUpMantenimiento extends JFrame {
 		c.weightx = 0.1;
 		contentPane.add(label, c);
 		
-		field = new JTextField();
+		mesFechaFin = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0.3;
-		contentPane.add(field, c);
+		contentPane.add(mesFechaFin, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.1;
 		
 		label = new JLabel("/");
 		c.anchor = GridBagConstraints.CENTER;
-		c.gridx = 4;
-		c.gridy = 1;
+		c.gridx = 4; c.gridy = 1;
 		contentPane.add(label, c);
 		
-		field = new JTextField();
+		anioFechaFin = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
-		c.gridx = 5;
-		c.gridy = 1;
-		contentPane.add(field, c);
+		c.gridx = 5; c.gridy = 1;
+		contentPane.add(anioFechaFin, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
 		
 		label = new JLabel("Observaciones: ");
-		c.anchor = GridBagConstraints.EAST;
-		c.gridx = 0;
-		c.gridy = 2;
+		c.anchor = GridBagConstraints.NORTH;
+		c.gridx = 0; c.gridy = 2;
+
 		contentPane.add(label, c);
 		
 		//c.anchor = GridBagConstraints.NONE;
 		
-		field = new JTextField();
+		texto = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(texto);
+		texto.setLineWrap(true);
+		texto.setWrapStyleWord(true);
 		c.fill = GridBagConstraints.BOTH;
-		c.gridheight = 2;
-		c.gridwidth = 6;
-		c.gridx = 1;
-		c.gridy = 2;
+		c.gridx = 1; c.gridy = 2;
+		c.gridheight = 2; c.gridwidth = 6;
 		c.weightx = 0.5;
-		contentPane.add(field, c);
+		contentPane.add(scrollPane, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
@@ -176,26 +188,65 @@ public class PopUpMantenimiento extends JFrame {
 				dispose();
 			}
 		});
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.SOUTH;
 		c.weightx = 0.0;
 		c.gridx = 0;
 		c.gridy = 4;
+		c.weighty = 0.1;
 		contentPane.add(button, c);
 		
 		button = new JButton("Registrar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				dispose();
+				try {
+					
+					inputEstaVacia();
+					inputEsValida();
+					
+					dispose();
+				
+				}catch (InputVacioException IVE) {
+					
+					JOptionPane.showMessageDialog(getFrame(),
+							IVE.getMessage(),
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}catch (InputInvalidaException IIE) {
+					
+					JOptionPane.showMessageDialog(getFrame(),
+							IIE.getMessage(),	//VER
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.SOUTH;
 		c.weightx = 0.0;
 		c.gridx = 6;
 		c.gridy = 4;
 		contentPane.add(button, c);
 		
 		
+	}
+	
+	public void inputEstaVacia() throws InputVacioException{
+		
+		if(diaFechaInicio.getText().isEmpty() || mesFechaInicio.getText().isEmpty() || anioFechaInicio.getText().isEmpty() ||
+				diaFechaFin.getText().isEmpty() || mesFechaFin.getText().isEmpty() || anioFechaFin.getText().isEmpty()) 
+				throw new InputVacioException();
+	}
+	
+	public void inputEsValida() throws InputInvalidaException{
+		//TODO
+		if(diaFechaInicio.getText().isEmpty() || mesFechaInicio.getText().isEmpty() || anioFechaInicio.getText().isEmpty() ||
+				diaFechaFin.getText().isEmpty() || mesFechaFin.getText().isEmpty() || anioFechaFin.getText().isEmpty())
+				throw new InputInvalidaException();
+	}
+	
+	public JFrame getFrame() {
+		return this;
 	}
 
 }
