@@ -57,7 +57,7 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		// Agregando padding
 		gbc.insets = new Insets(5,5,5,5);
 		
-		gbc.anchor = GridBagConstraints.WEST;
+//		gbc.anchor = GridBagConstraints.WEST;
 		
 		// Agregando componentes
 		gbc.gridx = 0;

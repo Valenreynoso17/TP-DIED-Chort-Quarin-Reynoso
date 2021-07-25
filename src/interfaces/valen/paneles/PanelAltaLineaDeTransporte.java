@@ -27,6 +27,11 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		gbc = new GridBagConstraints();
 		this.setBorder(BorderFactory.createTitledBorder("Alta de una nueva línea"));
 		
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		
 		// Componentes del panel
 		labelNombre = new JLabel("Nombre:");
 		nombreLinea = new JTextField("Ingrese el nombre de la línea");
