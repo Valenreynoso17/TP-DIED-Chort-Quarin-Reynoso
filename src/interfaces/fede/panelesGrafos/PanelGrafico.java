@@ -1,12 +1,15 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.panelesGrafos;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -22,7 +25,7 @@ public class PanelGrafico extends JPanel {
 	private GestorRuta gestorRutas;
 	private Integer radioEstaciones, largoFlecha;
 	private Double anchoFlecha;
-	
+	private Float escala = 1.0f;
 	
 	
 	public PanelGrafico() {
@@ -38,15 +41,30 @@ public class PanelGrafico extends JPanel {
 		largoFlecha = 10;
 	}
 	
+	public void aumentarEscala() {
+		escala *= 1.5f;
+		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
+		this.revalidate();
+		this.repaint();
+	}
 	
+	
+	public void disminuirEscala() {
+		escala /= 1.5f;
+		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
+		this.revalidate();
+		this.repaint();
+	}
 	
 	@Override
 	protected void paintComponent (Graphics g) {
 		super.paintComponent (g);
 		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.scale(escala, escala);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarGrafo(g2d);
+		
 
 	}
 	
@@ -69,7 +87,7 @@ public class PanelGrafico extends JPanel {
 				}
 				
 				if (cambios) {
-					this.setPreferredSize(new Dimension(anchoVentana, altoVentana));
+					this.setPreferredSize(new Dimension(Math.round(anchoVentana), Math.round(altoVentana)));
 					this.revalidate();
 				}
 				
@@ -85,11 +103,16 @@ public class PanelGrafico extends JPanel {
 	}
 	
 	protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
-		Point posicion = e.getPosicion();
+		Point pos = e.getPosicion();
 		
 		
-		g2d.setColor(Color.BLUE);
-		g2d.fillOval(posicion.x-radioEstaciones, posicion.y-radioEstaciones, 2*radioEstaciones, 2*radioEstaciones);	
+		g2d.setColor(new Color(39, 75, 211));
+		g2d.fillOval(pos.x-radioEstaciones, pos.y-radioEstaciones, 2*radioEstaciones, 2*radioEstaciones);	
+		g2d.setColor(new Color(3, 25, 111));
+		g2d.setStroke(new BasicStroke(1.0f));
+		g2d.drawOval(pos.x-radioEstaciones, pos.y-radioEstaciones, 2*radioEstaciones, 2*radioEstaciones);
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(e.getNombre(), pos.x, pos.y);
 		
 	}
 	
