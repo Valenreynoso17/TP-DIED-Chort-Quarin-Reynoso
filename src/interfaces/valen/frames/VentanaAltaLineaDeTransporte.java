@@ -77,15 +77,17 @@ public class VentanaAltaLineaDeTransporte extends JFrame{
 		// Boton Cancelar
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		gbc.weightx = 0.05;
-		gbc.weighty = 0.05;
+		gbc.weightx = 0.07;
+		gbc.weighty = 0.07;
 		botonCancelar = new JButton("Cancelar");
+		botonCancelar.setFocusable(false);
 		this.add(botonCancelar, gbc);
 		
 		// Boton Siguiente
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		botonSiguiente = new JButton("Siguiente");
+		botonSiguiente.setFocusable(false);
 		this.add(botonSiguiente, gbc);
 		
 		this.setVisible(true);
