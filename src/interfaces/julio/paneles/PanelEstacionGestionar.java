@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,6 +20,8 @@ import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
 import enums.EstadoEstacion;
+import interfaces.julio.frames.EstacionAlta;
+import interfaces.julio.frames.EstacionGestionar;
 
 public class PanelEstacionGestionar extends JPanel{
 	
@@ -39,7 +41,7 @@ public class PanelEstacionGestionar extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelBusqueda = new EstacionPanelBusqueda();
+		panelBusqueda = new PanelEstacionBusqueda();
 		c.fill = GridBagConstraints.BOTH;
 		//c.gridwidth = GridBagConstraints.BOTH;
 		c.gridheight = 1;
@@ -51,7 +53,7 @@ public class PanelEstacionGestionar extends JPanel{
 		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = GridBagConstraints.NONE;
 		
-		panelBusqueda = new EstacionTablaResultado(frame);
+		panelBusqueda = new PanelEstacionTablaResultado(frame);
 		c.fill = GridBagConstraints.BOTH;
 		//c.gridwidth = GridBagConstraints.BOTH;
 		c.gridheight = 1;

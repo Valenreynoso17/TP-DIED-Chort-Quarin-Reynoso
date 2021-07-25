@@ -1,4 +1,4 @@
-package interfaces.frames;
+package interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -8,13 +8,19 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.Vector;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import interfaces.julio.frames.EstacionEditar;
+import interfaces.julio.frames.EstacionGestionar;
+import interfaces.julio.otros.PopUpMantenimiento;
 
 public class PanelEstacionEditar extends JPanel{
 
@@ -25,6 +31,7 @@ public class PanelEstacionEditar extends JPanel{
 	private JLabel label;
 	
 	private EstacionGestionar frameAnterior;
+	private PopUpMantenimiento popUpMantenimiento;
 	
 	private LocalTime horarioAux;
 	
@@ -149,6 +156,16 @@ public class PanelEstacionEditar extends JPanel{
 		c.weightx = 0.0;
 		
 		button = new JButton("Inicio de tarea de mantenimiento");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				popUpMantenimiento = new PopUpMantenimiento();
+				
+				popUpMantenimiento.setVisible(true);
+		}
+		});
+		
+		
 		c.anchor = GridBagConstraints.CENTER;
 		//c.weightx = 0.5;
 		c.gridx = 3;
