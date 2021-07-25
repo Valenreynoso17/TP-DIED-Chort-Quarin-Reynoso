@@ -4,11 +4,13 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 
+import interfaces.valen.paneles.PanelPrincipalSiguienteAltaLineaDeTransporte;
 import interfaces.valen.paneles.PanelResumenAltaLinea;
 
 public class VentanaSiguienteAltaLineaDeTransporte extends JFrame{
 
-	PanelResumenAltaLinea panelResumen;
+	PanelPrincipalSiguienteAltaLineaDeTransporte panelPrincipal;
+	
 	
 	public VentanaSiguienteAltaLineaDeTransporte() {
 	
@@ -17,9 +19,8 @@ public class VentanaSiguienteAltaLineaDeTransporte extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setTitle("Resumen del alta de una nueva línea");
 		
-		panelResumen = new PanelResumenAltaLinea();
-		
-		this.add(panelResumen);
+		panelPrincipal = new PanelPrincipalSiguienteAltaLineaDeTransporte(this);
+		this.setContentPane(panelPrincipal);
 		
 		this.setVisible(true);
 	}
