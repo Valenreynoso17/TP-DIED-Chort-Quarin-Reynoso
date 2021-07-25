@@ -9,6 +9,7 @@ public class AppValenchu {
 
 	public static void main(String[] args) {
 		
+//		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
 		VentanaAltaLineaDeTransporte vent1 = new VentanaAltaLineaDeTransporte();
 
 	}
