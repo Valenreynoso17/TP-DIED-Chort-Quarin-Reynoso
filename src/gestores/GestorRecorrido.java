@@ -23,8 +23,29 @@ public class GestorRecorrido {
 		return gestor;
 	}
 	
+	// Este metodo devuelve una lista con todos los recorridos posibles desde origen hasta destino
 	public List<Recorrido> getRecorridos(Estacion origen, Estacion destino) {
-		return new ArrayList<>();
+		List<List<Ruta>> caminos = gestorRutas.buscarCaminos(origen, destino);
+		List<Recorrido> recorridos = new ArrayList<>();
+		
+		for (List<Ruta> camino : caminos) {
+			Integer distancia = 0;
+			Integer duracion = 0;
+			Double costo = 0.0;
+			Recorrido recorrido;
+			
+			for (Ruta r : camino) {
+				distancia += r.getDistancia();
+				duracion += r.getDuracion();
+				costo += r.getCosto();
+			}
+			
+			recorrido = new Recorrido(origen, destino, distancia, duracion, costo);
+			recorrido.agregarRutas(camino);
+			recorridos.add(recorrido);
+		}
+		
+		return recorridos;
 	}
 	
 

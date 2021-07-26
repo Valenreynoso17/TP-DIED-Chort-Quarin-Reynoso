@@ -82,7 +82,7 @@ public class PanelVentaBoleto extends JPanel {
 		JComboBox<Estacion> comboBoxOrigen = new JComboBox<Estacion>(estaciones.toArray(new Estacion[estaciones.size()]));
 		comboBoxOrigen.setSelectedItem(null);
 		comboBoxOrigen.addActionListener(e -> {
-			List<Estacion> accesible = gestorEstaciones.getEstacionesAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
+			List<Estacion> accesible = gestorEstaciones.getEstacionesOperativasAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
 			comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
 			comboBoxDestino.setEnabled(true);
 			comboBoxDestino.setSelectedItem(null);

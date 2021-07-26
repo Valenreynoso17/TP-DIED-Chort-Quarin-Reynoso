@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Estacion;
+import enums.EstadoEstacion;
 import enums.EstadoRuta;
 import gestores.GestorEstacion;
 import gestores.GestorRuta;
@@ -55,20 +56,28 @@ public class FrameVentaBoleto extends JFrame {
 		GestorEstacion gestor = GestorEstacion.getInstance();
 		GestorRuta gestor2 = GestorRuta.getInstance();
 		
-		gestor.agregarEstacion("123", "A", null, null, new Point(50, 50));
-		gestor.agregarEstacion("124", "B", null, null, new Point(100, 50));
-		gestor.agregarEstacion("125", "C", null, null, new Point(678, 500));
-		gestor.agregarEstacion("125", "D", null, null, new Point(500, 100));
-		gestor.agregarEstacion("125", "E", null, null, new Point(100, 400));
-		gestor.agregarEstacion("125", "F", null, null, new Point(100, 300));
+		gestor.agregarEstacion("123", "A", null, null, new Point(50, 70));
+		gestor.agregarEstacion("124", "B", null, null, new Point(180, 50));
+		gestor.agregarEstacion("125", "C", null, null, new Point(180, 150));
+		gestor.agregarEstacion("125", "D", null, null, new Point(300, 50));
+		gestor.agregarEstacion("125", "E", null, null, new Point(300, 150));
+		gestor.agregarEstacion("125", "F", null, null, new Point(450, 100));
+		gestor.agregarEstacion("125", "G", null, null, new Point(200, 300));
+		gestor.agregarEstacion("125", "X", null, null, new Point(500, 300));
+		
 		List<Estacion> estaciones = gestor.getEstaciones();
+		estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(1), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		//gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(2), estaciones.get(0), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		//gestor2.agregarRuta(estaciones.get(3), estaciones.get(4), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(4), estaciones.get(3), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(5), estaciones.get(4), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(0), estaciones.get(6), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(1), estaciones.get(3), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(2), estaciones.get(4), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(3), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(4), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(6), estaciones.get(7), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(7), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 	}
 }
