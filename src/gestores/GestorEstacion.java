@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Ruta;
@@ -34,6 +36,10 @@ public class GestorEstacion {
 		return estaciones;
 	}
 	
+	public List<Estacion> getEstacionesOperativas() {
+		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
+	}
+	
 	public void agregarEstacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
 		estaciones.add(new Estacion(i, n, hA, hC, pos));
 	}
@@ -52,6 +58,13 @@ public class GestorEstacion {
 		}
 		
 		return resultado;
+	}
+	
+	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) {
+		return this.getEstacionesAccesibles(estacion)
+				.stream()
+				.filter(e -> e.operativa())
+				.collect(Collectors.toList());
 	}
 	
 	private List<Estacion> getEstacionesAccesiblesAux(Estacion estacion, HashSet<Estacion> marcados) {

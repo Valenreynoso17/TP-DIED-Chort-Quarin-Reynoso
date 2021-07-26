@@ -36,7 +36,7 @@ public class PanelVentaBoleto extends JPanel {
 	 */
 	public PanelVentaBoleto() {
 		gestorEstaciones = GestorEstacion.getInstance();
-		List<Estacion> estaciones = gestorEstaciones.getEstaciones();
+		List<Estacion> estaciones = gestorEstaciones.getEstacionesOperativas();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		//gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
