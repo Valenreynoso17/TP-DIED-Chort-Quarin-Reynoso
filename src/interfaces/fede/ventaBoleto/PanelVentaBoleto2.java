@@ -1,22 +1,33 @@
 package interfaces.fede.ventaBoleto;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import clases.Estacion;
+import clases.Recorrido;
+import clases.Ruta;
+import gestores.GestorRecorrido;
+import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto2;
 
 public class PanelVentaBoleto2 extends JPanel {
 	private Estacion origen, destino;
+	private GestorRecorrido gestorRecorridos;
 	
 	public PanelVentaBoleto2(Estacion origen, Estacion destino) {
 		this.origen = origen;
 		this.destino = destino;
+		this.gestorRecorridos = GestorRecorrido.getInstance();
 		
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
@@ -28,11 +39,19 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbc_botonAtras.gridy = 1;
 		this.add(botonAtras, gbc_botonAtras);
 		
-		JLabel lbl1 = new JLabel(origen.toString());
-		GridBagConstraints gbc_lbl1 = new GridBagConstraints();
-		gbc_lbl1.gridx = 0;
-		gbc_lbl1.gridy = 2;
-		this.add(lbl1, gbc_lbl1);
+		
+		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+		
+		JTable tablaRecorridos = new JTable(new ModeloTablaRecorridos(recorridos));
+		JScrollPane spTablaRecorridos = new JScrollPane(tablaRecorridos);
+		spTablaRecorridos.setPreferredSize(new Dimension(500, 100));
+		GridBagConstraints gbc_spTablaRecorridos = new GridBagConstraints();
+		gbc_spTablaRecorridos.gridx = 1;
+		gbc_spTablaRecorridos.gridy = 2;
+		this.add(spTablaRecorridos, gbc_spTablaRecorridos);
+		
+		
+		
 	}
 	
 	public JFrame getPadre() {

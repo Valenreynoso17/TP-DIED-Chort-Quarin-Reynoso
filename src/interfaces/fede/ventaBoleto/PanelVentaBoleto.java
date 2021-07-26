@@ -36,7 +36,7 @@ public class PanelVentaBoleto extends JPanel {
 	 */
 	public PanelVentaBoleto() {
 		gestorEstaciones = GestorEstacion.getInstance();
-		List<Estacion> estaciones = gestorEstaciones.getEstaciones();
+		List<Estacion> estaciones = gestorEstaciones.getEstacionesOperativas();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		//gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
@@ -82,7 +82,7 @@ public class PanelVentaBoleto extends JPanel {
 		JComboBox<Estacion> comboBoxOrigen = new JComboBox<Estacion>(estaciones.toArray(new Estacion[estaciones.size()]));
 		comboBoxOrigen.setSelectedItem(null);
 		comboBoxOrigen.addActionListener(e -> {
-			List<Estacion> accesible = gestorEstaciones.getEstacionesAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
+			List<Estacion> accesible = gestorEstaciones.getEstacionesOperativasAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
 			comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
 			comboBoxDestino.setEnabled(true);
 			comboBoxDestino.setSelectedItem(null);
