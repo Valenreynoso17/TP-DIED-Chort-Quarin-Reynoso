@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import interfaces.fede.ventaBoleto.PanelGrafico;
+import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 

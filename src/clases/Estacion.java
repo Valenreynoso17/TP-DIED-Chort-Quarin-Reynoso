@@ -98,5 +98,69 @@ public class Estacion {
 	public void aniadirMantenimiento(Mantenimiento m) {
 		this.mantenimientos.add(m);
 	}
+	
+	public String toString() {
+		return "Estacion " + nombre;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		result = prime * result + ((horarioApertura == null) ? 0 : horarioApertura.hashCode());
+		result = prime * result + ((horarioCierre == null) ? 0 : horarioCierre.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((mantenimientos == null) ? 0 : mantenimientos.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Estacion other = (Estacion) obj;
+		if (estado != other.estado)
+			return false;
+		if (horarioApertura == null) {
+			if (other.horarioApertura != null)
+				return false;
+		} else if (!horarioApertura.equals(other.horarioApertura))
+			return false;
+		if (horarioCierre == null) {
+			if (other.horarioCierre != null)
+				return false;
+		} else if (!horarioCierre.equals(other.horarioCierre))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (mantenimientos == null) {
+			if (other.mantenimientos != null)
+				return false;
+		} else if (!mantenimientos.equals(other.mantenimientos))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (posicion == null) {
+			if (other.posicion != null)
+				return false;
+		} else if (!posicion.equals(other.posicion))
+			return false;
+		return true;
+	}
+	
+	
 
 }
