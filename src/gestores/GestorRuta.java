@@ -51,7 +51,7 @@ public class GestorRuta {
 			
 			marcados.add(e1);
 			for(Ruta r : salientes) {
-				if (!marcados.contains(r.getDestino())) {
+				if (!marcados.contains(r.getDestino()) && r.getDestino().operativa()) {
 					copiaMarcados = marcados.stream().collect(Collectors.toList());
 					copiaCamino = camino.stream().collect(Collectors.toList());
 					copiaCamino.add(r);
