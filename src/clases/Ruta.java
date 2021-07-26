@@ -1,5 +1,7 @@
 package clases;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import enums.EstadoRuta;
@@ -37,6 +39,18 @@ public class Ruta {
 		return destino;
 	}
 	
+	public Double getCosto() {
+		return this.costo;
+	}
+	
+	public Integer getDistancia() {
+		return this.distancia;
+	}
+	
+	public Integer getDuracion() {
+		return this.duracion;
+	}
+	
 	
 	
 	// Capaz lo termine sacando - FEDE
@@ -48,5 +62,7 @@ public class Ruta {
 	public String linea() {
 		return "Linea: " + new Random().nextInt();
 	}
+	
+
 	
 }
