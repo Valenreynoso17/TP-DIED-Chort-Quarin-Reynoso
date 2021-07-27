@@ -26,8 +26,8 @@ public class PanelVentaBoleto3 extends JPanel {
 		gbl.rowWeights = new double[]{0.5, 0.1, 0.0, 0.0};
 		this.setLayout(gbl);
 		
-		JPanel panelDatos = new PanelDatosVentaBoleto(recorrido);	
-		panelDatos.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Datos del cliente"));
+		PanelDatosVentaBoleto panelDatos = new PanelDatosVentaBoleto(recorrido);	
+		panelDatos.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Datos de la venta"));
 		GridBagConstraints gbc_panelDatos = new GridBagConstraints();
 		gbc_panelDatos.gridx = 1;
 		gbc_panelDatos.gridy = 0;
@@ -43,6 +43,9 @@ public class PanelVentaBoleto3 extends JPanel {
 		this.add(botonAtras, gbc_botonAtras);
 		
 		JButton botonSiguiente = new JButton("Siguiente");
+		botonSiguiente.addActionListener(e -> {
+			System.out.println(panelDatos.correoValido());
+		});
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
 		gbc_botonSiguiente.gridx = 2;
 		gbc_botonSiguiente.gridy = 1;

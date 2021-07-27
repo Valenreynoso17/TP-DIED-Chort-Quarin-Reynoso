@@ -28,7 +28,7 @@ public class ModeloTablaRecorridos extends DefaultTableModel {
 			this.setValueAt(valor, getRowCount()-1, 0);
 			this.setValueAt(r.getDuracion(), getRowCount()-1, 1);
 			this.setValueAt(r.getDistancia(), getRowCount()-1, 2);
-			this.setValueAt(r.getCosto(), getRowCount()-1, 3);		
+			this.setValueAt("$" + String.format("%.2f", r.getCosto()), getRowCount()-1, 3);		
 		}
 	}
 	
