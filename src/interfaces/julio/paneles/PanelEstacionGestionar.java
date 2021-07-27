@@ -36,7 +36,7 @@ public class PanelEstacionGestionar extends JPanel{
 	public PanelEstacionGestionar(EstacionGestionar frame) {
 		
 		this.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 5), "Gestionar Estación"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Gestionar Estación"));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -89,7 +89,6 @@ public class PanelEstacionGestionar extends JPanel{
 				
 				frame.dispose();
 				frameAlta = new EstacionAlta();
-				frameAlta.setVisible(true);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

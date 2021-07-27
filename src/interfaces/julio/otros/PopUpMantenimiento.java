@@ -47,13 +47,13 @@ public class PopUpMantenimiento extends JFrame {
 	 */
 	public PopUpMantenimiento() {
 		super("Registrar tarea de mantenimiento");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 420);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
-		contentPane.setBorder(new TitledBorder (new LineBorder (Color.black, 5), "Dar de alta Estación"));
+		contentPane.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Dar de alta Estación"));
 		
 		contentPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -188,11 +188,11 @@ public class PopUpMantenimiento extends JFrame {
 				dispose();
 			}
 		});
-		c.anchor = GridBagConstraints.SOUTH;
+		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.0;
 		c.gridx = 0;
 		c.gridy = 4;
-		c.weighty = 0.1;
+		c.weighty = 0.05;
 		contentPane.add(button, c);
 		
 		button = new JButton("Registrar");
@@ -222,7 +222,7 @@ public class PopUpMantenimiento extends JFrame {
 				
 			}
 		});
-		c.anchor = GridBagConstraints.SOUTH;
+		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.0;
 		c.gridx = 6;
 		c.gridy = 4;

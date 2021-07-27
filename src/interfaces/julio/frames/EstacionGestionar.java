@@ -14,25 +14,6 @@ public class EstacionGestionar extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EstacionGestionar frame = new EstacionGestionar();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public EstacionGestionar() {
 		super("Gestionar Estación");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +21,8 @@ public class EstacionGestionar extends JFrame {
 		contentPane = new PanelEstacionGestionar(this);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		this.setVisible(true);
 	}
 
 }
