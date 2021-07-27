@@ -8,8 +8,10 @@ import clases.Estacion;
 import clases.Recorrido;
 
 public class ModeloTablaRecorridos extends DefaultTableModel {
+	private List<Recorrido> recorridos;
 	
 	public ModeloTablaRecorridos(List<Recorrido> recorridos) {
+		this.recorridos = recorridos;
 		String[] columnNames = {"Recorrido", "Duración", "Distancia", "Precio"};
 		this.setColumnIdentifiers(columnNames);
 		
@@ -34,6 +36,8 @@ public class ModeloTablaRecorridos extends DefaultTableModel {
 	public boolean isCellEditable(int row, int column) {
 		return false;
 	}
+	
+	
 	
 	
 }

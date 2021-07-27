@@ -50,4 +50,12 @@ public class Recorrido {
 		return this.costo;
 	}
 
+	@Override
+	public String toString() {
+		String retorno = origen.getNombre();
+		for (Ruta r : rutas) {
+			retorno += " - " + r.getDestino().getNombre();
+		}
+		return retorno;
+	}
 }

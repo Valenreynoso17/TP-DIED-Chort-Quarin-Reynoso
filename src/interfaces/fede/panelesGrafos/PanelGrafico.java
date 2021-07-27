@@ -160,8 +160,6 @@ public class PanelGrafico extends JPanel {
 		g2d.drawLine(inicio.x, inicio.y, fin.x, fin.y);
 		
 		g2d.fillPolygon(x, y, 3);
-		
-		
 	}
 	
 	

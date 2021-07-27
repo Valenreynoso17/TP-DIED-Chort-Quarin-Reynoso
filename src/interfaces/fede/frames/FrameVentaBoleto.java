@@ -66,7 +66,7 @@ public class FrameVentaBoleto extends JFrame {
 		gestor.agregarEstacion("125", "X", null, null, new Point(500, 300));
 		
 		List<Estacion> estaciones = gestor.getEstaciones();
-		estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
+		//estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
