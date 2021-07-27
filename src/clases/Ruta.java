@@ -51,7 +51,10 @@ public class Ruta {
 		return this.duracion;
 	}
 	
-	
+	// Hay que cambiarlo
+	public String getNombreLinea() {
+		return "Linea Colectivo 16";
+	}
 	
 	// Capaz lo termine sacando - FEDE
 	public Color getColorLinea() {

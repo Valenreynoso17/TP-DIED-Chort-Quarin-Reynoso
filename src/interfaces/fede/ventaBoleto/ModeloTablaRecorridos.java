@@ -8,8 +8,10 @@ import clases.Estacion;
 import clases.Recorrido;
 
 public class ModeloTablaRecorridos extends DefaultTableModel {
+	private List<Recorrido> recorridos;
 	
 	public ModeloTablaRecorridos(List<Recorrido> recorridos) {
+		this.recorridos = recorridos;
 		String[] columnNames = {"Recorrido", "Duración", "Distancia", "Precio"};
 		this.setColumnIdentifiers(columnNames);
 		
@@ -26,7 +28,7 @@ public class ModeloTablaRecorridos extends DefaultTableModel {
 			this.setValueAt(valor, getRowCount()-1, 0);
 			this.setValueAt(r.getDuracion(), getRowCount()-1, 1);
 			this.setValueAt(r.getDistancia(), getRowCount()-1, 2);
-			this.setValueAt(r.getCosto(), getRowCount()-1, 3);		
+			this.setValueAt("$" + String.format("%.2f", r.getCosto()), getRowCount()-1, 3);		
 		}
 	}
 	
@@ -34,6 +36,8 @@ public class ModeloTablaRecorridos extends DefaultTableModel {
 	public boolean isCellEditable(int row, int column) {
 		return false;
 	}
+	
+	
 	
 	
 }

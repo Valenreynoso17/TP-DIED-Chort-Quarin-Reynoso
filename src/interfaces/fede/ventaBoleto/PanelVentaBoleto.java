@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
 import gestores.GestorEstacion;
@@ -35,15 +37,17 @@ public class PanelVentaBoleto extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelVentaBoleto() {
+		this.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Seleccione estación origen y destino"));
 		gestorEstaciones = GestorEstacion.getInstance();
 		List<Estacion> estaciones = gestorEstaciones.getEstacionesOperativas();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		//gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		//gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.1, 0.0, 0.4, 0.4, 0.4, 0.4, 0.1, 0.1};
+		gridBagLayout.columnWeights = new double[]{0.1, 0.0, 0.1, 0.4, 0.1, 0.4, 0.1, 0.1};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.5, 0.5, 0.0};
 		setLayout(gridBagLayout);
+		
 		
 		JLabel llbOrigen = new JLabel("Origen:");
 		GridBagConstraints gbc_llbOrigen = new GridBagConstraints();
@@ -53,8 +57,6 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_llbOrigen.gridy = 0;
 		add(llbOrigen, gbc_llbOrigen);
 		
-
-
 
 		
 		JLabel lblDestino = new JLabel("Destino:");
@@ -77,6 +79,7 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_comboBoxDestino.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxDestino.gridx = 5;
 		gbc_comboBoxDestino.gridy = 0;
+		gbc_comboBoxDestino.ipadx = 5;
 		add(comboBoxDestino, gbc_comboBoxDestino);
 		
 		JComboBox<Estacion> comboBoxOrigen = new JComboBox<Estacion>(estaciones.toArray(new Estacion[estaciones.size()]));
@@ -95,7 +98,7 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_comboBoxOrigen.gridy = 0;
 		add(comboBoxOrigen, gbc_comboBoxOrigen);
 		
-
+		
 		
 		PanelGrafico panelGrafico = new PanelGrafico();
 		/*GridBagConstraints gbc_panelGrafico = new GridBagConstraints();
