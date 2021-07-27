@@ -31,6 +31,8 @@ public class EstacionAlta extends JFrame {
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
+		this.setVisible(true);
+		
 		//this.setLayout(new GridBagLayout());
 		//GridBagConstraints c = new GridBagConstraints();
 		

@@ -25,6 +25,8 @@ public class EstacionEditar extends JFrame {
 		contentPane = new PanelEstacionEditar(this, filaSeleccionada);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		this.setVisible(true);
 	}
 
 }
