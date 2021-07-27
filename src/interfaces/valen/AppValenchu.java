@@ -1,6 +1,7 @@
 package interfaces.valen;
 
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
+import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
 
@@ -12,7 +13,8 @@ public class AppValenchu {
 		
 //		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
 //		VentanaAltaLineaDeTransporte vent2 = new VentanaAltaLineaDeTransporte();
-		VentanaSiguienteAltaLineaDeTransporte vent3 = new VentanaSiguienteAltaLineaDeTransporte();
+//		VentanaSiguienteAltaLineaDeTransporte vent3 = new VentanaSiguienteAltaLineaDeTransporte();
+		VentanaEdicionLineaDeTransporte vent4 = new VentanaEdicionLineaDeTransporte();
 		
 	}
 
