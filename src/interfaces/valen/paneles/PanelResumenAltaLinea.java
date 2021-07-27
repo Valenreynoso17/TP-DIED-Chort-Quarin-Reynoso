@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interfaces.valen.otros.ColorPicker;
+
 public class PanelResumenAltaLinea extends JPanel{
 
 	JLabel labelNombre, nombreLinea, labelEstado, estado, labelColor;
