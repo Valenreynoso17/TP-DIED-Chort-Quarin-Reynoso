@@ -25,6 +25,11 @@ public class ElementoListaEdicionLineaDeTransporte extends JPanel{
 	
 	public ElementoListaEdicionLineaDeTransporte() {
 		
+		this.setSize(new Dimension(602,60));
+		this.setMaximumSize(new Dimension(602,60));
+		this.setMinimumSize(new Dimension(602,60));
+		this.setPreferredSize(new Dimension(602,60));
+		
 		this.setLayout(new GridBagLayout());
 		this.setBorder(new LineBorder(Color.GRAY,1));
 		gbc = new GridBagConstraints();
@@ -111,6 +116,6 @@ public class ElementoListaEdicionLineaDeTransporte extends JPanel{
 		this.add(costo, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		
-		}
+	}
+	
 }

@@ -67,22 +67,22 @@ public class PanelListadoGestionLineas extends JPanel{
 		
 		JPanel panelGridLista = new JPanel(new GridLayout(0, 2));
 		panelGridLista.add(e1);
-		panelGridLista.add(e2);
-		panelGridLista.add(e3);
-		panelGridLista.add(e4);
-		panelGridLista.add(e5);
-		panelGridLista.add(e6);
-		panelGridLista.add(e7);
-		panelGridLista.add(e8);
-		panelGridLista.add(e9);
-		panelGridLista.add(e10);
-		panelGridLista.add(e11);
-		panelGridLista.add(e12);
-		panelGridLista.add(e13);
-		panelGridLista.add(e14);
-		panelGridLista.add(e15);
-		panelGridLista.add(e16);
-		panelGridLista.add(e17);
+//		panelGridLista.add(e2);
+//		panelGridLista.add(e3);
+//		panelGridLista.add(e4);
+//		panelGridLista.add(e5);
+//		panelGridLista.add(e6);
+//		panelGridLista.add(e7);
+//		panelGridLista.add(e8);
+//		panelGridLista.add(e9);
+//		panelGridLista.add(e10);
+//		panelGridLista.add(e11);
+//		panelGridLista.add(e12);
+//		panelGridLista.add(e13);
+//		panelGridLista.add(e14);
+//		panelGridLista.add(e15);
+//		panelGridLista.add(e16);
+//		panelGridLista.add(e17);
 		
 		JScrollPane panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
