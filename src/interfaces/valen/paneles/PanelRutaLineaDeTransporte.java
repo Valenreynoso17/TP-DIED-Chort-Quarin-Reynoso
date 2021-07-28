@@ -1,5 +1,6 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -46,129 +47,91 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		distancia = new JTextField("Kilómetros");
 		labelDuracion = new JLabel("Duración del viaje:");
 		duracion = new JTextField("Minutos");
-		labelCantMaxPasajeros = new JLabel("Cantidad máxima de pasajeros a transportar:");
+		labelCantMaxPasajeros = new JLabel("Cantidad máxima pasajeros:");
 		cantMaxPasajeros = new JTextField("Unidades");
 		labelEstadoRuta = new JLabel("Estado ruta:");
 		estadoRuta = new JComboBox<String>(opcionesEstado);
 		labelCosto = new JLabel("Costo:");
 		costo = new JTextField("Pesos");
 		botonAgregar = new JButton("Agregar nueva ruta");
-		botonAgregar.setFocusable(false);
 		
 		// Agregando padding
-		gbc.insets = new Insets(5,5,5,5);
+//		gbc.insets = new Insets(5,5,5,5);
 		
-		gbc.anchor = GridBagConstraints.WEST;
-		
-//		gbc.weighty = 1.0;
-//		gbc.gridy = 0;
-//		gbc.gridx = 0;
-//		gbc.weightx = 0.2;
-//		gbc.gridx = 1;
-//		gbc.weightx = 0.8;
-//		gbc.gridx = 2;
-//		gbc.weightx = 0.2;
-//		gbc.gridx = 3;
-//		gbc.weightx = 0.8;
-//		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		
-		
+		gbc.weighty = 1.0;	
+		gbc.weightx = 1.0;
 		
 		// Agregando componentes
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 0.2;
-		gbc.gridwidth = 2;
 		this.add(labelSeleccione, gbc);
-		gbc.gridwidth = 1;
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.weightx = 0.2;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(estacionOrigen, gbc);
-		gbc.gridwidth = 1;
 		
-		gbc.gridx = 2;
+		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.weightx = 0.2;
-		gbc.gridwidth = 2;
 		this.add(estacionDestino, gbc);
-		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.WEST;
+		
+//		gbc.anchor = GridBagConstraints.WEST;
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.weightx = 0.2;
 		this.add(labelDistancia, gbc);
 		
 		gbc.gridx = 1;
 		gbc.gridy = 2;
-		gbc.weightx = 0.8;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(distancia, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbc.weightx = 0.2;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
 		this.add(labelDuracion, gbc);
 		
-		gbc.gridx = 3;
-		gbc.gridy = 2;
-		gbc.weightx = 0.8;
+		gbc.gridx = 1;
+		gbc.gridy = 3;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(duracion, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
 		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.gridwidth = 3;
-		gbc.weightx = 0.2;
+		gbc.gridy = 4;
 		this.add(labelCantMaxPasajeros, gbc);
-		gbc.gridwidth = 1;
 		
-		gbc.gridx = 3;
-		gbc.gridy = 3;
-		gbc.weightx = 0.8;
+		gbc.gridx = 1;
+		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cantMaxPasajeros, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
 		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.weightx = 0.2;
+		gbc.gridy = 5;
 		this.add(labelEstadoRuta, gbc);
 		
 		gbc.gridx = 1;
-		gbc.gridy = 4;
-		gbc.weightx = 0.8;
+		gbc.gridy = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(estadoRuta, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		gbc.gridx = 2;
-		gbc.gridy = 4;
-		gbc.weightx = 0.2;
+		gbc.gridx = 0;
+		gbc.gridy = 6;;
 		this.add(labelCosto, gbc);
 		
-		gbc.gridx = 3;
-		gbc.gridy = 4;
-		gbc.weightx = 0.8;
+		gbc.gridx = 1;
+		gbc.gridy = 6;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(costo, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		gbc.gridx = 2;
-		gbc.gridy = 5;
-		gbc.weightx = 0.2;
+		gbc.gridx = 0;
+		gbc.gridy = 7;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(botonAgregar, gbc);
 		gbc.gridwidth = 1;
-		
 		
 	}
 }
