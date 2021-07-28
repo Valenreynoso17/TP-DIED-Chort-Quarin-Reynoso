@@ -4,21 +4,19 @@ import java.time.LocalDate;
 
 public class Boleto {
 	
-	private String nroBoleto;
+	private Integer nroBoleto;
 	private String correoCliente;
 	private String nombreCliente;
 	private LocalDate fechaVenta;
-	private double costo;
 	
 	private Recorrido recorrido;
 	
-	public Boleto(String nB, String cC, String nC, LocalDate fV, double c, Recorrido r) {
-		this.nroBoleto = nB;
-		this.correoCliente = cC;
-		this.nombreCliente = nC;
-		this.fechaVenta = fV;
-		this.costo = c;
-		this.recorrido = r;
+	public Boleto(Integer nroBoleto, String correoCliente, String nombreCliente, LocalDate fechaVenta, Recorrido recorrido) {
+		this.nroBoleto = nroBoleto;
+		this.correoCliente = correoCliente;
+		this.nombreCliente = nombreCliente;
+		this.fechaVenta = fechaVenta;
+		this.recorrido = recorrido;
 	}
 
 }

@@ -11,9 +11,9 @@ import interfaces.fede.ventaBoleto.PanelVentaBoleto2;
 import interfaces.fede.ventaBoleto.PanelVentaBoleto3;
 
 public class FrameVentaBoleto3 extends JFrame {
-	private JFrame padre;
+	private FrameVentaBoleto2 padre;
 	
-	public static void crearVentana(JFrame padre, Recorrido recorrido) {
+	public static void crearVentana(FrameVentaBoleto2 padre, Recorrido recorrido) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -26,7 +26,7 @@ public class FrameVentaBoleto3 extends JFrame {
 		});
 	}
 	
-	public FrameVentaBoleto3(JFrame padre, Recorrido recorrido) {
+	public FrameVentaBoleto3(FrameVentaBoleto2 padre, Recorrido recorrido) {
 		this.padre = padre;
 		
 		JPanel panel = new PanelVentaBoleto3(recorrido);
@@ -38,5 +38,10 @@ public class FrameVentaBoleto3 extends JFrame {
 	
 	public void abriVentanaAnterior() {
 		padre.setVisible(true);
+	}
+	
+	public void volverAlMenu() {
+		this.dispose();
+		padre.volverAlMenu();
 	}
 }

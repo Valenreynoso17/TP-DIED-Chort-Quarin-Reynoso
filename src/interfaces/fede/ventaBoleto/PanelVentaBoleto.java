@@ -133,7 +133,7 @@ public class PanelVentaBoleto extends JPanel {
 		botonSiguiente = new JButton("Siguiente");
 		botonSiguiente.setEnabled(false);
 		botonSiguiente.addActionListener(e -> {
-			FrameVentaBoleto2.crearVentana(getPadre(), ((Estacion) comboBoxOrigen.getSelectedItem()), ((Estacion) comboBoxDestino.getSelectedItem()));
+			FrameVentaBoleto2.crearVentana((FrameVentaBoleto) getPadre(), ((Estacion) comboBoxOrigen.getSelectedItem()), ((Estacion) comboBoxDestino.getSelectedItem()));
 			getPadre().dispose();
 		});
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();

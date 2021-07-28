@@ -19,7 +19,7 @@ import interfaces.fede.ventaBoleto.PanelVentaBoleto;
 public class FrameVentaBoleto extends JFrame {
 
 	private JPanel contentPane;
-
+	private JFrame padre;
 	/**
 	 * Launch the application.
 	 */
@@ -47,6 +47,16 @@ public class FrameVentaBoleto extends JFrame {
 		contentPane = new PanelVentaBoleto();
 		setContentPane(contentPane);
 		//this.pack();
+	}
+
+	
+	public void abriVentanaAnterior() {
+		padre.setVisible(true);
+	}
+	
+	public void volverAlMenu() {
+		this.dispose();
+		if (padre != null) padre.setVisible(true);
 	}
 
 	/*
@@ -80,4 +90,5 @@ public class FrameVentaBoleto extends JFrame {
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 	}
+	
 }

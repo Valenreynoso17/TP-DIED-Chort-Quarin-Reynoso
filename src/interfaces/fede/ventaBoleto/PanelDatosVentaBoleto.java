@@ -24,7 +24,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.MaskFormatter;
 
+import clases.Boleto;
 import clases.Recorrido;
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
 import gestores.GestorBoleto;
 
 import javax.swing.JScrollPane;
@@ -237,14 +240,20 @@ public class PanelDatosVentaBoleto extends JPanel {
 		}
 		return true;
 	}*/
-	
-	public Boolean nombreValido() {
-		String nombre = txtFNombreCliente.getText();
-		return nombre.matches("[a-zA-Z ]+");
+	public void validarCamposNoVacios() throws InputVacioException {
+		if (txtFNombreCliente.getText().isEmpty() || txtFNombreCliente.getText().isBlank() 
+				|| txtFCorreoCliente.getText().isEmpty() || txtFCorreoCliente.getText().isBlank()) throw new InputVacioException();
 	}
 	
-	public Boolean correoValido() {
-		String correo = txtFCorreoCliente.getText();
-		return correo.matches("[a-zA-Z0-9()<>@,;:\\\"ç%&]+@[a-z]+[.][a-z]+");
+	public void validarNombre() throws InputInvalidaException {
+		if (!txtFNombreCliente.getText().matches("[a-zA-Z ]+")) throw new InputInvalidaException();
+	}
+	
+	public void validarCorreo() throws InputInvalidaException {
+		if (!txtFCorreoCliente.getText().matches("[a-zA-Z0-9()<>@,;:\\\"ç%&]+@[a-z]+[.][a-z]+")) throw new InputInvalidaException();
+	}
+	
+	public void crearBoleto() {
+		gestorBoletos.crearBoleto(nroBoleto, txtFCorreoCliente.getText(), txtFNombreCliente.getText(), fechaActual, recorrido);
 	}
 }

@@ -8,10 +8,10 @@ import clases.Estacion;
 import interfaces.fede.ventaBoleto.PanelVentaBoleto2;
 
 public class FrameVentaBoleto2 extends JFrame {
-	private JFrame padre;
+	private FrameVentaBoleto padre;
 	
 	
-	public static void crearVentana(JFrame padre, Estacion origen, Estacion destino) {
+	public static void crearVentana(FrameVentaBoleto padre, Estacion origen, Estacion destino) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -24,7 +24,7 @@ public class FrameVentaBoleto2 extends JFrame {
 		});
 	}
 	
-	public FrameVentaBoleto2(JFrame padre, Estacion origen, Estacion destino) {
+	public FrameVentaBoleto2(FrameVentaBoleto padre, Estacion origen, Estacion destino) {
 		this.padre = padre;
 		
 		JPanel panel = new PanelVentaBoleto2(origen, destino);
@@ -34,7 +34,14 @@ public class FrameVentaBoleto2 extends JFrame {
 		setBounds(100, 100, 1280, 720);
 	}
 	
+
+	
 	public void abriVentanaAnterior() {
 		padre.setVisible(true);
+	}
+	
+	public void volverAlMenu() {
+		this.dispose();
+		padre.volverAlMenu();
 	}
 }
