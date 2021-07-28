@@ -31,28 +31,29 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		// PanelAltaLinea
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 0.2;
-		gbc.weighty = 0.2;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		panelAlta = new PanelAltaLineaDeTransporte();
 		this.add(panelAlta, gbc);
 		
 		//PanelGrafo
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.weightx = 0.8;
-		gbc.weighty = 0.8;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		gbc.gridheight = 3;
 		PanelGrafico panelGrafo = new PanelGrafico();
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
 		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
 		gbc.gridheight = 1;
+		gbc.weightx = 0.0;
 		
 		// PanelRuta
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.weightx = 0.2;
-		gbc.weighty = 0.2;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		gbc.gridheight = 2;
 		panelRuta = new PanelRutaLineaDeTransporte();
 		this.add(panelRuta, gbc);
@@ -73,17 +74,17 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		// Boton Cancelar
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		gbc.weightx = 0.07;
-		gbc.weighty = 0.07;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		botonCancelar = new JButton("Cancelar");
-		botonCancelar.setFocusable(false);
 		this.add(botonCancelar, gbc);
 		
 		// Boton Siguiente
 		gbc.gridx = 1;
 		gbc.gridy = 4;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		botonSiguiente = new JButton("Siguiente");
-		botonSiguiente.setFocusable(false);
 		botonSiguiente.addActionListener(e -> {frame.dispose();
 											   new VentanaSiguienteAltaLineaDeTransporte();});
 		this.add(botonSiguiente, gbc);

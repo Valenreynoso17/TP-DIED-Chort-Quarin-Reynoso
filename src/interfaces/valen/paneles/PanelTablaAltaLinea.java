@@ -25,8 +25,6 @@ public class PanelTablaAltaLinea extends JPanel{
 	Object[][] data = {{"A", "B", 100, 50, 80, "Activo", 35}};
 	
 	public PanelTablaAltaLinea() {
-		
-		this.setBorder(BorderFactory.createTitledBorder("Resumen - Trayecto"));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		
