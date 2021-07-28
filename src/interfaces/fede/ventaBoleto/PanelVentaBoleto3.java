@@ -7,16 +7,21 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import clases.Recorrido;
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
+import gestores.GestorBoleto;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 
 public class PanelVentaBoleto3 extends JPanel {
 	private Recorrido seleccionado;
+	private GestorBoleto gestorBoletos;
 	
 	public PanelVentaBoleto3(Recorrido recorrido) {
 		this.seleccionado = recorrido;
@@ -44,7 +49,22 @@ public class PanelVentaBoleto3 extends JPanel {
 		
 		JButton botonSiguiente = new JButton("Siguiente");
 		botonSiguiente.addActionListener(e -> {
-			System.out.println(panelDatos.correoValido());
+			try {
+				panelDatos.validarCamposNoVacios();
+				panelDatos.validarNombre();
+				panelDatos.validarCorreo();
+				panelDatos.crearBoleto();
+				
+				JOptionPane.showMessageDialog(null, "Boleto comprado con éxito.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+				((FrameVentaBoleto3) getPadre()).volverAlMenu();
+			}
+			catch (InputVacioException exc) {
+				JOptionPane.showMessageDialog(getPadre(),exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			catch (InputInvalidaException exc) {
+				JOptionPane.showMessageDialog(getPadre(),exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		});
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
 		gbc_botonSiguiente.gridx = 2;
