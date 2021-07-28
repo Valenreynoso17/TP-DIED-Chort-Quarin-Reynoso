@@ -31,8 +31,6 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		// PanelListado
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
 		panelListado = new PanelListadoGestionLineas();
 		this.add(panelListado, gbc);
 		
@@ -45,14 +43,14 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
 		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		
 		gbc.fill = GridBagConstraints.NONE;
 		
 		// Boton Cancelar
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.weightx = 0.05;
-		gbc.weighty = 0.05;
 		botonCancelar = new JButton("Cancelar");
 		botonCancelar.setFocusable(false);
 		this.add(botonCancelar, gbc);
@@ -61,8 +59,6 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		// Boton Siguiente
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.weightx = 0.0;
-		gbc.weighty = 0.0;
 		botonSiguiente = new JButton("Dar de alta una nueva línea");
 		botonSiguiente.setFocusable(false);
 		botonSiguiente.addActionListener(e -> {frame.dispose();

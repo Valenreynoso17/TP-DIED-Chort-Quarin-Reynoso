@@ -16,7 +16,6 @@ public class PanelDatosTrayectoLineaDeTransporte extends JPanel{
 	public PanelDatosTrayectoLineaDeTransporte() {
 		
 		this.setLayout(new GridBagLayout());
-//		this.setLayout(new GridLayout(0,1,1,5));
 		gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(2,1,2,1);
