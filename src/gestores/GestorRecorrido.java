@@ -48,5 +48,9 @@ public class GestorRecorrido {
 		return recorridos;
 	}
 	
+	public Recorrido crearRecorrido(Estacion origen, Estacion destino, Integer distancia, Integer duracion, Double costo) {
+		return new Recorrido(origen, destino, distancia, duracion, costo);
+	}
+	
 
 }

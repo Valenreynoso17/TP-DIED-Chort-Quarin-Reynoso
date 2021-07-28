@@ -19,6 +19,14 @@ public class Recorrido {
 		this.costo = costo;
 	}
 	
+	public Estacion getOrigen() {
+		return this.origen;
+	}
+	
+	public Estacion getDestino() {
+		return this.destino;
+	}
+	
 	public void agregarRuta(Ruta r) {
 		this.rutas.add(r);
 	}
@@ -38,6 +46,10 @@ public class Recorrido {
 		return estaciones;
 	}
 	
+	public List<Ruta> getRutas() {
+		return this.rutas;
+	}
+	
 	public Integer getDistancia() {
 		return this.distancia;
 	}
@@ -50,4 +62,12 @@ public class Recorrido {
 		return this.costo;
 	}
 
+	@Override
+	public String toString() {
+		String retorno = origen.getNombre();
+		for (Ruta r : rutas) {
+			retorno += " - " + r.getDestino().getNombre();
+		}
+		return retorno;
+	}
 }
