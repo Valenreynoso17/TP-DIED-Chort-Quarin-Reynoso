@@ -50,7 +50,9 @@ public class PanelDatosVentaBoleto extends JPanel {
 	public PanelDatosVentaBoleto(Recorrido recorrido) {
 		this.recorrido = recorrido;
 		this.gestorBoletos = GestorBoleto.getInstance();
+		
 		this.setPreferredSize(new Dimension(800, 600));
+		this.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Datos de la venta"));
 		
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWeights = new double[]{0.2, 1.0, 0.2, 1.0};
@@ -65,7 +67,7 @@ public class PanelDatosVentaBoleto extends JPanel {
 		gbc_lblNroBoleto.insets = new Insets(5, 10, 5, 5);
 		this.add(lblNroBoleto, gbc_lblNroBoleto);
 		
-		nroBoleto = gestorBoletos.getSiguienteNroBoleto();
+		nroBoleto = GestorBoleto.getSiguienteNroBoleto();
 		JTextField txtFNroBoleto = new JTextField(nroBoleto.toString());
 		txtFNroBoleto.setEditable(false);
 		GridBagConstraints gbc_txtFNroBoleto = new GridBagConstraints();
@@ -83,7 +85,8 @@ public class PanelDatosVentaBoleto extends JPanel {
 		gbc_lblFechaVenta.gridy = 0;
 		add(lblFechaVenta, gbc_lblFechaVenta);
 		
-		txtFFechaVenta = new JTextField(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+		fechaActual = LocalDate.now();
+		txtFFechaVenta = new JTextField(fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		txtFFechaVenta.setEditable(false);
 		GridBagConstraints gbc_txtFFechaVenta = new GridBagConstraints();
 		gbc_txtFFechaVenta.insets = new Insets(5, 5, 5, 5);
@@ -233,13 +236,7 @@ public class PanelDatosVentaBoleto extends JPanel {
 		add(txtFPrecio, gbc_txtFPrecio);
 	}
 	
-	/*public Boolean nombreValido() {
-		String nombre = txtFNombreCliente.getText();
-		for(int i=0; i<nombre.length(); i++) {
-			if (!Character.isAlphabetic(nombre.charAt(i))) return false;
-		}
-		return true;
-	}*/
+	
 	public void validarCamposNoVacios() throws InputVacioException {
 		if (txtFNombreCliente.getText().isEmpty() || txtFNombreCliente.getText().isBlank() 
 				|| txtFCorreoCliente.getText().isEmpty() || txtFCorreoCliente.getText().isBlank()) throw new InputVacioException();
@@ -254,6 +251,6 @@ public class PanelDatosVentaBoleto extends JPanel {
 	}
 	
 	public void crearBoleto() {
-		gestorBoletos.crearBoleto(nroBoleto, txtFCorreoCliente.getText(), txtFNombreCliente.getText(), fechaActual, recorrido);
+		gestorBoletos.cargarBoleto(nroBoleto, txtFCorreoCliente.getText(), txtFNombreCliente.getText(), fechaActual, recorrido);
 	}
 }

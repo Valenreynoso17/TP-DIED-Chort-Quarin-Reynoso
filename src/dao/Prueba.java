@@ -1,15 +1,10 @@
 package dao;
 
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import clases.Boleto;
 import clases.Estacion;
 import clases.Recorrido;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 
 public class Prueba {

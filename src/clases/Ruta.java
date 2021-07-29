@@ -7,7 +7,6 @@ import java.util.Random;
 import enums.EstadoRuta;
 
 public class Ruta {
-
 	private Integer distancia;
 	private Integer duracion;
 	private Integer maxPasajeros;
@@ -65,6 +64,9 @@ public class Ruta {
 	public String linea() {
 		return "Linea: " + new Random().nextInt();
 	}
+	
+	
+	
 	
 
 	

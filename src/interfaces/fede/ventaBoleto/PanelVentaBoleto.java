@@ -10,6 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
+import excepciones.SinEstacionesAccesiblesException;
 import gestores.GestorEstacion;
 import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto;
@@ -18,8 +19,11 @@ import interfaces.fede.panelesGrafos.PanelGrafico;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -85,10 +89,17 @@ public class PanelVentaBoleto extends JPanel {
 		JComboBox<Estacion> comboBoxOrigen = new JComboBox<Estacion>(estaciones.toArray(new Estacion[estaciones.size()]));
 		comboBoxOrigen.setSelectedItem(null);
 		comboBoxOrigen.addActionListener(e -> {
-			List<Estacion> accesible = gestorEstaciones.getEstacionesOperativasAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
-			comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
-			comboBoxDestino.setEnabled(true);
-			comboBoxDestino.setSelectedItem(null);
+			try{
+				List<Estacion> accesible = gestorEstaciones.getEstacionesOperativasAccesibles((Estacion)comboBoxOrigen.getSelectedItem());
+				comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
+				comboBoxDestino.setEnabled(true);
+				comboBoxDestino.setSelectedItem(null);
+			}
+			catch (SinEstacionesAccesiblesException exc) {
+				comboBoxDestino.setEnabled(false);
+				comboBoxDestino.setSelectedItem(null);
+				JOptionPane.showMessageDialog(getPadre(), exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		GridBagConstraints gbc_comboBoxOrigen = new GridBagConstraints();
 		gbc_comboBoxOrigen.anchor = GridBagConstraints.WEST;
@@ -101,13 +112,6 @@ public class PanelVentaBoleto extends JPanel {
 		
 		
 		PanelGrafico panelGrafico = new PanelGrafico();
-		/*GridBagConstraints gbc_panelGrafico = new GridBagConstraints();
-		gbc_panelGrafico.fill = GridBagConstraints.BOTH;
-		gbc_panelGrafico.insets = new Insets(5, 5, 5, 5);
-		gbc_panelGrafico.gridx = 0;
-		gbc_panelGrafico.gridy = 1;
-		gbc_panelGrafico.gridwidth = 5;
-		add(panelGrafico, gbc_panelGrafico);*/
 		
 		JScrollPane scrollPane = new JScrollPane(panelGrafico);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -164,14 +168,6 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_botonZoomAtras.gridx = 1;
 		gbc_botonZoomAtras.gridy = 2;
 		add(botonZoomAtras, gbc_botonZoomAtras);
-		/*JButton botonPrueba = new JButton("Prueba");
-		botonPrueba.addActionListener(e -> panelGrafico.cambiarlo());
-		GridBagConstraints gbc_botonPrueba = new GridBagConstraints();
-		gbc_botonPrueba.anchor = GridBagConstraints.EAST;
-		gbc_botonPrueba.insets = new Insets(5, 5, 5, 5);
-		gbc_botonPrueba.gridx = 3;
-		gbc_botonPrueba.gridy = 2;
-		add(botonPrueba, gbc_botonPrueba);*/
 	}
 	
 	public JFrame getPadre() {
