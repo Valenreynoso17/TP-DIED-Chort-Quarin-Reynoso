@@ -90,5 +90,36 @@ public class Flecha implements Dibujable{
 		this.escala = escala;
 		//hitbox = calcularHitbox();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((posDestino == null) ? 0 : posDestino.hashCode());
+		result = prime * result + ((posOrigen == null) ? 0 : posOrigen.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Flecha other = (Flecha) obj;
+		if (posDestino == null) {
+			if (other.posDestino != null)
+				return false;
+		} else if (!posDestino.equals(other.posDestino))
+			return false;
+		if (posOrigen == null) {
+			if (other.posOrigen != null)
+				return false;
+		} else if (!posOrigen.equals(other.posOrigen))
+			return false;
+		return true;
+	}
 	
 }

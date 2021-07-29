@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.EstadoEstacion;
+import interfaces.fede.panelesGrafos.GamaColor;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Estacion implements Dibujable{
@@ -18,6 +19,7 @@ public class Estacion implements Dibujable{
 	private LocalTime horarioApertura;
 	private LocalTime horarioCierre;
 	private Float escala;
+	private GamaColor colorGrafico;
 	
 	private List<Mantenimiento> mantenimientos;
 	
@@ -31,6 +33,7 @@ public class Estacion implements Dibujable{
 		this.estado = EstadoEstacion.OPERATIVA;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
 		this.escala = 1.0f;
+		this.colorGrafico = GamaColor.AZUL;
 	}
 	
 	// ver si lo dejamos
@@ -77,6 +80,10 @@ public class Estacion implements Dibujable{
 
 	public void setHorarioCierre(LocalTime horarioCierre) {
 		this.horarioCierre = horarioCierre;
+	}
+	
+	public void setGamaColor(GamaColor gama) {
+		this.colorGrafico = gama;
 	}
 
 	public List<Mantenimiento> getMantenimientos() {
@@ -168,9 +175,20 @@ public class Estacion implements Dibujable{
 
 	@Override
 	public void dibujarse(Graphics2D g2d) {
-		g2d.setColor(new Color(39, 75, 211));
+		g2d.setColor(colorGrafico.getRelleno());
 		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
-		g2d.setColor(new Color(3, 25, 111));
+		g2d.setColor(colorGrafico.getBorde());
+		g2d.setStroke(new BasicStroke(1.0f));
+		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(nombre, posicion.x, posicion.y);
+		
+	}
+	
+	public void dibujarse(Graphics2D g2d, GamaColor gama) {
+		g2d.setColor(gama.getRelleno());
+		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
+		g2d.setColor(gama.getBorde());
 		g2d.setStroke(new BasicStroke(1.0f));
 		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
 		g2d.setColor(Color.BLACK);
@@ -182,7 +200,6 @@ public class Estacion implements Dibujable{
 	public void reescalar(Float escala) {
 		this.escala = escala;
 	}
-	
 	
 
 }

@@ -28,15 +28,15 @@ import gestores.GestorFlecha;
 import gestores.GestorRuta;
 
 public class PanelGrafico extends JPanel {
-	private Integer anchoVentana, altoVentana;
-	private GestorEstacion gestorEstaciones;
-	private GestorRuta gestorRutas;
-	private GestorFlecha gestorFlechas;
-	private static Integer radioEstaciones = 20;
-	private DialogInfoFlecha ventanaInfoFlecha;
+	protected Integer anchoVentana, altoVentana;
+	protected GestorEstacion gestorEstaciones;
+	protected GestorRuta gestorRutas;
+	protected GestorFlecha gestorFlechas;
+	protected static Integer radioEstaciones = 20;
+	protected DialogInfoFlecha ventanaInfoFlecha;
 
-	private Float escala = 1.0f;
-	private List<Dibujable> dibujables;
+	protected Float escala = 1.0f;
+	protected List<Dibujable> dibujables;
 	
 	
 	
