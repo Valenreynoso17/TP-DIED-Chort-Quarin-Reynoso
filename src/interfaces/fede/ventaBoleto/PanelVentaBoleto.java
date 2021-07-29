@@ -16,6 +16,7 @@ import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.panelesGrafos.PanelGrafico;
+import interfaces.fede.panelesGrafos.PanelSeleccionOrigenDestino;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ import javax.swing.JScrollBar;
 public class PanelVentaBoleto extends JPanel {
 	private GestorEstacion gestorEstaciones;
 	private JButton botonSiguiente;
-	
+	private PanelSeleccionOrigenDestino panelGrafico;
 	/**
 	 * Create the panel.
 	 */
@@ -76,6 +77,7 @@ public class PanelVentaBoleto extends JPanel {
 		comboBoxDestino.addActionListener(e -> {
 			if (comboBoxDestino.getSelectedItem() != null) botonSiguiente.setEnabled(true);
 			else botonSiguiente.setEnabled(false);
+			if (comboBoxDestino.getSelectedItem() != null) panelGrafico.pintarDestino((Estacion) comboBoxDestino.getSelectedItem());
 		});
 		GridBagConstraints gbc_comboBoxDestino = new GridBagConstraints();
 		gbc_comboBoxDestino.anchor = GridBagConstraints.WEST;
@@ -94,6 +96,7 @@ public class PanelVentaBoleto extends JPanel {
 				comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
 				comboBoxDestino.setEnabled(true);
 				comboBoxDestino.setSelectedItem(null);
+				panelGrafico.pintarOrigen((Estacion)comboBoxOrigen.getSelectedItem());
 			}
 			catch (SinEstacionesAccesiblesException exc) {
 				comboBoxDestino.setEnabled(false);
@@ -111,7 +114,7 @@ public class PanelVentaBoleto extends JPanel {
 		
 		
 		
-		PanelGrafico panelGrafico = new PanelGrafico();
+		panelGrafico = new PanelSeleccionOrigenDestino();
 		
 		JScrollPane scrollPane = new JScrollPane(panelGrafico);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();

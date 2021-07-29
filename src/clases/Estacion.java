@@ -1,19 +1,25 @@
 package clases;
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import enums.EstadoEstacion;
+import interfaces.fede.panelesGrafos.GamaColor;
+import interfaces.fede.panelesGrafos.PanelGrafico;
 
-public class Estacion {
+public class Estacion implements Dibujable{
 	
 	private String id;
 	private String nombre;
 	private EstadoEstacion estado;
 	private LocalTime horarioApertura;
 	private LocalTime horarioCierre;
+	private Float escala;
+	private GamaColor colorGrafico;
 	
 	private List<Mantenimiento> mantenimientos;
 	
@@ -26,6 +32,8 @@ public class Estacion {
 		this.horarioCierre = hC;
 		this.estado = EstadoEstacion.OPERATIVA;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
+		this.escala = 1.0f;
+		this.colorGrafico = GamaColor.AZUL;
 	}
 	
 	// ver si lo dejamos
@@ -72,6 +80,10 @@ public class Estacion {
 
 	public void setHorarioCierre(LocalTime horarioCierre) {
 		this.horarioCierre = horarioCierre;
+	}
+	
+	public void setGamaColor(GamaColor gama) {
+		this.colorGrafico = gama;
 	}
 
 	public List<Mantenimiento> getMantenimientos() {
@@ -160,7 +172,34 @@ public class Estacion {
 			return false;
 		return true;
 	}
+
+	@Override
+	public void dibujarse(Graphics2D g2d) {
+		g2d.setColor(colorGrafico.getRelleno());
+		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
+		g2d.setColor(colorGrafico.getBorde());
+		g2d.setStroke(new BasicStroke(1.0f));
+		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(nombre, posicion.x, posicion.y);
+		
+	}
 	
+	public void dibujarse(Graphics2D g2d, GamaColor gama) {
+		g2d.setColor(gama.getRelleno());
+		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
+		g2d.setColor(gama.getBorde());
+		g2d.setStroke(new BasicStroke(1.0f));
+		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(nombre, posicion.x, posicion.y);
+		
+	}
+	
+	@Override
+	public void reescalar(Float escala) {
+		this.escala = escala;
+	}
 	
 
 }
