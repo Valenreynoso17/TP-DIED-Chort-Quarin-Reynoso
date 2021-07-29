@@ -19,4 +19,46 @@ public class Boleto {
 		this.recorrido = recorrido;
 	}
 
+	public Integer getNroBoleto() {
+		return nroBoleto;
+	}
+
+	public void setNroBoleto(Integer nroBoleto) {
+		this.nroBoleto = nroBoleto;
+	}
+
+	public String getCorreoCliente() {
+		return correoCliente;
+	}
+
+	public void setCorreoCliente(String correoCliente) {
+		this.correoCliente = correoCliente;
+	}
+
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public LocalDate getFechaVenta() {
+		return fechaVenta;
+	}
+
+	public void setFechaVenta(LocalDate fechaVenta) {
+		this.fechaVenta = fechaVenta;
+	}
+
+	public Recorrido getRecorrido() {
+		return recorrido;
+	}
+
+	public void setRecorrido(Recorrido recorrido) {
+		this.recorrido = recorrido;
+	}
+	
+	
+
 }

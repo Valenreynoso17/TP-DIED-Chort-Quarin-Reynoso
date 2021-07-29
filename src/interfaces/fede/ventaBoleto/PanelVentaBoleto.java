@@ -164,7 +164,6 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_botonZoomAtras.gridx = 1;
 		gbc_botonZoomAtras.gridy = 2;
 		add(botonZoomAtras, gbc_botonZoomAtras);
-		
 		/*JButton botonPrueba = new JButton("Prueba");
 		botonPrueba.addActionListener(e -> panelGrafico.cambiarlo());
 		GridBagConstraints gbc_botonPrueba = new GridBagConstraints();

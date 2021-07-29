@@ -9,6 +9,7 @@ public class Recorrido {
 	private List<Ruta> rutas;
 	private Integer distancia, duracion;
 	private Double costo;
+
 	
 	public Recorrido(Estacion origen, Estacion destino, Integer distancia, Integer duracion, Double costo) {
 		this.origen = origen;
@@ -18,6 +19,8 @@ public class Recorrido {
 		this.duracion = duracion;
 		this.costo = costo;
 	}
+	
+	
 	
 	public Estacion getOrigen() {
 		return this.origen;
