@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class Flecha implements Dibujable{
 	private Double anguloFlecha;
 	private static Integer largoFlecha = 10;
 	private static Double anchoFlecha = 4.0;
+	private static Double anchoHitbox = 10.0;
+	//private Polygon hitbox;
+	private Float escala;
 	
 	
 	public Flecha(Point posOrigen, Point posDestino, Double anguloFlecha, Color color) {
@@ -24,6 +28,19 @@ public class Flecha implements Dibujable{
 		this.anguloFlecha = anguloFlecha;
 		this.color = color;
 		this.rutas = new ArrayList<>();
+		//this.hitbox = this.calcularHitbox();
+		this.escala = 1.0f;
+		
+	}
+	
+	public Polygon getHitbox() {
+		Integer despX = (int) Math.round((anchoHitbox/2)*Math.cos(anguloFlecha-(Math.PI/2)));
+		Integer despY = (int) Math.round((anchoHitbox/2)*Math.sin(anguloFlecha-(Math.PI/2)));
+		
+		int[] x = {Math.round(escala*(posOrigen.x - despX)), Math.round(escala*(posOrigen.x + despX)), Math.round(escala*(posDestino.x + despX)), Math.round(escala*(posDestino.x - despX))}; 
+		int[] y = {Math.round(escala*(posOrigen.y - despY)), Math.round(escala*(posOrigen.y + despY)), Math.round(escala*(posDestino.y + despY)), Math.round(escala*(posDestino.y - despY))};
+		
+		return new Polygon(x, y, 4);
 	}
 	
 	public Boolean correspondeAEstaFlecha(Ruta r) {
@@ -46,6 +63,10 @@ public class Flecha implements Dibujable{
 		return rutas.get(0).getDestino();
 	}
 
+	public List<Ruta> getRutas() {
+		return this.rutas;
+	}
+	
 	@Override
 	public void dibujarse(Graphics2D g2d) {
 		Point aux1, aux2;
@@ -61,7 +82,13 @@ public class Flecha implements Dibujable{
 		g2d.drawLine(posOrigen.x, posOrigen.y, posDestino.x, posDestino.y);
 		
 		g2d.fillPolygon(x, y, 3);
-		
+		//g2d.drawPolygon(getHitbox());
+	}
+	
+	@Override
+	public void reescalar(Float escala) {
+		this.escala = escala;
+		//hitbox = calcularHitbox();
 	}
 	
 }

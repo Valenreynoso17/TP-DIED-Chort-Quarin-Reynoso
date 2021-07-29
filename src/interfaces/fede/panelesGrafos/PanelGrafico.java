@@ -2,6 +2,7 @@ package interfaces.fede.panelesGrafos;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,6 +11,9 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,7 @@ import javax.swing.JPanel;
 
 import clases.Dibujable;
 import clases.Estacion;
+import clases.Flecha;
 import clases.Ruta;
 import gestores.GestorEstacion;
 import gestores.GestorFlecha;
@@ -28,6 +33,7 @@ public class PanelGrafico extends JPanel {
 	private GestorRuta gestorRutas;
 	private GestorFlecha gestorFlechas;
 	private static Integer radioEstaciones = 20;
+	private DialogInfoFlecha ventanaInfoFlecha;
 
 	private Float escala = 1.0f;
 	private List<Dibujable> dibujables;
@@ -72,13 +78,48 @@ public class PanelGrafico extends JPanel {
 		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				List<Flecha> flechas = gestorFlechas.getFlechas();
+				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
+					for (Flecha f : flechas) {
+						if (f.getHitbox().contains(e.getPoint())) {
+							ventanaInfoFlecha = new DialogInfoFlecha(f);
+							ventanaInfoFlecha.setVisible(true);
+						}
+					}
+				}
+			}
+		});
+		
+		this.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				List<Flecha> flechas = gestorFlechas.getFlechas();
+				Boolean existeAlguna = false;
+				for (Flecha f : flechas) {
+					if (f.getHitbox().contains(e.getPoint())) {
+						existeAlguna = true;
+						break;
+					}
+				}
+				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				
+			}
+		});
 
 	}
+
 	
 	public void aumentarEscala() {
-		escala *= 1.5f;
+		this.escala *= 1.5f;
 		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
 		this.revalidate();
+		for (Dibujable p : dibujables) {
+			p.reescalar(escala);
+		};
 		this.repaint();
 	}
 	
@@ -87,6 +128,9 @@ public class PanelGrafico extends JPanel {
 		escala /= 1.5f;
 		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
 		this.revalidate();
+		for (Dibujable p : dibujables) {
+			p.reescalar(escala);
+		};
 		this.repaint();
 	}
 	
@@ -102,6 +146,7 @@ public class PanelGrafico extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarGrafo(g2d);
+		imprimirImagen(g2d);
 		
 
 	}
@@ -110,6 +155,10 @@ public class PanelGrafico extends JPanel {
 		for (Dibujable d : dibujables) {
 			d.dibujarse(g2d);
 		}
+	}
+	
+	protected void imprimirImagen(Graphics2D g2d) {
+
 	}
 	
 	/*protected void dibujarEstacion(Graphics2D g2d, Estacion e) {

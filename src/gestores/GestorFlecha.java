@@ -2,6 +2,7 @@ package gestores;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,10 @@ public class GestorFlecha {
 		flecha = new Flecha(origenFlecha, destinoFlecha, anguloFlecha, color);
 		flecha.agregarRuta(r);
 		flechas.add(flecha);
+	}
+	
+	public void borrarFlechas() {
+		flechas = new ArrayList<>();
 	}
 }
 

@@ -17,6 +17,7 @@ public class Estacion implements Dibujable{
 	private EstadoEstacion estado;
 	private LocalTime horarioApertura;
 	private LocalTime horarioCierre;
+	private Float escala;
 	
 	private List<Mantenimiento> mantenimientos;
 	
@@ -29,6 +30,7 @@ public class Estacion implements Dibujable{
 		this.horarioCierre = hC;
 		this.estado = EstadoEstacion.OPERATIVA;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
+		this.escala = 1.0f;
 	}
 	
 	// ver si lo dejamos
@@ -174,6 +176,11 @@ public class Estacion implements Dibujable{
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(nombre, posicion.x, posicion.y);
 		
+	}
+	
+	@Override
+	public void reescalar(Float escala) {
+		this.escala = escala;
 	}
 	
 	
