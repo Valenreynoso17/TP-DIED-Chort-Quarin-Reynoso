@@ -10,22 +10,28 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
 
+import clases.Dibujable;
 import clases.Estacion;
 import clases.Ruta;
 import gestores.GestorEstacion;
+import gestores.GestorFlecha;
 import gestores.GestorRuta;
 
 public class PanelGrafico extends JPanel {
 	private Integer anchoVentana, altoVentana;
 	private GestorEstacion gestorEstaciones;
 	private GestorRuta gestorRutas;
-	private Integer radioEstaciones, largoFlecha;
-	private Double anchoFlecha;
+	private GestorFlecha gestorFlechas;
+	private static Integer radioEstaciones = 20;
+
 	private Float escala = 1.0f;
+	private List<Dibujable> dibujables;
+	
 	
 	
 	public PanelGrafico() {
@@ -36,9 +42,37 @@ public class PanelGrafico extends JPanel {
 		
 		gestorEstaciones = GestorEstacion.getInstance();
 		gestorRutas = GestorRuta.getInstance();
-		radioEstaciones = 20;
-		anchoFlecha = 4.0;
-		largoFlecha = 10;
+		gestorFlechas = new GestorFlecha();
+		
+		dibujables = new ArrayList<>();
+		
+		Thread t1 = new Thread(() -> {
+			List<Estacion> estaciones = gestorEstaciones.getEstaciones();
+			synchronized (dibujables) {
+				dibujables.addAll(estaciones);
+			}
+		});
+		Thread t2 = new Thread(() -> {
+			List<Ruta> rutas = gestorRutas.getRutas();
+			for (Ruta r : rutas) {
+				if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
+					gestorFlechas.asignarAFlecha(r);
+				}
+			}
+			synchronized (dibujables) {
+				dibujables.addAll(gestorFlechas.getFlechas());
+			}
+		});
+		t1.run();
+		t2.run();
+		try{
+			t1.join();
+			t2.join();
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void aumentarEscala() {
@@ -56,6 +90,10 @@ public class PanelGrafico extends JPanel {
 		this.repaint();
 	}
 	
+	public static Integer getRadioEstaciones() {
+		return radioEstaciones;
+	}
+	
 	@Override
 	protected void paintComponent (Graphics g) {
 		super.paintComponent (g);
@@ -69,40 +107,12 @@ public class PanelGrafico extends JPanel {
 	}
 	
 	protected void dibujarGrafo(Graphics2D g2d) {
-		List<Estacion> estaciones = gestorEstaciones.getEstaciones();
-		List<Ruta> rutas = gestorRutas.getRutas();
-
-		for (Estacion e : estaciones) {
-			if (e.operativa()) {
-				boolean cambios = false;
-				
-				if (e.getPosicion().x + radioEstaciones >= anchoVentana) {
-					anchoVentana = e.getPosicion().x + radioEstaciones;
-					cambios = true;
-				}
-				
-				if (e.getPosicion().y + radioEstaciones >= altoVentana) {
-					altoVentana = e.getPosicion().y + radioEstaciones;
-					cambios = true;
-				}
-				
-				if (cambios) {
-					this.setPreferredSize(new Dimension(Math.round(anchoVentana), Math.round(altoVentana)));
-					this.revalidate();
-				}
-				
-				dibujarEstacion(g2d, e);
-			}
+		for (Dibujable d : dibujables) {
+			d.dibujarse(g2d);
 		}
-		
-		for (Ruta r : rutas) {
-			if (r.activa()) {
-				dibujarRuta(g2d, r);
-			}
-		}		
 	}
 	
-	protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
+	/*protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
 		Point pos = e.getPosicion();
 		
 		
@@ -160,7 +170,7 @@ public class PanelGrafico extends JPanel {
 		g2d.drawLine(inicio.x, inicio.y, fin.x, fin.y);
 		
 		g2d.fillPolygon(x, y, 3);
-	}
+	}*/
 	
 	
 }

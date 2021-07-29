@@ -1,13 +1,16 @@
 package clases;
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import enums.EstadoEstacion;
+import interfaces.fede.panelesGrafos.PanelGrafico;
 
-public class Estacion {
+public class Estacion implements Dibujable{
 	
 	private String id;
 	private String nombre;
@@ -159,6 +162,18 @@ public class Estacion {
 		} else if (!posicion.equals(other.posicion))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void dibujarse(Graphics2D g2d) {
+		g2d.setColor(new Color(39, 75, 211));
+		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
+		g2d.setColor(new Color(3, 25, 111));
+		g2d.setStroke(new BasicStroke(1.0f));
+		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(nombre, posicion.x, posicion.y);
+		
 	}
 	
 	
