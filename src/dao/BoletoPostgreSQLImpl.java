@@ -33,7 +33,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		String obtenerID = 		"SELECT max(id)"
 							+ 	"FROM died.recorrido;";
 		String insercionRecorrido = 	"INSERT INTO died.recorrido "
-									+ 	"VALUES (?, ?, ?, ?, ?, ?);";
+									+ 	"VALUES (?, ?, ?, ?, ?, ?); ";
 		String insercionBoleto = 	"INSERT INTO died.boleto "
 								+ 	"VALUES (?, ?, ?, ?, ?);";
 		Integer id = null;
@@ -42,6 +42,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
+			System.out.println("Falta cargar la relacion con ruta");
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
 			
@@ -55,32 +56,21 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 			rs.close();
 			st.close();
 			
-			try {
-				conn.setAutoCommit(false);
-				// Se insertan los datos del recorrido
-				st = conn.prepareStatement(insercionRecorrido);
-				st.setInt(1, id);
-				st.setInt(2, recorrido.getDistancia());
-				st.setInt(3, recorrido.getDuracion());
-				st.setDouble(4, recorrido.getCosto());
-				st.setInt(5, Integer.parseInt(recorrido.getOrigen().getId()));
-				st.setInt(6, 2);
-				st.executeUpdate();
-				st.close();
-				
-				// Se insertan datos del boleto
-				st = conn.prepareStatement(insercionBoleto);
-				st.setInt(1, boleto.getNroBoleto());
-				st.setString(2, boleto.getNombreCliente());
-				st.setString(3, boleto.getCorreoCliente());
-				st.setDate(4, Date.valueOf(boleto.getFechaVenta()));
-				st.setInt(5, id);		
-				st.executeUpdate();
-				conn.commit();
-			}
-			catch (SQLException e) {
-				conn.rollback();
-			}
+			
+			st = conn.prepareStatement(insercionRecorrido + insercionBoleto);
+			st.setInt(1, id);
+			st.setInt(2, recorrido.getDistancia());
+			st.setInt(3, recorrido.getDuracion());
+			st.setDouble(4, recorrido.getCosto());
+			st.setInt(5, Integer.parseInt(recorrido.getOrigen().getId()));
+			st.setInt(6, 2);
+			st.setInt(7, boleto.getNroBoleto());
+			st.setString(8, boleto.getNombreCliente());
+			st.setString(9, boleto.getCorreoCliente());
+			System.out.println(boleto.getFechaVenta());
+			st.setDate(10, Date.valueOf(boleto.getFechaVenta()));
+			st.setInt(11, id);		
+			st.executeUpdate();
 			
 		} 
 		catch (ClassNotFoundException e) {
@@ -127,6 +117,65 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 	public List<Boleto> buscar() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Integer getUltimoNroBoleto() {
+		String obtenerID = 		"SELECT max(nro_boleto)"
+							+ 	"FROM died.boleto;";
+		Integer id = null;
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
+			
+			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 0;
+			rs.close();
+			st.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
+		return id;
 	}
 
 }

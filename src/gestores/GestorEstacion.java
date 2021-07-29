@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Ruta;
+import excepciones.SinEstacionesAccesiblesException;
 
 public class GestorEstacion {
 	private List<Estacion> estaciones;
@@ -60,11 +61,13 @@ public class GestorEstacion {
 		return resultado;
 	}
 	
-	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) {
-		return this.getEstacionesAccesibles(estacion)
-				.stream()
-				.filter(e -> e.operativa())
-				.collect(Collectors.toList());
+	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
+		List<Estacion> accesibles =	this.getEstacionesAccesibles(estacion)
+										.stream()
+										.filter(e -> e.operativa())
+										.collect(Collectors.toList());
+		if (accesibles.isEmpty()) throw new SinEstacionesAccesiblesException();
+		return accesibles;
 	}
 	
 	private List<Estacion> getEstacionesAccesiblesAux(Estacion estacion, HashSet<Estacion> marcados) {
