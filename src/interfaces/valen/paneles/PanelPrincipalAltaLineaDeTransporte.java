@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
 
 public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
@@ -33,7 +34,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.gridy = 0;
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
-		panelAlta = new PanelAltaLineaDeTransporte();
+		panelAlta = new PanelAltaLineaDeTransporte(frame);
 		this.add(panelAlta, gbc);
 		
 		//PanelGrafo
@@ -77,6 +78,8 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
 		botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(e -> {frame.dispose();
+											  new VentanaGestionLineasDeTransporte();});
 		this.add(botonCancelar, gbc);
 		
 		// Boton Siguiente

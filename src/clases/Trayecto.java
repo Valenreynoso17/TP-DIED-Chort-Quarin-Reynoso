@@ -8,18 +8,18 @@ public class Trayecto {
 	private List<Ruta> rutas;
 	private List<Estacion> estaciones;
 	
-	public Trayecto(LineaDeTransporte l) {
-		this.linea = l;
+	public Trayecto(LineaDeTransporte linea) {
+		this.linea = linea;
 		this.rutas = new ArrayList<Ruta>();
 		this.estaciones = new ArrayList<Estacion>();
 	}
 	
-	public void aniadirRuta(Ruta r) {
-		this.rutas.add(r);
+	public void aniadirRuta(Ruta ruta) {
+		this.rutas.add(ruta);
 	}
 	
-	public void aniadirEstacion(Estacion e) {
-		this.estaciones.add(e);
+	public void aniadirEstacion(Estacion estacion) {
+		this.estaciones.add(estacion);
 	}
 
 }

@@ -1,5 +1,7 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import clases.LineaDeTransporte;
+import dao.LineaDeTransporteDAO;
+import enums.EstadoLineaDeTransporte;
+import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
 import interfaces.valen.otros.ColorPicker;
 
 public class PanelDatosLineaDeTransporte extends JPanel{
@@ -20,12 +26,14 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 	JLabel labelEstado;
 	JComboBox<String> estado;
 	JLabel labelColor;
-	JButton botonColor;
-	//ColorPicker colorPicker;
+	ColorPicker colorPicker;
 	GridBagConstraints gbc;
+	LineaDeTransporte lineaDeTransporte;
 	String[] opcionesEstado = {"Activa", "No activa"};
 	
-	public PanelDatosLineaDeTransporte() {
+	public PanelDatosLineaDeTransporte(VentanaEdicionLineaDeTransporte frame, LineaDeTransporte lineaDeTransporte) {
+		
+		this.lineaDeTransporte = lineaDeTransporte;
 		
 		this.setBorder(BorderFactory.createTitledBorder("Datos de la línea"));
 		this.setLayout(new GridBagLayout());
@@ -33,12 +41,18 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		
 		// Componentes
 		labelNombreLinea = new JLabel("Nombre de la línea:");
-		nombreLinea = new JTextField("<<Nombre de la línea>>");
+		nombreLinea = new JTextField(lineaDeTransporte.getNombre());
+		nombreLinea.setForeground(Color.BLACK);
 		labelEstado = new JLabel("Estado:");
-		estado = new JComboBox<String>(opcionesEstado);
-		labelColor = new JLabel("Color:");
-		botonColor = new JButton("Color");
 		
+		estado = new JComboBox<String>(opcionesEstado);
+		estado.setSelectedIndex(0);
+		if (lineaDeTransporte.getEstado() == EstadoLineaDeTransporte.NO_ACTIVA) estado.setSelectedIndex(1);
+		
+		labelColor = new JLabel("Color:");
+		colorPicker = new ColorPicker(frame, lineaDeTransporte.getColor());
+		
+		// Configuraciones gbc
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.gridy = 0;
@@ -48,8 +62,10 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(nombreLinea, gbc);
 		gbc.weightx = 0.0;
+		gbc.fill = GridBagConstraints.NONE;
 		
 		gbc.gridx = 2;
 		this.add(labelEstado, gbc);
@@ -61,6 +77,6 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		this.add(labelColor, gbc);
 		
 		gbc.gridx = 5;
-		this.add(botonColor, gbc);
+		this.add(colorPicker, gbc);
 	}
 }

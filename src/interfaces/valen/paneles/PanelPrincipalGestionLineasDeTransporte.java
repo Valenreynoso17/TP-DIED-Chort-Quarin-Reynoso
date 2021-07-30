@@ -31,7 +31,7 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		// PanelListado
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		panelListado = new PanelListadoGestionLineas();
+		panelListado = new PanelListadoGestionLineas(frame);
 		this.add(panelListado, gbc);
 		
 		// PanelGrafo

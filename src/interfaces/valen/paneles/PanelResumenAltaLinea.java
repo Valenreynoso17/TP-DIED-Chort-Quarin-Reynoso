@@ -1,5 +1,6 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,15 +10,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
 import interfaces.valen.otros.ColorPicker;
 
 public class PanelResumenAltaLinea extends JPanel{
 
 	JLabel labelNombre, nombreLinea, labelEstado, estado, labelColor;
-	JButton botonColor;
+	JPanel color;
 	GridBagConstraints gbc;
 	
-	public PanelResumenAltaLinea() {
+	public PanelResumenAltaLinea(VentanaSiguienteAltaLineaDeTransporte frame) {
 		
 		this.setBorder(BorderFactory.createTitledBorder("Resumen - Alta de línea"));
 		this.setLayout(new GridBagLayout());
@@ -29,7 +31,8 @@ public class PanelResumenAltaLinea extends JPanel{
 		labelEstado = new JLabel("Estado:");
 		estado = new JLabel("<<Estado>>");
 		labelColor = new JLabel("Color:");
-		botonColor = new JButton("Color");
+		color = new JPanel();
+		color.setBackground(Color.blue);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -53,7 +56,7 @@ public class PanelResumenAltaLinea extends JPanel{
 		this.add(labelColor, gbc);
 		
 		gbc.gridx = 5;
-		this.add(botonColor, gbc);
+		this.add(color, gbc);
 				
 	}
 	

@@ -11,8 +11,7 @@ public class AppValenchu {
 
 	public static void main(String[] args) {
 		
-		System.out.println("hola");
-//		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
+		VentanaGestionLineasDeTransporte vent1 = new VentanaGestionLineasDeTransporte();
 //		VentanaAltaLineaDeTransporte vent2 = new VentanaAltaLineaDeTransporte();
 //		VentanaSiguienteAltaLineaDeTransporte vent3 = new VentanaSiguienteAltaLineaDeTransporte();
 //		VentanaEdicionLineaDeTransporte vent4 = new VentanaEdicionLineaDeTransporte();
