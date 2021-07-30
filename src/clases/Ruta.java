@@ -47,8 +47,7 @@ public class Ruta {
 	public Integer getDuracion() {
 		return this.duracion;
 	}
-	
-	//No entiendo para que es esto, la ruta no tiene nombre ni color, ni esta asociado a una linea
+
 	// Hay que cambiarlo
 	public String getNombreLinea() {
 		return "Linea Colectivo 16";
