@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clases.LineaDeTransporte;
+import dao.LineaDeTransporteDAO;
+import dao.LineaDeTransporteSQLImp;
 
 public class GestorLineaDeTransporte {
 
@@ -21,7 +23,12 @@ public class GestorLineaDeTransporte {
 		return gestor;
 	}
 	
+	// TODO: no se si se hace asi
 	public List<LineaDeTransporte> getLineasDeTransporte(){
+		
+		LineaDeTransporteDAO lineaDAO = new LineaDeTransporteSQLImp();
+		lineasDeTransporte = lineaDAO.buscar();
+		
 		return lineasDeTransporte;
 	}
 	

@@ -9,15 +9,25 @@ import java.awt.Insets;
 
 import javax.swing.*;
 
+import clases.LineaDeTransporte;
+import enums.EstadoLineaDeTransporte;
+import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
+
 public class ElementoListaGestionTransporte extends JPanel{
 	
+	VentanaGestionLineasDeTransporte frameContenedor;
+	LineaDeTransporte lineaDeTransporte;
 	JLabel nombreLinea;
 	JLabel estadoLinea;
 	JButton botonEditar;
 	JButton botonBorrar;
 	GridBagConstraints gbc;
 	
-	public ElementoListaGestionTransporte(String nombre, String estado) {
+	public ElementoListaGestionTransporte(VentanaGestionLineasDeTransporte frame, LineaDeTransporte linea) {
+		
+		this.frameContenedor = frame;
+		this.lineaDeTransporte = linea;
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 		this.setLayout(new GridBagLayout());
@@ -25,17 +35,19 @@ public class ElementoListaGestionTransporte extends JPanel{
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(2,2,2,2);
 		
-		
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		nombreLinea = new JLabel(nombre);
+		nombreLinea = new JLabel(lineaDeTransporte.getNombre());
 		nombreLinea.setFont(new Font(null, Font.BOLD, 16));
 		
-		estadoLinea = new JLabel(estado);
+		if(lineaDeTransporte.getEstado() == EstadoLineaDeTransporte.ACTIVA)	estadoLinea = new JLabel("Activa");
+		else estadoLinea = new JLabel("No activa");
 		
 		botonEditar = new JButton("Editar");
 		botonEditar.setPreferredSize(new Dimension(50, 20));
 		botonEditar.setMargin(new Insets(0,0,0,0));
+		botonEditar.addActionListener(e -> {frameContenedor.dispose();
+											new VentanaEdicionLineaDeTransporte(lineaDeTransporte);});
 		
 		botonBorrar = new JButton("Borrar");
 		botonBorrar.setPreferredSize(new Dimension(50, 20));

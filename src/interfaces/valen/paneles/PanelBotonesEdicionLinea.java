@@ -6,13 +6,16 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
+
 public class PanelBotonesEdicionLinea extends JPanel{
 
 	JButton botonCancelar;
 	JButton botonTerminado;
 	GridBagConstraints gbc;
 	
-	public PanelBotonesEdicionLinea() {
+	public PanelBotonesEdicionLinea(VentanaEdicionLineaDeTransporte frame) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -23,6 +26,8 @@ public class PanelBotonesEdicionLinea extends JPanel{
 		
 		gbc.gridx = 0;
 		botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(e -> {frame.dispose();
+											  new VentanaGestionLineasDeTransporte();});
 		this.add(botonCancelar, gbc);
 		
 		gbc.gridx = 1;

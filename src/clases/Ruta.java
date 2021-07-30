@@ -1,30 +1,27 @@
 package clases;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import enums.EstadoRuta;
 
 public class Ruta {
 
-	private Integer distancia;
-	private Integer duracion;
-	private Integer maxPasajeros;
-	private EstadoRuta estado;
-	private double costo;
-	
 	private Estacion origen;
 	private Estacion destino;
+	private Integer distancia;
+	private Integer duracion;
+	private Integer cantMaxPasajeros;
+	private EstadoRuta estado;
+	private double costo;	
 	
-	public Ruta(Estacion o, Estacion des,Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
-		this.origen = o;
-		this.destino = des;
-		this.distancia = d;
-		this.duracion = du;
-		this.maxPasajeros = mP;
-		this.estado = e;
-		this.costo = c;
+	public Ruta(Estacion estacionOrigen, Estacion estacionDestino,Integer distancia, Integer duracion, Integer cantMaxPasajeros, EstadoRuta estado, double costo) {
+		this.origen = estacionOrigen;
+		this.destino = estacionDestino;
+		this.distancia = distancia;
+		this.duracion = duracion;
+		this.cantMaxPasajeros = cantMaxPasajeros;
+		this.estado = estado;
+		this.costo = costo;
 	}
 	
 	public Boolean activa() {
@@ -51,6 +48,7 @@ public class Ruta {
 		return this.duracion;
 	}
 	
+	//No entiendo para que es esto, la ruta no tiene nombre ni color, ni esta asociado a una linea
 	// Hay que cambiarlo
 	public String getNombreLinea() {
 		return "Linea Colectivo 16";

@@ -9,17 +9,16 @@ import javax.swing.JPanel;
 
 public class DialogoColorPicker extends JDialog{
 	
-	JPanel panelPrincipal;
-	
+	PanelPrincipalDialogoColorPicker panelPrincipal;
 	
 	public DialogoColorPicker(JFrame parent, boolean modal) {
 		super(parent, modal);
 		
-		panelPrincipal = new JPanel();
-		JLabel labelElige = new JLabel("Elige un color:");
-		panelPrincipal.add(labelElige);
-		panelPrincipal.add(new Button("hola?"));
+		this.setLocationRelativeTo(null);
+		this.setSize(500,200);
+		this.setTitle("Selector de color");
 		
+		panelPrincipal = new PanelPrincipalDialogoColorPicker();
 		
 		this.setContentPane(panelPrincipal);
 		this.setVisible(true);

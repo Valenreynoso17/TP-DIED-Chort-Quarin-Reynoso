@@ -33,7 +33,7 @@ public class PanelPrincipalSiguienteAltaLineaDeTransporte extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weighty = 0.0;
-		panelResumen = new PanelResumenAltaLinea();
+		panelResumen = new PanelResumenAltaLinea(frame);
 		this.add(panelResumen, gbc);
 		
 		// Segundo componente - Panel tabla

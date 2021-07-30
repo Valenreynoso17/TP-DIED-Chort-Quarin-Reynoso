@@ -4,16 +4,23 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JPanel;
 
+import clases.LineaDeTransporte;
+import enums.EstadoLineaDeTransporte;
+import gestores.GestorLineaDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.otros.ElementoListaGestionTransporte;
 
 public class PanelGridListaGestionLineas extends JPanel{
 	
 	GridBagConstraints gbc;
+	GestorLineaDeTransporte gestorLinea;
 
-	public PanelGridListaGestionLineas() {
+	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -21,58 +28,58 @@ public class PanelGridListaGestionLineas extends JPanel{
 		gbc.insets = new Insets(2,2,2,2);
 		gbc.gridx = GridBagConstraints.RELATIVE;
 		
-		ElementoListaGestionTransporte e1 = new ElementoListaGestionTransporte("Linea Verde", "Activa");
-		ElementoListaGestionTransporte e2 = new ElementoListaGestionTransporte("Linea Amarilla", "No activa");
-		ElementoListaGestionTransporte e3 = new ElementoListaGestionTransporte("Linea Roja", "No activa");
-		ElementoListaGestionTransporte e4 = new ElementoListaGestionTransporte("Linea Azul", "No activa");
-		ElementoListaGestionTransporte e5 = new ElementoListaGestionTransporte("Linea Juancho", "No activa");
-		ElementoListaGestionTransporte e6 = new ElementoListaGestionTransporte("Linea Naranja", "Activa");
-		ElementoListaGestionTransporte e7 = new ElementoListaGestionTransporte("Linea Mariano", "No activa");
-		ElementoListaGestionTransporte e8 = new ElementoListaGestionTransporte("Linea Pepe", "No activa");
-		ElementoListaGestionTransporte e9 = new ElementoListaGestionTransporte("Linea El domingo", "No activa");
-		ElementoListaGestionTransporte e10 = new ElementoListaGestionTransporte("Linea Agus", "No activa");
-		ElementoListaGestionTransporte e11 = new ElementoListaGestionTransporte("Linea Azul", "No activa");
-		ElementoListaGestionTransporte e12 = new ElementoListaGestionTransporte("Linea Juancho", "No activa");
-		ElementoListaGestionTransporte e13 = new ElementoListaGestionTransporte("Linea Naranja", "Activa");
-		ElementoListaGestionTransporte e14 = new ElementoListaGestionTransporte("Linea Mariano", "No activa");
-		ElementoListaGestionTransporte e15 = new ElementoListaGestionTransporte("Linea Pepe", "No activa");
-		ElementoListaGestionTransporte e16 = new ElementoListaGestionTransporte("Linea El domingo", "No activa");
-		ElementoListaGestionTransporte e17 = new ElementoListaGestionTransporte("Linea Agus", "No activa");
+		gestorLinea = GestorLineaDeTransporte.getInstance();
 		
-		gbc.gridy = 0;
-		this.add(e1, gbc);
-		this.add(e2, gbc);
+//		Optional<List<LineaDeTransporte>> lista = Optional.ofNullable(gestorLinea.getLineasDeTransporte());
+		List<LineaDeTransporte> lista = gestorLinea.getLineasDeTransporte();
 		
-		gbc.gridy = 1;
-		this.add(e3, gbc);
-		this.add(e4, gbc);
+		if(lista != null) {
+			Integer valorGridy = 0;
+			for(int i = 0; i < lista.size(); i++) {
+				
+				ElementoListaGestionTransporte auxElemento = new ElementoListaGestionTransporte(frame, lista.get(i));
+				
+				gbc.gridy = valorGridy;
+				this.add(auxElemento, gbc);
+				
+				if (i % 2 == 0) valorGridy++;
+			}
+		}
 		
-		gbc.gridy = 2;
-		this.add(e5, gbc);
-		this.add(e6, gbc);
-		
-		gbc.gridy = 3;
-		this.add(e7, gbc);
-		this.add(e8, gbc);
-		
-		gbc.gridy = 4;
-		this.add(e9, gbc);
-		this.add(e10, gbc);
-		
-		gbc.gridy = 5;
-		this.add(e11, gbc);
-		this.add(e12, gbc);
-		
-		gbc.gridy = 6;
-		this.add(e13, gbc);
-		this.add(e14, gbc);
-		
-		gbc.gridy = 7;
-		this.add(e15, gbc);
-		this.add(e16, gbc);
-		
-		gbc.gridy = 8;
-		this.add(e17, gbc);
+//		gbc.gridy = 0;
+//		this.add(e1, gbc);
+//		this.add(e2, gbc);
+//		
+//		gbc.gridy = 1;
+//		this.add(e3, gbc);
+//		this.add(e4, gbc);
+//		
+//		gbc.gridy = 2;
+//		this.add(e5, gbc);
+//		this.add(e6, gbc);
+//		
+//		gbc.gridy = 3;
+//		this.add(e7, gbc);
+//		this.add(e8, gbc);
+//		
+//		gbc.gridy = 4;
+//		this.add(e9, gbc);
+//		this.add(e10, gbc);
+//		
+//		gbc.gridy = 5;
+//		this.add(e11, gbc);
+//		this.add(e12, gbc);
+//		
+//		gbc.gridy = 6;
+//		this.add(e13, gbc);
+//		this.add(e14, gbc);
+//		
+//		gbc.gridy = 7;
+//		this.add(e15, gbc);
+//		this.add(e16, gbc);
+//		
+//		gbc.gridy = 8;
+//		this.add(e17, gbc);
 		
 	}
 }

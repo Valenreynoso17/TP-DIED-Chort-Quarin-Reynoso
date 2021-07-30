@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import clases.LineaDeTransporte;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
 
@@ -18,8 +19,11 @@ public class PanelPrincipalEdicionLineaDeTransporte extends JPanel{
 	PanelDatosTrayectoLineaDeTransporte panelDatosTrayecto;
 	PanelBotonesEdicionLinea panelBotones;
 	GridBagConstraints gbc = new GridBagConstraints();
+	LineaDeTransporte lineaDeTransporte;
 	
-	public PanelPrincipalEdicionLineaDeTransporte(VentanaEdicionLineaDeTransporte frame) {
+	public PanelPrincipalEdicionLineaDeTransporte(VentanaEdicionLineaDeTransporte frame, LineaDeTransporte lineaDeTransporte) {
+		
+		this.lineaDeTransporte = lineaDeTransporte;
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -31,7 +35,7 @@ public class PanelPrincipalEdicionLineaDeTransporte extends JPanel{
 		
 		// Primer componente - panel datos linea
 		gbc.gridy = 0;
-		panelDatosLinea = new PanelDatosLineaDeTransporte();
+		panelDatosLinea = new PanelDatosLineaDeTransporte(frame, lineaDeTransporte);
 		this.add(panelDatosLinea, gbc);
 		
 		// Segundo componente - panel datos trayecto
@@ -48,7 +52,7 @@ public class PanelPrincipalEdicionLineaDeTransporte extends JPanel{
 		
 		// Tercer componente - panel botones
 		gbc.gridy = 2;
-		panelBotones = new PanelBotonesEdicionLinea();
+		panelBotones = new PanelBotonesEdicionLinea(frame);
 		this.add(panelBotones, gbc);
 		
 	}

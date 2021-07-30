@@ -1,30 +1,33 @@
 package clases;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
 
-import enums.ColorLinea;
-import enums.EstadoRuta;
+import enums.EstadoLineaDeTransporte;
 
 public class LineaDeTransporte {
 
-	private String id;  //Tiene sentido que le asigne el usuario el id?
+	private Integer id;
 	private String nombre;
-	private ColorLinea color;
-	private EstadoRuta estado; //VER
+	private Color color;
+	private EstadoLineaDeTransporte estado;
+	private Trayecto trayecto;
 	
-	private MedioDeTransporte medio;
-	private List<Trayecto> trayectos;
-	
-	public LineaDeTransporte(String i, String n, ColorLinea c, EstadoRuta e, MedioDeTransporte m) {
-		this.id = i;
-		this.nombre = n;
-		this.color = c;
-		this.estado = e;
-		this.medio = m;
-		this.trayectos = new ArrayList<Trayecto>();
+	public LineaDeTransporte(Integer id, String nombre, Color color, EstadoLineaDeTransporte estadoRuta, Trayecto trayecto) {
+		this.id = id;
+		this.nombre = nombre;
+		this.color = color;
+		this.estado = estadoRuta;
+		this.trayecto = trayecto;
 	}
 	
-	public void aniadirTrayecto(Trayecto t) {
-		this.trayectos.add(t);
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public Enum<EstadoLineaDeTransporte> getEstado(){
+		return estado;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 }

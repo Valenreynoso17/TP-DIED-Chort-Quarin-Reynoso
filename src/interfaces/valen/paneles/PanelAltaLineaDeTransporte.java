@@ -1,5 +1,6 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,6 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
+import interfaces.valen.otros.ColorPicker;
+import interfaces.valen.otros.TextPrompt;
+
 public class PanelAltaLineaDeTransporte extends JPanel{
 
 	GridBagConstraints gbc;
@@ -21,7 +26,7 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 	JLabel labelColor;
 	String[] opcionesEstado = {"Activa", "No activa"};
 	
-	public PanelAltaLineaDeTransporte() {
+	public PanelAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -34,11 +39,12 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		
 		// Componentes del panel
 		labelNombre = new JLabel("Nombre:");
-		nombreLinea = new JTextField("Ingrese el nombre de la línea");
+		nombreLinea = new JTextField();
+		TextPrompt tpNombreLinea = new TextPrompt("Ingrese el nombre de la línea", nombreLinea);
 		labelEstado = new JLabel("Estado:");
 		estado = new JComboBox<String>(opcionesEstado);
 		labelColor = new JLabel("Color:");
-		//TODO: agregar el color picker
+		ColorPicker colorPicker;
 		
 		// Agregando padding
 		gbc.insets = new Insets(5,5,5,5);
@@ -70,6 +76,7 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		
 		gbc.gridx = 3;
 		gbc.gridy = 1;
-		this.add(new JButton("ColorPicker"), gbc);
+		colorPicker = new ColorPicker(frame, Color.WHITE);
+		this.add(colorPicker, gbc);
 	}
 }
