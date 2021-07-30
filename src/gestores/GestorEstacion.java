@@ -45,7 +45,7 @@ public class GestorEstacion {
 		estaciones.add(new Estacion(i, n, hA, hC, pos));
 	}
 	
-	public List<Estacion> getEstacionesAccesibles(Estacion estacion) {
+	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
 		List<Estacion> resultado = new ArrayList<>();
 		HashSet<Estacion> marcados = new HashSet<>();
 		List<Estacion> adyacentes = this.getAdyacentes(estacion);
@@ -53,24 +53,18 @@ public class GestorEstacion {
 		marcados.add(estacion);
 		
 		for (Estacion e : adyacentes) {
-			if (!marcados.contains(e)) {
-				resultado.addAll(getEstacionesAccesiblesAux(e, marcados));
+			if (!marcados.contains(e) && e.operativa()) {
+				resultado.addAll(getEstacionesOperativasAccesiblesAux(e, marcados));
 			}
 		}
 		
+		if (resultado.isEmpty()) throw new SinEstacionesAccesiblesException();
 		return resultado;
 	}
 	
-	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
-		List<Estacion> accesibles =	this.getEstacionesAccesibles(estacion)
-										.stream()
-										.filter(e -> e.operativa())
-										.collect(Collectors.toList());
-		if (accesibles.isEmpty()) throw new SinEstacionesAccesiblesException();
-		return accesibles;
-	}
+
 	
-	private List<Estacion> getEstacionesAccesiblesAux(Estacion estacion, HashSet<Estacion> marcados) {
+	private List<Estacion> getEstacionesOperativasAccesiblesAux(Estacion estacion, HashSet<Estacion> marcados) {
 		Stack<Estacion> pendientes = new Stack<>();
 		List<Estacion> resultado = new ArrayList<>();
 		
@@ -82,7 +76,7 @@ public class GestorEstacion {
 			resultado.add(e);
 			List<Estacion> adyacentes = this.getAdyacentes(e);
 			for (Estacion e2 : adyacentes) {
-				if (!marcados.contains(e2)) {
+				if (!marcados.contains(e2) && e2.operativa()) {
 					marcados.add(e2);
 					pendientes.push(e2);
 				}
@@ -93,6 +87,15 @@ public class GestorEstacion {
 		return resultado;
 		
 	}
+	
+	/*public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
+		List<Estacion> accesibles =	this.getEstacionesAccesibles(estacion)
+										.stream()
+										.filter(e -> e.operativa())
+										.collect(Collectors.toList());
+		if (accesibles.isEmpty()) throw new SinEstacionesAccesiblesException();
+		return accesibles;
+	}*/
 	
 	public List<Estacion> getAdyacentes(Estacion estacion) {
 		List<Ruta> rutas = gestorRutas.getRutas();
