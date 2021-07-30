@@ -11,6 +11,11 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -34,6 +39,7 @@ public abstract class PanelGrafico extends JPanel {
 	protected GestorFlecha gestorFlechas;
 	protected static Integer radioEstaciones = 20;
 	protected DialogInfoFlechaInactivosNoVisibles ventanaInfoFlecha;
+	protected List<Estacion> estaciones;
 
 	protected Float escala = 1.0f;
 	protected List<Dibujable> dibujables;
@@ -53,7 +59,7 @@ public abstract class PanelGrafico extends JPanel {
 		dibujables = new ArrayList<>();
 		
 		Thread t1 = new Thread(() -> {
-			List<Estacion> estaciones = gestorEstaciones.getEstaciones();
+			estaciones = gestorEstaciones.getEstaciones();
 			synchronized (dibujables) {
 				dibujables.addAll(estaciones);
 			}
@@ -79,36 +85,9 @@ public abstract class PanelGrafico extends JPanel {
 			e.printStackTrace();
 		}
 		
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
-					for (Flecha f : flechas) {
-						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f);
-							ventanaInfoFlecha.setVisible(true);
-						}
-					}
-				}
-			}
-		});
 		
-		this.addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseMoved(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				Boolean existeAlguna = false;
-				for (Flecha f : flechas) {
-					if (f.getHitbox().contains(e.getPoint())) {
-						existeAlguna = true;
-						break;
-					}
-				}
-				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
-				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				
-			}
-		});
+		
+
 
 	}
 

@@ -1,8 +1,12 @@
 package clases;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +23,7 @@ public class Estacion implements Dibujable{
 	private LocalTime horarioApertura;
 	private LocalTime horarioCierre;
 	private Float escala;
-	private GamaColor colorGrafico;
+	//private GamaColor colorGrafico;
 	
 	private List<Mantenimiento> mantenimientos;
 	
@@ -33,7 +37,7 @@ public class Estacion implements Dibujable{
 		this.estado = EstadoEstacion.OPERATIVA;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
 		this.escala = 1.0f;
-		this.colorGrafico = GamaColor.AZUL;
+		//this.colorGrafico = GamaColor.AZUL;
 	}
 	
 	// ver si lo dejamos
@@ -82,8 +86,9 @@ public class Estacion implements Dibujable{
 		this.horarioCierre = horarioCierre;
 	}
 	
-	public void setGamaColor(GamaColor gama) {
-		this.colorGrafico = gama;
+	public GamaColor getGamaColor() {
+		if (estado == EstadoEstacion.OPERATIVA) return GamaColor.AZUL;
+		else return GamaColor.GRIS;
 	}
 
 	public List<Mantenimiento> getMantenimientos() {
@@ -114,7 +119,17 @@ public class Estacion implements Dibujable{
 	public String toString() {
 		return "Estacion " + nombre;
 	}
-
+	
+	public Shape getHitbox() {
+		Integer radioEstaciones = PanelGrafico.getRadioEstaciones();
+		return new Ellipse2D.Double(posicion.getX()-radioEstaciones, posicion.getY()-radioEstaciones, 2.0*radioEstaciones, 2.0*radioEstaciones);
+	}
+	
+	public void mover(Point puntoRelativoAgarre, Point nuevaPos) {
+		if (nuevaPos.x - puntoRelativoAgarre.x - PanelGrafico.getRadioEstaciones() > 1) posicion.x = nuevaPos.x - puntoRelativoAgarre.x;
+		if (nuevaPos.y - puntoRelativoAgarre.y - PanelGrafico.getRadioEstaciones() > 1) posicion.y = nuevaPos.y - puntoRelativoAgarre.y;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -175,12 +190,13 @@ public class Estacion implements Dibujable{
 
 	@Override
 	public void dibujarse(Graphics2D g2d) {
-		g2d.setColor(colorGrafico.getRelleno());
+		g2d.setColor(this.getGamaColor().getRelleno());
 		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
-		g2d.setColor(colorGrafico.getBorde());
+		g2d.setColor(this.getGamaColor().getBorde());
 		g2d.setStroke(new BasicStroke(1.0f));
 		g2d.drawOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());
-		g2d.setColor(Color.BLACK);
+		if (this.operativa()) g2d.setColor(Color.BLACK);
+		else g2d.setColor(new Color(90, 90, 90));
 		g2d.drawString(nombre, posicion.x, posicion.y);
 		
 	}

@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
 import clases.Ruta;
+import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Flecha implements Dibujable{
 	private Point posOrigen, posDestino;
@@ -22,26 +24,32 @@ public class Flecha implements Dibujable{
 	private Float escala;
 	
 	
+	public Flecha(Color color) {
+		this.color = color;
+		this.rutas = new ArrayList<>();
+		this.escala = 1.0f;
+	}
+	
 	public Flecha(Point posOrigen, Point posDestino, Double anguloFlecha, Color color) {
+		this(color);
 		this.posOrigen = posOrigen;
 		this.posDestino = posDestino;
 		this.anguloFlecha = anguloFlecha;
-		this.color = color;
-		this.rutas = new ArrayList<>();
-		//this.hitbox = this.calcularHitbox();
-		this.escala = 1.0f;
-		
+
+	}	
+
+	public void setOrigen(Point pos) {
+		this.posOrigen = pos;
 	}
 	
-	public Polygon getHitbox() {
-		Integer despX = (int) Math.round((anchoHitbox/2)*Math.cos(anguloFlecha-(Math.PI/2)));
-		Integer despY = (int) Math.round((anchoHitbox/2)*Math.sin(anguloFlecha-(Math.PI/2)));
-		
-		int[] x = {Math.round(escala*(posOrigen.x - despX)), Math.round(escala*(posOrigen.x + despX)), Math.round(escala*(posDestino.x + despX)), Math.round(escala*(posDestino.x - despX))}; 
-		int[] y = {Math.round(escala*(posOrigen.y - despY)), Math.round(escala*(posOrigen.y + despY)), Math.round(escala*(posDestino.y + despY)), Math.round(escala*(posDestino.y - despY))};
-		
-		return new Polygon(x, y, 4);
+	public void setDestino(Point pos) {
+		this.posDestino = pos;
 	}
+	
+	public void setAngulo(Double angulo) {
+		this.anguloFlecha = angulo;
+	}
+	
 	
 	public Boolean correspondeAEstaFlecha(Ruta r) {
 		return this.getEstacionOrigen().equals(r.getOrigen()) && this.getEstacionDestino().equals(r.getDestino());
@@ -99,7 +107,7 @@ public class Flecha implements Dibujable{
 		g2d.drawLine(posOrigen.x, posOrigen.y, posDestino.x, posDestino.y);
 		
 		g2d.fillPolygon(x, y, 3);
-		//g2d.drawPolygon(getHitbox());
+		//g2d.drawPolygon((Polygon) getHitbox());
 	}
 	
 	@Override
@@ -113,6 +121,24 @@ public class Flecha implements Dibujable{
 	@Override
 	public Boolean visible() {
 		return !rutas.isEmpty() && !todasLasRutasInactivas() && getEstacionOrigen().operativa() && getEstacionDestino().operativa();
+	}
+	
+	
+	@Override
+	public Shape getHitbox() {
+		Integer margenX = (int) Math.round(Math.cos(anguloFlecha)*3);
+		Integer margenY = (int) Math.round(Math.sin(anguloFlecha)*3);
+		
+		Point margen1 = new Point(posOrigen.x + margenX, posOrigen.y + margenY);
+		Point margen2 = new Point(posDestino.x - margenX, posDestino.y - margenY);
+		
+		Integer despX = (int) Math.round((anchoHitbox/2)*Math.cos(anguloFlecha-(Math.PI/2)));
+		Integer despY = (int) Math.round((anchoHitbox/2)*Math.sin(anguloFlecha-(Math.PI/2)));
+		
+		int[] x = {Math.round(escala*(margen1.x - despX)), Math.round(escala*(margen1.x + despX)), Math.round(escala*(margen2.x + despX)), Math.round(escala*(margen2.x - despX))}; 
+		int[] y = {Math.round(escala*(margen1.y - despY)), Math.round(escala*(margen1.y + despY)), Math.round(escala*(margen2.y + despY)), Math.round(escala*(margen2.y - despY))};
+		
+		return new Polygon(x, y, 4);
 	}
 	
 	

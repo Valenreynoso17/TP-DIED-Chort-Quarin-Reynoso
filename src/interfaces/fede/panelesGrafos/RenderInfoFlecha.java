@@ -2,6 +2,7 @@ package interfaces.fede.panelesGrafos;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -23,12 +24,20 @@ public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
 		
 		if (value instanceof Ruta) {
 			Ruta r = (Ruta) value;
-			setForeground(r.getColorLinea());
-			setText(r.linea());
+			if (r.activa()) {
+				setForeground(r.getColorLinea());
+				setFont(list.getFont());
+				setText(r.linea());
+			}
+			else {
+				setForeground(new Color(90, 90, 90));
+				setFont(new Font("ff", Font.ITALIC, 12));
+				setText(r.linea() + " - No activa");
+			}
 			
 		}
 			
-		setFont(list.getFont());
+		
 			
 		return this;
 	}

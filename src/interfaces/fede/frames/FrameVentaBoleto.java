@@ -73,7 +73,7 @@ public class FrameVentaBoleto extends JFrame {
 		gestor.agregarEstacion("5", "E", null, null, new Point(300, 150));
 		gestor.agregarEstacion("6", "F", null, null, new Point(450, 100));
 		gestor.agregarEstacion("7", "G", null, null, new Point(200, 300));
-		gestor.agregarEstacion("8", "X", null, null, new Point(500, 300));
+		gestor.agregarEstacion("8", "X", null, null, new Point(700, 300));
 		
 		List<Estacion> estaciones = gestor.getEstaciones();
 		//estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
