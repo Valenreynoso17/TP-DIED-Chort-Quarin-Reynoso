@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
 import interfaces.julio.frames.EstacionEditar;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.otros.PopUpMantenimiento;
@@ -27,6 +29,11 @@ public class PanelEstacionEditar extends JPanel{
 	
 	private JComboBox<String> comboBox;
 	private JButton button;
+	private JTextField nombre;
+	private JTextField horaApertura;
+	private JTextField minutoApertura;
+	private JTextField horaCierre;
+	private JTextField minutoCierre;
 	private JTextField field;
 	private JLabel label;
 	
@@ -48,11 +55,11 @@ public class PanelEstacionEditar extends JPanel{
 		c.weightx = 0.0; c.weighty = 0.1;
 		this.add(label, c);
 		
-		field = new JTextField((String) filaSeleccionada.elementAt(1));
+		nombre = new JTextField((String) filaSeleccionada.elementAt(1));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1; c.gridy = 0;
 		c.gridwidth = 3;
-		this.add(field, c);
+		this.add(nombre, c);
 		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = 1;
 		
@@ -63,10 +70,10 @@ public class PanelEstacionEditar extends JPanel{
 		
 		horarioAux = (LocalTime) filaSeleccionada.elementAt(2);
 		
-		field = new JTextField(Integer.toString(horarioAux.getHour()));
+		horaApertura = new JTextField(Integer.toString(horarioAux.getHour()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1; c.gridy = 1;
-		this.add(field, c);
+		this.add(horaApertura, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		
@@ -75,10 +82,10 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridx = 2; c.gridy = 1;
 		this.add(label, c);
 		
-		field = new JTextField(Integer.toString(horarioAux.getMinute()));
+		minutoApertura = new JTextField(Integer.toString(horarioAux.getMinute()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3; c.gridy = 1;
-		this.add(field, c);
+		this.add(minutoApertura, c);
 		c.fill = GridBagConstraints.NONE;
 		
 		label = new JLabel("Horario de cierre: ");
@@ -88,11 +95,11 @@ public class PanelEstacionEditar extends JPanel{
 		
 		horarioAux = (LocalTime) filaSeleccionada.elementAt(3);
 		
-		field = new JTextField(Integer.toString(horarioAux.getHour()));
+		horaCierre = new JTextField(Integer.toString(horarioAux.getHour()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1; c.gridy = 2;
 		c.weightx = 0.1;
-		this.add(field, c);
+		this.add(horaCierre, c);
 		c.fill = GridBagConstraints.NONE;
 		
 		label = new JLabel(":");
@@ -100,10 +107,10 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridx = 2; c.gridy = 2;
 		this.add(label, c);
 		
-		field = new JTextField(Integer.toString(horarioAux.getMinute()));
+		minutoCierre = new JTextField(Integer.toString(horarioAux.getMinute()));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3; c.gridy = 2;
-		this.add(field, c);
+		this.add(minutoCierre, c);
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.0;
 		
@@ -168,13 +175,106 @@ public class PanelEstacionEditar extends JPanel{
 		this.add(button, c);
 		
 		button = new JButton("Confirmar edición");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+					try {
+						
+						inputEstaVacia();
+						inputEsValida();
+						
+						frame.dispose();
+						frameAnterior = new EstacionGestionar();
+					
+				}catch (InputVacioException IVE) {
+					
+					JOptionPane.showMessageDialog(frame,
+							"Faltan completar los siguientes campos:\n\n"+IVE.getMessage(),
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}catch (InputInvalidaException IIE) {
+					
+					JOptionPane.showMessageDialog(frame,
+							IIE.getMessage(),	//VER
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.5;
 		c.gridx = 5;
 		c.gridy = 4;
 		this.add(button, c);
 		
+		button = new JButton("Editar ubicación");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { }
+		
+					
+		});
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridx = 4;
+		c.gridy = 4;
+		this.add(button, c);
+		
+	}
+	
+	public void inputEstaVacia() throws InputVacioException{
+		String error = "";
+		boolean algunoVacio = false;
+		
+		if(nombre.getText().isEmpty()) {
+			error += "- Nombre\n";
+			algunoVacio = true;
+		}
+		
+		if(horaApertura.getText().isEmpty() || minutoApertura.getText().isEmpty()) {
+			error += "- Hora de apertura\n";
+			algunoVacio = true;
+		}
+		
+		if(horaCierre.getText().isEmpty() || minutoCierre.getText().isEmpty()) {
+			error += "- Hora de cierre\n";
+			algunoVacio = true;
+		}
+		
+		if(algunoVacio) {
+			
+			throw new InputVacioException(error);
+		}
+			
+				
+	}
+	
+	public void inputEsValida() throws InputInvalidaException{
+		//TODO
+		if(validarDatoInteger(horaApertura) || validarDatoInteger(minutoApertura) ||
+		   validarDatoInteger(horaCierre) || validarDatoInteger(minutoCierre) || validarDatoString(nombre))
+
+				throw new InputInvalidaException();
+	}
+	
+	public boolean validarDatoInteger(JTextField field) {
+		
+		try {
+			Integer.parseInt(field.getText());
+		} catch(NumberFormatException e) {
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean validarDatoString(JTextField field) {
+		
+		if(field.getText().length() > 30)
+			return true;
+		
+		return false;
 	}
 
-	
 }
+
+	
