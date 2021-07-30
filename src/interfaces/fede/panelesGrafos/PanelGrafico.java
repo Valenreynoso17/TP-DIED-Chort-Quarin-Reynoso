@@ -27,13 +27,13 @@ import gestores.GestorEstacion;
 import gestores.GestorFlecha;
 import gestores.GestorRuta;
 
-public class PanelGrafico extends JPanel {
+public abstract class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
 	protected GestorEstacion gestorEstaciones;
 	protected GestorRuta gestorRutas;
 	protected GestorFlecha gestorFlechas;
 	protected static Integer radioEstaciones = 20;
-	protected DialogInfoFlecha ventanaInfoFlecha;
+	protected DialogInfoFlechaInactivosNoVisibles ventanaInfoFlecha;
 
 	protected Float escala = 1.0f;
 	protected List<Dibujable> dibujables;
@@ -61,9 +61,9 @@ public class PanelGrafico extends JPanel {
 		Thread t2 = new Thread(() -> {
 			List<Ruta> rutas = gestorRutas.getRutas();
 			for (Ruta r : rutas) {
-				if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
+				//if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
 					gestorFlechas.asignarAFlecha(r);
-				}
+				//}
 			}
 			synchronized (dibujables) {
 				dibujables.addAll(gestorFlechas.getFlechas());
@@ -86,7 +86,7 @@ public class PanelGrafico extends JPanel {
 				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlecha(f);
+							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f);
 							ventanaInfoFlecha.setVisible(true);
 						}
 					}
@@ -146,20 +146,15 @@ public class PanelGrafico extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarGrafo(g2d);
-		imprimirImagen(g2d);
 		
 
 	}
 	
-	protected void dibujarGrafo(Graphics2D g2d) {
+	protected abstract void dibujarGrafo(Graphics2D g2d); /*{
 		for (Dibujable d : dibujables) {
 			d.dibujarse(g2d);
 		}
-	}
-	
-	protected void imprimirImagen(Graphics2D g2d) {
-
-	}
+	}*/
 	
 	/*protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
 		Point pos = e.getPosicion();

@@ -67,6 +67,23 @@ public class Flecha implements Dibujable{
 		return this.rutas;
 	}
 	
+	public List<Ruta> getRutasActivas() {
+		List<Ruta> activas = new ArrayList<>();
+		for (Ruta r : rutas) {
+			if (r.activa()) activas.add(r);
+		}
+		
+		return activas;
+	}
+	
+	public Boolean todasLasRutasInactivas() {
+		for (Ruta r : rutas) {
+			if (r.activa()) return false;
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public void dibujarse(Graphics2D g2d) {
 		Point aux1, aux2;
@@ -91,6 +108,14 @@ public class Flecha implements Dibujable{
 		//hitbox = calcularHitbox();
 	}
 
+	
+	
+	@Override
+	public Boolean visible() {
+		return !rutas.isEmpty() && !todasLasRutasInactivas() && getEstacionOrigen().operativa() && getEstacionDestino().operativa();
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -121,5 +146,4 @@ public class Flecha implements Dibujable{
 			return false;
 		return true;
 	}
-	
 }

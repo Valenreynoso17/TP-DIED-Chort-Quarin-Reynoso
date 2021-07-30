@@ -39,9 +39,11 @@ public class PanelSeleccionOrigenDestino extends PanelGrafico {
 	
 	protected void dibujarGrafo(Graphics2D g2d) {
 		for (Dibujable d : dibujables) {
-			if (d.equals(origen)) origen.dibujarse(g2d, GamaColor.VERDE);
-			else if (d.equals(destino)) destino.dibujarse(g2d, GamaColor.VERDE);
-			else d.dibujarse(g2d);
+			if (d.visible()) {
+				if (d.equals(origen)) origen.dibujarse(g2d, GamaColor.VERDE);
+				else if (d.equals(destino)) destino.dibujarse(g2d, GamaColor.VERDE);
+				else d.dibujarse(g2d);
+			}
 		}
 	}
 	

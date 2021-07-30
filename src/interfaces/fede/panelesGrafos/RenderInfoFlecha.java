@@ -21,23 +21,13 @@ public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
 	public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, boolean isSelected,
 			boolean cellHasFocus) {
 		
-		//int selectedIndex = ((Integer)value).intValue();
-			
-		/*if (isSelected) {
-			setBackground(list.getSelectionBackground());
-			setForeground(list.getSelectionForeground());
-		} else {
-			setBackground(list.getBackground());
-			setForeground(list.getForeground());
-		}*/
 		if (value instanceof Ruta) {
-			setForeground(((Ruta) value).getColorLinea());
-			setText(((Ruta) value).linea());
+			Ruta r = (Ruta) value;
+			setForeground(r.getColorLinea());
+			setText(r.linea());
+			
 		}
 			
-		//Set the icon and text.  If icon was null, say so.
-		
-		
 		setFont(list.getFont());
 			
 		return this;

@@ -201,5 +201,10 @@ public class Estacion implements Dibujable{
 		this.escala = escala;
 	}
 	
+	@Override
+	public Boolean visible() {
+		return this.operativa();
+	}
+	
 
 }

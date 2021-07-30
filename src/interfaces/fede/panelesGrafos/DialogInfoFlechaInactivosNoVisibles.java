@@ -18,8 +18,8 @@ import clases.Flecha;
 import clases.Ruta;
 import enums.EstadoRuta;
 
-public class DialogInfoFlecha extends JDialog {
-	public DialogInfoFlecha(Flecha f) {
+public class DialogInfoFlechaInactivosNoVisibles extends JDialog {
+	public DialogInfoFlechaInactivosNoVisibles(Flecha f) {
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
 		this.setSize(200, 250);
@@ -33,7 +33,7 @@ public class DialogInfoFlecha extends JDialog {
 		
 		DefaultListModel<Ruta> model = new DefaultListModel<>();
 		JList<Ruta> lista = new JList<>(model);
-		model.addAll(f.getRutas());
+		model.addAll(f.getRutasActivas());
 		lista.setCellRenderer(new RenderInfoFlecha<Ruta>());
 		
 		

@@ -96,12 +96,15 @@ public class PanelVentaBoleto extends JPanel {
 				comboBoxDestino.setModel(new DefaultComboBoxModel<>(accesible.toArray(new Estacion[accesible.size()])));
 				comboBoxDestino.setEnabled(true);
 				comboBoxDestino.setSelectedItem(null);
-				panelGrafico.pintarOrigen((Estacion)comboBoxOrigen.getSelectedItem());
 			}
 			catch (SinEstacionesAccesiblesException exc) {
 				comboBoxDestino.setEnabled(false);
 				comboBoxDestino.setSelectedItem(null);
+
 				JOptionPane.showMessageDialog(getPadre(), exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			finally {
+				panelGrafico.pintarOrigen((Estacion)comboBoxOrigen.getSelectedItem());
 			}
 		});
 		GridBagConstraints gbc_comboBoxOrigen = new GridBagConstraints();
