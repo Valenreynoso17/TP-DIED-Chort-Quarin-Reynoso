@@ -31,6 +31,7 @@ import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 import interfaces.fede.panelesGrafos.PanelGrafico;
+import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 
 public class PanelVentaBoleto2 extends JPanel {
 	private JButton botonSiguiente;
@@ -48,11 +49,11 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbl.rowWeights = new double[]{0.5, 0.2, 0.0, 0.0};
 		this.setLayout(gbl);
 		
-		JPanel panelGrafico = new JPanel();
+		PanelPermiteCambiarPosicion panelGrafico = new PanelPermiteCambiarPosicion();
 		panelGrafico.setBackground(Color.WHITE);
-		panelGrafico.setPreferredSize(new Dimension(600, 400));
 		
 		JScrollPane spPanelGrafico = new JScrollPane(panelGrafico);		
+		spPanelGrafico.setPreferredSize(new Dimension(600, 400));
 		GridBagConstraints gbc_spPanelGrafico = new GridBagConstraints();
 		gbc_spPanelGrafico.gridx = 1;
 		gbc_spPanelGrafico.gridy = 0;

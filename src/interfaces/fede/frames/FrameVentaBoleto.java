@@ -73,10 +73,11 @@ public class FrameVentaBoleto extends JFrame {
 		gestor.agregarEstacion("5", "E", null, null, new Point(300, 150));
 		gestor.agregarEstacion("6", "F", null, null, new Point(450, 100));
 		gestor.agregarEstacion("7", "G", null, null, new Point(200, 300));
-		gestor.agregarEstacion("8", "X", null, null, new Point(500, 300));
+		gestor.agregarEstacion("8", "X", null, null, new Point(700, 300));
 		
 		List<Estacion> estaciones = gestor.getEstaciones();
 		//estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
+		//estaciones.get(5).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
@@ -87,7 +88,7 @@ public class FrameVentaBoleto extends JFrame {
 		gestor2.agregarRuta(estaciones.get(4), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(7), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(7), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.NO_ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 	}
 	

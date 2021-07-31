@@ -11,6 +11,11 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -27,13 +32,14 @@ import gestores.GestorEstacion;
 import gestores.GestorFlecha;
 import gestores.GestorRuta;
 
-public class PanelGrafico extends JPanel {
+public abstract class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
 	protected GestorEstacion gestorEstaciones;
 	protected GestorRuta gestorRutas;
 	protected GestorFlecha gestorFlechas;
 	protected static Integer radioEstaciones = 20;
-	protected DialogInfoFlecha ventanaInfoFlecha;
+	protected DialogInfoFlechaInactivosNoVisibles ventanaInfoFlecha;
+	protected List<Estacion> estaciones;
 
 	protected Float escala = 1.0f;
 	protected List<Dibujable> dibujables;
@@ -53,7 +59,7 @@ public class PanelGrafico extends JPanel {
 		dibujables = new ArrayList<>();
 		
 		Thread t1 = new Thread(() -> {
-			List<Estacion> estaciones = gestorEstaciones.getEstaciones();
+			estaciones = gestorEstaciones.getEstaciones();
 			synchronized (dibujables) {
 				dibujables.addAll(estaciones);
 			}
@@ -61,9 +67,9 @@ public class PanelGrafico extends JPanel {
 		Thread t2 = new Thread(() -> {
 			List<Ruta> rutas = gestorRutas.getRutas();
 			for (Ruta r : rutas) {
-				if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
+				//if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
 					gestorFlechas.asignarAFlecha(r);
-				}
+				//}
 			}
 			synchronized (dibujables) {
 				dibujables.addAll(gestorFlechas.getFlechas());
@@ -79,36 +85,9 @@ public class PanelGrafico extends JPanel {
 			e.printStackTrace();
 		}
 		
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
-					for (Flecha f : flechas) {
-						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlecha(f);
-							ventanaInfoFlecha.setVisible(true);
-						}
-					}
-				}
-			}
-		});
 		
-		this.addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseMoved(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				Boolean existeAlguna = false;
-				for (Flecha f : flechas) {
-					if (f.getHitbox().contains(e.getPoint())) {
-						existeAlguna = true;
-						break;
-					}
-				}
-				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
-				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				
-			}
-		});
+		
+
 
 	}
 
@@ -146,20 +125,15 @@ public class PanelGrafico extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarGrafo(g2d);
-		imprimirImagen(g2d);
 		
 
 	}
 	
-	protected void dibujarGrafo(Graphics2D g2d) {
+	protected abstract void dibujarGrafo(Graphics2D g2d); /*{
 		for (Dibujable d : dibujables) {
 			d.dibujarse(g2d);
 		}
-	}
-	
-	protected void imprimirImagen(Graphics2D g2d) {
-
-	}
+	}*/
 	
 	/*protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
 		Point pos = e.getPosicion();

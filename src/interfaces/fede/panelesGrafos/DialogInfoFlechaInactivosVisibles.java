@@ -1,11 +1,8 @@
 package interfaces.fede.panelesGrafos;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
@@ -13,13 +10,11 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import clases.Estacion;
 import clases.Flecha;
 import clases.Ruta;
-import enums.EstadoRuta;
 
-public class DialogInfoFlecha extends JDialog {
-	public DialogInfoFlecha(Flecha f) {
+public class DialogInfoFlechaInactivosVisibles extends JDialog {
+	public DialogInfoFlechaInactivosVisibles(Flecha f) {
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
 		this.setSize(200, 250);
@@ -35,7 +30,6 @@ public class DialogInfoFlecha extends JDialog {
 		JList<Ruta> lista = new JList<>(model);
 		model.addAll(f.getRutas());
 		lista.setCellRenderer(new RenderInfoFlecha<Ruta>());
-		
 		
 		JScrollPane scrollPane = new JScrollPane(lista);
 		//scrollPane.setPreferredSize(new Dimension(60, 80));
