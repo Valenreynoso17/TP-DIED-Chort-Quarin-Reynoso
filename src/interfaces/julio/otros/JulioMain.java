@@ -1,12 +1,12 @@
 package interfaces.julio.otros;
 
-import interfaces.julio.frames.EstacionGestionar;
+import interfaces.julio.frames.MenuPrincipal;
 
 public class JulioMain {
 
 	public static void main(String[] args) {
 		
-		EstacionGestionar estacion1 = new EstacionGestionar();
+		MenuPrincipal estacion1 = new MenuPrincipal();
 	}
 
 }

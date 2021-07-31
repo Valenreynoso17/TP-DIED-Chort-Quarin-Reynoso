@@ -2,6 +2,7 @@ package interfaces.fede.panelesGrafos;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -21,24 +22,22 @@ public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
 	public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, boolean isSelected,
 			boolean cellHasFocus) {
 		
-		//int selectedIndex = ((Integer)value).intValue();
-			
-		/*if (isSelected) {
-			setBackground(list.getSelectionBackground());
-			setForeground(list.getSelectionForeground());
-		} else {
-			setBackground(list.getBackground());
-			setForeground(list.getForeground());
-		}*/
 		if (value instanceof Ruta) {
-			setForeground(((Ruta) value).getColorLinea());
-			setText(((Ruta) value).linea());
+			Ruta r = (Ruta) value;
+			if (r.activa()) {
+				setForeground(r.getColorLinea());
+				setFont(list.getFont());
+				setText(r.linea());
+			}
+			else {
+				setForeground(new Color(90, 90, 90));
+				setFont(new Font("ff", Font.ITALIC, 12));
+				setText(r.linea() + " - No activa");
+			}
+			
 		}
 			
-		//Set the icon and text.  If icon was null, say so.
 		
-		
-		setFont(list.getFont());
 			
 		return this;
 	}

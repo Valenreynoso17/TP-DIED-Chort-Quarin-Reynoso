@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -152,7 +154,7 @@ public class PanelEstacionAlta extends JPanel{
 				}catch (InputVacioException IVE) {
 					
 					JOptionPane.showMessageDialog(frame,
-							IVE.getMessage(),
+							"Faltan completar los siguientes campos:\n\n"+IVE.getMessage(),
 						    "Error",
 						    JOptionPane.ERROR_MESSAGE);
 				}catch (InputInvalidaException IIE) {
@@ -170,23 +172,40 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 4;
 		this.add(button, c);
 		
-	}
+	} 
 	
 	public void inputEstaVacia() throws InputVacioException{
+		String error = "";
+		boolean algunoVacio = false;
 		
-		if(nombre.getText().isEmpty())
-		else if(horaApertura.getText().isEmpty() || minutoApertura.getText().isEmpty())
-		else if(horaCierre.getText().isEmpty() || minutoCierre.getText().isEmpty())
+		if(nombre.getText().isEmpty()) {
+			error += "- Nombre\n";
+			algunoVacio = true;
+		}
+		
+		if(horaApertura.getText().isEmpty() || minutoApertura.getText().isEmpty()) {
+			error += "- Hora de apertura\n";
+			algunoVacio = true;
+		}
+		
+		if(horaCierre.getText().isEmpty() || minutoCierre.getText().isEmpty()) {
+			error += "- Hora de cierre\n";
+			algunoVacio = true;
+		}
+		
+		if(algunoVacio) {
 			
-				throw new InputVacioException();
+			throw new InputVacioException(error);
+		}
+			
+				
 	}
 	
 	public void inputEsValida() throws InputInvalidaException{
 		//TODO
 		if(validarDatoInteger(horaApertura) || validarDatoInteger(minutoApertura) ||
 		   validarDatoInteger(horaCierre) || validarDatoInteger(minutoCierre) || validarDatoString(nombre))
-//			|| nombre.getText().isEmpty() || horaApertura.getText().isEmpty() ||
-//		   minutoApertura.getText().isEmpty() || horaCierre.getText().isEmpty() || minutoCierre.getText().isEmpty()) 
+
 				throw new InputInvalidaException();
 	}
 	
@@ -206,7 +225,6 @@ public class PanelEstacionAlta extends JPanel{
 		
 		if(field.getText().length() > 30)
 			return true;
-		
 		
 		return false;
 	}

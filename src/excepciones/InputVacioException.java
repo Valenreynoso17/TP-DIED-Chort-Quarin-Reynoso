@@ -2,8 +2,9 @@ package excepciones;
 
 public class InputVacioException extends Exception {
 	
-	public InputVacioException() {
-		super("Algunos datos no han sido ingresados.");
+	public InputVacioException(String error) {
+
+		super(error);
 	}
 
 }
