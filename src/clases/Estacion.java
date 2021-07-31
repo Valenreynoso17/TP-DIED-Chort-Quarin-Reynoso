@@ -41,9 +41,15 @@ public class Estacion implements Dibujable{
 	}
 	
 	// ver si lo dejamos
-	public Estacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
-		this(i, n, hA, hC);
+	public Estacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, Point pos, EstadoEstacion estado, List<Mantenimiento> mantenimientos) {
+		this.id = id;
+		this.nombre = nombre;
+		this.horarioApertura = horarioApertura;
+		this.horarioCierre = horarioCierre;
 		this.posicion = pos;
+		this.estado = estado;
+		this.mantenimientos = mantenimientos;
+		this.escala = 1.0f;
 	}
 	
 	public String getId() {

@@ -46,7 +46,10 @@ public class PanelPermiteCambiarPosicion extends PanelGrafico {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if (seleccionada != null) seleccionada = null;
+				if (seleccionada != null) {
+					seleccionada = null;
+				}
+				
 			}
 		});
 		
@@ -75,9 +78,12 @@ public class PanelPermiteCambiarPosicion extends PanelGrafico {
 			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				seleccionada.mover(puntoRelativoAgarre, e.getPoint());
-				gestorFlechas.recalcularFlechas(seleccionada);
-				repaint();
+				if (seleccionada != null) {
+					seleccionada.mover(puntoRelativoAgarre, e.getPoint());
+					gestorFlechas.recalcularFlechas(seleccionada);
+					repaint();
+					chequearPreferredSize(seleccionada);
+				}
 			}
 		});
 	}

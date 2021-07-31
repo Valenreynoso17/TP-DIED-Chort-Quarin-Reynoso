@@ -66,16 +66,31 @@ public class FrameVentaBoleto extends JFrame {
 		GestorEstacion gestor = GestorEstacion.getInstance();
 		GestorRuta gestor2 = GestorRuta.getInstance();
 		
-		gestor.agregarEstacion("1", "A", null, null, new Point(50, 70));
+		/*gestor.agregarEstacion("1", "A", null, null, new Point(50, 70));
 		gestor.agregarEstacion("2", "B", null, null, new Point(180, 50));
 		gestor.agregarEstacion("3", "C", null, null, new Point(180, 150));
 		gestor.agregarEstacion("4", "D", null, null, new Point(300, 50));
 		gestor.agregarEstacion("5", "E", null, null, new Point(300, 150));
 		gestor.agregarEstacion("6", "F", null, null, new Point(450, 100));
 		gestor.agregarEstacion("7", "G", null, null, new Point(200, 300));
-		gestor.agregarEstacion("8", "X", null, null, new Point(700, 300));
+		gestor.agregarEstacion("8", "X", null, null, new Point(700, 300));*/
 		
+		
+		/*
+		 	INSERT INTO died.estacion
+		 	VALUES (1, 'A', 'OPERATIVA', '10:00', '20:00', 50, 70),
+		 		(2, 'B', 'OPERATIVA', '10:00', '20:00', 180, 50),
+		 		(3, 'C', 'OPERATIVA', '10:00', '20:00', 180, 150),
+		 		(4, 'D', 'OPERATIVA', '10:00', '20:00', 300, 50),
+		 		(5, 'E', 'OPERATIVA', '10:00', '20:00', 300, 150),
+		 		(6, 'F', 'OPERATIVA', '10:00', '20:00', 450, 100),
+		 		(7, 'G', 'OPERATIVA', '10:00', '20:00', 200, 300),
+		 		(8, 'H', 'OPERATIVA', '10:00', '20:00', 700, 300);
+		 
+		 
+		 */
 		List<Estacion> estaciones = gestor.getEstaciones();
+
 		//estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		//estaciones.get(5).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		

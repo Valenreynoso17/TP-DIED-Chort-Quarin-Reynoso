@@ -3,13 +3,15 @@ package interfaces.fede.frames;
 import java.util.List;
 
 import clases.Estacion;
+import dao.EstacionDAO;
+import dao.EstacionPostgreSQLImpl;
 import gestores.GestorEstacion;
 
 public class App {
 	public static void main(String[] args) {
-		FrameVentaBoleto.pruebaGrafico();
-		GestorEstacion gestor = GestorEstacion.getInstance();
-		List<Estacion> estaciones = gestor.getEstaciones();
-		FrameVentaBoleto2.crearVentana(null, estaciones.get(0), estaciones.get(1));
+		EstacionDAO dao = new EstacionPostgreSQLImpl();
+		List<Estacion> estacion = dao.buscar();
+		
+		for (Estacion e : estacion) System.out.println(e.toString());
 	}
 }

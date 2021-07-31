@@ -32,7 +32,7 @@ import gestores.GestorEstacion;
 import gestores.GestorFlecha;
 import gestores.GestorRuta;
 
-public abstract class PanelGrafico extends JPanel {
+public class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
 	protected GestorEstacion gestorEstaciones;
 	protected GestorRuta gestorRutas;
@@ -40,6 +40,7 @@ public abstract class PanelGrafico extends JPanel {
 	protected static Integer radioEstaciones = 20;
 	protected DialogInfoFlechaInactivosNoVisibles ventanaInfoFlecha;
 	protected List<Estacion> estaciones;
+	protected Integer margen = 10;
 
 	protected Float escala = 1.0f;
 	protected List<Dibujable> dibujables;
@@ -60,16 +61,17 @@ public abstract class PanelGrafico extends JPanel {
 		
 		Thread t1 = new Thread(() -> {
 			estaciones = gestorEstaciones.getEstaciones();
-			synchronized (dibujables) {
-				dibujables.addAll(estaciones);
+			for (Estacion e : estaciones) {
+				chequearPreferredSize(e);
+	 			synchronized (dibujables) {
+					dibujables.addAll(estaciones);
+				}
 			}
 		});
 		Thread t2 = new Thread(() -> {
 			List<Ruta> rutas = gestorRutas.getRutas();
 			for (Ruta r : rutas) {
-				//if (r.activa() && r.getOrigen().operativa() && r.getDestino().operativa()) {
-					gestorFlechas.asignarAFlecha(r);
-				//}
+				gestorFlechas.asignarAFlecha(r);
 			}
 			synchronized (dibujables) {
 				dibujables.addAll(gestorFlechas.getFlechas());
@@ -129,12 +131,22 @@ public abstract class PanelGrafico extends JPanel {
 
 	}
 	
-	protected abstract void dibujarGrafo(Graphics2D g2d); /*{
+	protected void dibujarGrafo(Graphics2D g2d){
 		for (Dibujable d : dibujables) {
 			d.dibujarse(g2d);
 		}
-	}*/
+	}
 	
+	protected void chequearPreferredSize(Estacion e) {
+		if (this.getPreferredSize().height <= e.getPosicion().y + radioEstaciones + margen) {
+			this.setPreferredSize(new Dimension(this.getPreferredSize().width , e.getPosicion().y + radioEstaciones + margen));
+			revalidate();
+		}
+		else if (this.getPreferredSize().width <= e.getPosicion().x + radioEstaciones + margen) {
+			this.setPreferredSize(new Dimension(e.getPosicion().x + radioEstaciones + margen , this.getPreferredSize().height));
+			revalidate();
+		}
+	}
 	/*protected void dibujarEstacion(Graphics2D g2d, Estacion e) {
 		Point pos = e.getPosicion();
 		
