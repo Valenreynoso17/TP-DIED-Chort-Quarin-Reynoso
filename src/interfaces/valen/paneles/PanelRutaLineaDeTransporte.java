@@ -154,9 +154,8 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		List<String> listaEstaciones = gestorEstacion.getStringEstaciones();
 		String[] arrayEstaciones = new String[listaEstaciones.size()];
 		listaEstaciones.toArray(arrayEstaciones);
-//		opcionesEstaciones = new String[listaEstaciones.size()];
-//		listaEstaciones.toArray(opcionesEstaciones);
-		System.out.println(arrayEstaciones);
+		opcionesEstaciones = new String[listaEstaciones.size()];
+		listaEstaciones.toArray(opcionesEstaciones);
 		
 //		Foo[] array = new Foo[list.size()];
 //		list.toArray(array); // fill the array

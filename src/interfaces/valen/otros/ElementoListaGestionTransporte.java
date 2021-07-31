@@ -11,8 +11,10 @@ import javax.swing.*;
 
 import clases.LineaDeTransporte;
 import enums.EstadoLineaDeTransporte;
+import gestores.GestorLineaDeTransporte;
 import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
+import interfaces.valen.paneles.PanelListadoGestionLineas;
 
 public class ElementoListaGestionTransporte extends JPanel{
 	
@@ -23,11 +25,13 @@ public class ElementoListaGestionTransporte extends JPanel{
 	JButton botonEditar;
 	JButton botonBorrar;
 	GridBagConstraints gbc;
+	GestorLineaDeTransporte gestorLineas;
 	
-	public ElementoListaGestionTransporte(VentanaGestionLineasDeTransporte frame, LineaDeTransporte linea) {
+	public ElementoListaGestionTransporte(VentanaGestionLineasDeTransporte frame,PanelListadoGestionLineas panel, LineaDeTransporte linea) {
 		
 		this.frameContenedor = frame;
 		this.lineaDeTransporte = linea;
+		gestorLineas = GestorLineaDeTransporte.getInstance();
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 		this.setLayout(new GridBagLayout());
@@ -66,10 +70,9 @@ public class ElementoListaGestionTransporte extends JPanel{
 			    options[1]);
 			
 			if(n==0) {
-				System.out.println("Se elimina");
-			} else {
-				System.out.println("Se cancela la eliminación");
-			}
+				gestorLineas.borrarLineaDeTransporte(linea);
+				panel.actualizarPanelGridLista();
+			} 
 		});
 		
 		gbc.gridx = 0;

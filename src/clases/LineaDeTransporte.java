@@ -7,11 +7,11 @@ public class LineaDeTransporte {
 
 	private Integer id;
 	private String nombre;
-	private Color color;
+	private CustomColor color;
 	private EstadoLineaDeTransporte estado;
 	private Trayecto trayecto;
 	
-	public LineaDeTransporte(Integer id, String nombre, Color color, EstadoLineaDeTransporte estadoRuta, Trayecto trayecto) {
+	public LineaDeTransporte(Integer id, String nombre, CustomColor color, EstadoLineaDeTransporte estadoRuta, Trayecto trayecto) {
 		this.id = id;
 		this.nombre = nombre;
 		this.color = color;
@@ -31,7 +31,7 @@ public class LineaDeTransporte {
 		return estado;
 	}
 	
-	public Color getColor() {
+	public CustomColor getColor() {
 		return color;
 	}
 	

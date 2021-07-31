@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import clases.CustomColor;
 import gestores.GestorColor;
+import interfaces.valen.paneles.PanelAltaLineaDeTransporte;
 import interfaces.valen.paneles.PanelListadoGestionLineas;
 
 public class ElementoDialogoColorPicker extends JPanel{
@@ -35,6 +36,7 @@ public class ElementoDialogoColorPicker extends JPanel{
 		boton.addActionListener(e -> {
 			dialogoPadre.dispose();
 			if (panel instanceof PanelListadoGestionLineas) ((PanelListadoGestionLineas) panel).cambiarColorPicker(color);
+			else if (panel instanceof PanelAltaLineaDeTransporte) ((PanelAltaLineaDeTransporte) panel).cambiarColorPicker(color);
 		});
 		boton.setMargin(new Insets(5, 5, 5, 5));
 		this.add(boton, gbc);
