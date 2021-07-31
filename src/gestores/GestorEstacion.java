@@ -13,15 +13,19 @@ import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Ruta;
+import dao.EstacionDAO;
+import dao.EstacionPostgreSQLImpl;
 import excepciones.SinEstacionesAccesiblesException;
 
 public class GestorEstacion {
 	private List<Estacion> estaciones;
 	private static GestorEstacion gestor;
 	private GestorRuta gestorRutas;
+	private EstacionDAO dao;
 	
 	private GestorEstacion() {
-		estaciones = new ArrayList<>();
+		dao = new EstacionPostgreSQLImpl();
+		estaciones = new ArrayList<>(dao.buscar());
 		gestorRutas = GestorRuta.getInstance();
 	}
 	
@@ -42,7 +46,7 @@ public class GestorEstacion {
 	}
 	
 	public void agregarEstacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
-		estaciones.add(new Estacion(i, n, hA, hC, pos));
+		estaciones.add(new Estacion(i, n, hA, hC));
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
