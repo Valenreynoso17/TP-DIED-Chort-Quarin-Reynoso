@@ -13,43 +13,9 @@ import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 
-public class PanelSeleccionOrigenDestino extends PanelGrafico {
-	public Estacion origen, destino;
-	
+public class PanelSeleccionOrigenDestino extends PanelPintaSoloVisibles {
 	public PanelSeleccionOrigenDestino() {
-		super();
-		
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
-					for (Flecha f : flechas) {
-						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f);
-							ventanaInfoFlecha.setVisible(true);
-						}
-					}
-				}
-			}
-		});
-		
-		this.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				List<Flecha> flechas = gestorFlechas.getFlechas();
-				Boolean existeAlguna = false;
-				for (Flecha f : flechas) {
-					if (f.getHitbox().contains(e.getPoint())) {
-						existeAlguna = true;
-						break;
-					}
-				}
-				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
-				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				
-			}
-		});
+		super(null, null);
 		
 	}
 	
@@ -73,16 +39,6 @@ public class PanelSeleccionOrigenDestino extends PanelGrafico {
 		if (destino != null) repaint(destino.getPosicion().x - radioEstaciones - 5, destino.getPosicion().y - radioEstaciones - 5, (radioEstaciones + 5)*2, (radioEstaciones + 5)*2);
 		destino = e;
 		repaint(e.getPosicion().x - radioEstaciones - 5, e.getPosicion().y - radioEstaciones - 5, (radioEstaciones + 5)*2, (radioEstaciones + 5)*2);
-	}
-	
-	protected void dibujarGrafo(Graphics2D g2d) {
-		for (Dibujable d : dibujables) {
-			if (d.visible()) {
-				if (d.equals(origen)) origen.dibujarse(g2d, GamaColor.VERDE);
-				else if (d.equals(destino)) destino.dibujarse(g2d, GamaColor.VERDE);
-				else d.dibujarse(g2d);
-			}
-		}
 	}
 	
 }
