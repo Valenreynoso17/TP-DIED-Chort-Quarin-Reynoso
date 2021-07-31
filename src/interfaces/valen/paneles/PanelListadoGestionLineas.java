@@ -97,16 +97,6 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		this.add(panelScrollLista, gbc);
-		
-		System.out.println(this.getSize());
-		System.out.println(this.getMaximumSize());
-		System.out.println(this.getMinimumSize());
-		System.out.println(this.getPreferredSize());
-		
-		System.out.println(textoBusqueda.getSize());
-		System.out.println(textoBusqueda.getMaximumSize());
-		System.out.println(textoBusqueda.getMinimumSize());
-		System.out.println(textoBusqueda.getPreferredSize());
 	}
 	
 	public void cambiarColorPicker(CustomColor color) {
