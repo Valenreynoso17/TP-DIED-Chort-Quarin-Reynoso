@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
+import clases.CustomColor;
 import clases.LineaDeTransporte;
 import enums.EstadoLineaDeTransporte;
 import gestores.GestorLineaDeTransporte;
@@ -22,7 +23,7 @@ public class PanelGridListaGestionLineas extends JPanel{
 	GridBagConstraints gbc;
 	GestorLineaDeTransporte gestorLinea;
 
-	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame, Boolean ckbActiva, Boolean ckbNoActiva, String buscaNombre) {
+	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame, Boolean ckbActiva, Boolean ckbNoActiva, String buscaNombre, CustomColor colorBusqueda) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -46,7 +47,12 @@ public class PanelGridListaGestionLineas extends JPanel{
 		}
 		
 		Predicate<LineaDeTransporte> filtroBusqueda = lt -> lt.getNombre().toUpperCase().contains(buscaNombre.toUpperCase());
-		List<LineaDeTransporte> lista = gestorLinea.getLineasDeTransporte().stream().filter(filtroCheckBoxes).filter(filtroBusqueda).collect(Collectors.toList());
+		
+		Predicate<LineaDeTransporte> filtroColor;
+		if(colorBusqueda.getNombre() == "Ninguno") filtroColor = cc -> true;
+		else filtroColor = lt -> lt.getColor().equals(colorBusqueda);
+		
+		List<LineaDeTransporte> lista = gestorLinea.getLineasDeTransporte().stream().filter(filtroCheckBoxes).filter(filtroBusqueda).filter(filtroColor).collect(Collectors.toList());
 //		if(lista != null) {
 			Integer valorGridy = 0;
 			for(int i = 0; i < lista.size(); i++) {

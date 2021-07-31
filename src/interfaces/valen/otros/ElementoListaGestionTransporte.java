@@ -74,20 +74,30 @@ public class ElementoListaGestionTransporte extends JPanel{
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.gridheight = 3;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		JPanel panelColor = new JPanel();
+		panelColor.setBackground(lineaDeTransporte.getColor());
+		this.add(panelColor, gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.gridheight = 1;
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
 		gbc.gridwidth = 2;
 		this.add(nombreLinea, gbc);
 		
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridwidth = 2;
 		this.add(estadoLinea, gbc);
 		
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		this.add(botonEditar, gbc);
 		
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		this.add(botonBorrar, gbc);	
