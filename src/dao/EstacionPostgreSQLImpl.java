@@ -44,7 +44,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			st = conn.prepareStatement(consulta);
 			rs = st.executeQuery();
 			
-			while(!rs.next()) {
+			
+			while(rs.next()) {				
 				String id = String.valueOf(rs.getInt("id"));
 				String nombre = rs.getString("nombre");
 				String estado = rs.getString("estado");
