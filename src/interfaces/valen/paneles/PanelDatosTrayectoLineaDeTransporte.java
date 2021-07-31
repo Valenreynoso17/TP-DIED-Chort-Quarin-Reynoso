@@ -4,16 +4,24 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import clases.LineaDeTransporte;
+import clases.Ruta;
+import gestores.GestorTrayecto;
+
 public class PanelDatosTrayectoLineaDeTransporte extends JPanel{
 	
 	GridBagConstraints gbc;
+	GestorTrayecto gestorTrayecto;
 	
-	public PanelDatosTrayectoLineaDeTransporte() {
+	public PanelDatosTrayectoLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {
+		
+		gestorTrayecto = GestorTrayecto.getInstance();
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -23,6 +31,9 @@ public class PanelDatosTrayectoLineaDeTransporte extends JPanel{
 		gbc.weightx = 1.0;
 		gbc.gridx = 0;
 		gbc.gridy = GridBagConstraints.RELATIVE;
+		
+		// Necesito obtener las rutas que pertenecen al trayecto que esta asociado con la linea de transporte
+//		List<Ruta> listaRutas = gestorTrayecto.();
 		
 		ElementoListaEdicionLineaDeTransporte e1 = new ElementoListaEdicionLineaDeTransporte();
 		ElementoListaEdicionLineaDeTransporte e2 = new ElementoListaEdicionLineaDeTransporte();

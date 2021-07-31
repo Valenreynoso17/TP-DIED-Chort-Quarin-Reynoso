@@ -107,5 +107,9 @@ public class GestorEstacion {
 		}
 		return resultado;
 	}
+	
+	public List<String> getStringEstaciones(){
+		return this.getEstaciones().stream().map(e -> e.getNombre()).collect(Collectors.toList());
+	}
 
 }

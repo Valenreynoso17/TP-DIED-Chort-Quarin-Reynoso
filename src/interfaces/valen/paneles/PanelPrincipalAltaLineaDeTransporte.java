@@ -89,7 +89,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weighty = 0.0;
 		botonSiguiente = new JButton("Siguiente");
 		botonSiguiente.addActionListener(e -> {frame.dispose();
-											   new VentanaSiguienteAltaLineaDeTransporte();});
+											   new VentanaSiguienteAltaLineaDeTransporte(panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea());});
 		this.add(botonSiguiente, gbc);
 	}
 }

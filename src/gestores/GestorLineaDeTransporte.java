@@ -11,9 +11,11 @@ public class GestorLineaDeTransporte {
 
 	private List<LineaDeTransporte> lineasDeTransporte;
 	private static GestorLineaDeTransporte gestor;
+	private LineaDeTransporteDAO lineaDAO;
 	
 	private GestorLineaDeTransporte() {
-		lineasDeTransporte = new ArrayList<LineaDeTransporte>();
+		lineaDAO = new LineaDeTransporteSQLImp();
+		lineasDeTransporte = new ArrayList<LineaDeTransporte>(lineaDAO.buscar());
 	}
 	
 	public static GestorLineaDeTransporte getInstance() {
@@ -23,13 +25,12 @@ public class GestorLineaDeTransporte {
 		return gestor;
 	}
 	
-	// TODO: no se si se hace asi
-	public List<LineaDeTransporte> getLineasDeTransporte(){
-		
-		LineaDeTransporteDAO lineaDAO = new LineaDeTransporteSQLImp();
-		lineasDeTransporte = lineaDAO.buscar();
-		
+	public List<LineaDeTransporte> getLineasDeTransporte(){		
 		return lineasDeTransporte;
+	}
+	
+	public void borrarLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {
+		lineaDAO.eliminar(lineaDeTransporte);
 	}
 	
 }

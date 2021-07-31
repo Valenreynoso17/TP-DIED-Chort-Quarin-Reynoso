@@ -19,6 +19,10 @@ public class LineaDeTransporte {
 		this.trayecto = trayecto;
 	}
 	
+	public Integer getId() {
+		return id;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -29,5 +33,9 @@ public class LineaDeTransporte {
 	
 	public Color getColor() {
 		return color;
+	}
+	
+	public Boolean estaActiva() {
+		return estado == EstadoLineaDeTransporte.ACTIVA;
 	}
 }
