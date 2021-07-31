@@ -22,7 +22,7 @@ public class RutaSQLImp implements RutaDAO{
 		this.ip = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
-		this.psw = "DarkSouls";
+		this.psw = "ChortQuarinReynoso";
 	}
 	
 	@Override

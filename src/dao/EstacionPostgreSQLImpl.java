@@ -23,7 +23,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		this.ip = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
-		this.psw = "DarkSouls";
+		this.psw = "ChortQuarinReynoso";
 	}
 
 	@Override

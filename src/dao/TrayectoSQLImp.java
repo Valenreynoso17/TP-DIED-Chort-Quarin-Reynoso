@@ -14,7 +14,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 	String host = "localhost";
 	String port = "5432";
 	String usr = "postgres";
-	String pass = "Valen123";
+	String pass = "ChortQuarinReynoso";
 	
 	@Override
 	public List<Trayecto> buscar() {
