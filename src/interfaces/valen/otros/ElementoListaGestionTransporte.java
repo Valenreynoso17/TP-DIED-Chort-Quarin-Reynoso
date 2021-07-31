@@ -52,6 +52,25 @@ public class ElementoListaGestionTransporte extends JPanel{
 		botonBorrar = new JButton("Borrar");
 		botonBorrar.setPreferredSize(new Dimension(50, 20));
 		botonBorrar.setMargin(new Insets(0,0,0,0));
+		botonBorrar.addActionListener(e -> {
+			//Custom JOptionPane
+			Object[] options = {"Confirmar",
+			                    "Cancelar"};
+			int n = JOptionPane.showOptionDialog(frame,
+			    "Está seguro que desea eliminar esta línea de transporte del sistema?",
+			    "Confirmar eliminación",
+			    JOptionPane.OK_CANCEL_OPTION,
+			    JOptionPane.QUESTION_MESSAGE,
+			    null,
+			    options,
+			    options[1]);
+			
+			if(n==0) {
+				System.out.println("Se elimina");
+			} else {
+				System.out.println("Se cancela la eliminación");
+			}
+		});
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;

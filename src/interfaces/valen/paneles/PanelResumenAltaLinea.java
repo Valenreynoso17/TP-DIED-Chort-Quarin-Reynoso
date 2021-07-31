@@ -19,7 +19,7 @@ public class PanelResumenAltaLinea extends JPanel{
 	JPanel color;
 	GridBagConstraints gbc;
 	
-	public PanelResumenAltaLinea(VentanaSiguienteAltaLineaDeTransporte frame) {
+	public PanelResumenAltaLinea(VentanaSiguienteAltaLineaDeTransporte frame, String nomLinea, Integer estadoLinea, Color colorLinea) {
 		
 		this.setBorder(BorderFactory.createTitledBorder("Resumen - Alta de línea"));
 		this.setLayout(new GridBagLayout());
@@ -27,12 +27,15 @@ public class PanelResumenAltaLinea extends JPanel{
 		
 		// Componentes
 		labelNombre = new JLabel("Nombre:");
-		nombreLinea = new JLabel("<<Nombre línea de transporte>>");
+		nombreLinea = new JLabel(nomLinea);
 		labelEstado = new JLabel("Estado:");
-		estado = new JLabel("<<Estado>>");
+		
+		if(estadoLinea == 0) estado = new JLabel("Activa");
+		else estado = new JLabel("No activa");
+		
 		labelColor = new JLabel("Color:");
 		color = new JPanel();
-		color.setBackground(Color.blue);
+		color.setBackground(colorLinea);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5, 5, 5, 5);

@@ -6,7 +6,7 @@ import clases.LineaDeTransporte;
 
 public interface LineaDeTransporteDAO {
 	public List<LineaDeTransporte> buscar();
-	public void eliminar();
+	public void eliminar(LineaDeTransporte lineaDetransporte);
 	public void insertar(LineaDeTransporte lineaDeTransporte);
 	public void modificar();
 }

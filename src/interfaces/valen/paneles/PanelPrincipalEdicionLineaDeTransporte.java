@@ -43,7 +43,7 @@ public class PanelPrincipalEdicionLineaDeTransporte extends JPanel{
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
 		
-		panelDatosTrayecto = new PanelDatosTrayectoLineaDeTransporte();
+		panelDatosTrayecto = new PanelDatosTrayectoLineaDeTransporte(lineaDeTransporte);
 		JScrollPane panelScrollDatosTrayecto = new JScrollPane(panelDatosTrayecto, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelScrollDatosTrayecto.setBorder(BorderFactory.createTitledBorder("Datos del trayecto"));
 		this.add(panelScrollDatosTrayecto, gbc);

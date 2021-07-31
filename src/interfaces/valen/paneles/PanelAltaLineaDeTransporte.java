@@ -79,4 +79,16 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		colorPicker = new ColorPicker(frame, Color.WHITE);
 		this.add(colorPicker, gbc);
 	}
+	
+	public String getNombreLinea() {
+		return this.nombreLinea.getText();
+	}
+	
+	public Integer getEstadoLinea() {
+		return this.estado.getSelectedIndex();
+	}
+	
+	public Color getColorLinea() {
+		return Color.yellow;
+	}
 }

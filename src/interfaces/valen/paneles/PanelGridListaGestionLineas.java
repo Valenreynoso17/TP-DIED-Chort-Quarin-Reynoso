@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -20,7 +22,7 @@ public class PanelGridListaGestionLineas extends JPanel{
 	GridBagConstraints gbc;
 	GestorLineaDeTransporte gestorLinea;
 
-	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame) {
+	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame, Boolean ckbActiva, Boolean ckbNoActiva, String buscaNombre) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -31,9 +33,21 @@ public class PanelGridListaGestionLineas extends JPanel{
 		gestorLinea = GestorLineaDeTransporte.getInstance();
 		
 //		Optional<List<LineaDeTransporte>> lista = Optional.ofNullable(gestorLinea.getLineasDeTransporte());
-		List<LineaDeTransporte> lista = gestorLinea.getLineasDeTransporte();
 		
-		if(lista != null) {
+		Predicate<LineaDeTransporte> filtroCheckBoxes;
+		if(ckbActiva == true && ckbNoActiva == true) {
+			filtroCheckBoxes = e -> true;
+		}else if (ckbActiva == true) {
+			filtroCheckBoxes = e -> e.estaActiva() == true;
+		}else if (ckbNoActiva){
+			filtroCheckBoxes = e -> e.estaActiva() == false;
+		} else {
+			filtroCheckBoxes = e -> false;
+		}
+		
+		Predicate<LineaDeTransporte> filtroBusqueda = lt -> lt.getNombre().toUpperCase().contains(buscaNombre.toUpperCase());
+		List<LineaDeTransporte> lista = gestorLinea.getLineasDeTransporte().stream().filter(filtroCheckBoxes).filter(filtroBusqueda).collect(Collectors.toList());
+//		if(lista != null) {
 			Integer valorGridy = 0;
 			for(int i = 0; i < lista.size(); i++) {
 				
@@ -42,44 +56,9 @@ public class PanelGridListaGestionLineas extends JPanel{
 				gbc.gridy = valorGridy;
 				this.add(auxElemento, gbc);
 				
-				if (i % 2 == 0) valorGridy++;
+				if (i % 2 == 1) valorGridy++;
 			}
-		}
-		
-//		gbc.gridy = 0;
-//		this.add(e1, gbc);
-//		this.add(e2, gbc);
-//		
-//		gbc.gridy = 1;
-//		this.add(e3, gbc);
-//		this.add(e4, gbc);
-//		
-//		gbc.gridy = 2;
-//		this.add(e5, gbc);
-//		this.add(e6, gbc);
-//		
-//		gbc.gridy = 3;
-//		this.add(e7, gbc);
-//		this.add(e8, gbc);
-//		
-//		gbc.gridy = 4;
-//		this.add(e9, gbc);
-//		this.add(e10, gbc);
-//		
-//		gbc.gridy = 5;
-//		this.add(e11, gbc);
-//		this.add(e12, gbc);
-//		
-//		gbc.gridy = 6;
-//		this.add(e13, gbc);
-//		this.add(e14, gbc);
-//		
-//		gbc.gridy = 7;
-//		this.add(e15, gbc);
-//		this.add(e16, gbc);
-//		
-//		gbc.gridy = 8;
-//		this.add(e17, gbc);
+//		}
 		
 	}
 }

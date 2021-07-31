@@ -9,4 +9,5 @@ public interface TrayectoDAO {
 	public void eliminar();
 	public void insertar(Trayecto trayecto);
 	public void modificar();
+	public Trayecto buscarTrayectoPorIdLinea(Integer idLinea);
 }

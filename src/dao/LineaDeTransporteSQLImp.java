@@ -12,6 +12,7 @@ import java.util.List;
 
 import clases.LineaDeTransporte;
 import clases.Recorrido;
+import clases.Trayecto;
 import enums.EstadoLineaDeTransporte;
 
 public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
@@ -42,6 +43,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			List<LineaDeTransporte> lista = new ArrayList<LineaDeTransporte>();
 			
 			while(rs.next()) {
+//				Trayecto auxTrayecto = new Trayecto
 				LineaDeTransporte auxLinea = new LineaDeTransporte(rs.getInt("id"),rs.getString("nombre"),new Color(rs.getInt("r"), rs.getInt("g"), rs.getInt("b")), EstadoLineaDeTransporte.valueOf(rs.getString("estado")), null);
 				lista.add(auxLinea);
 			}
@@ -61,9 +63,34 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 	}
 
 	@Override
-	public void eliminar() {
-		// TODO Auto-generated method stub
+	public void eliminar(LineaDeTransporte lineaDeTransporte) {
 		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn.setAutoCommit(false);
+			
+			// Borrar una tupla de la tabla
+			st = conn.prepareStatement("DELETE FROM died.linea_de_transporte " +
+									   "WHERE id = (?);");
+			st.setInt(1, lineaDeTransporte.getId());
+			
+			rs = st.executeQuery();
+			conn.commit();
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch(SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class PanelPrincipalSiguienteAltaLineaDeTransporte extends JPanel{
 	PanelBotonesResumenAltaLinea panelBotones;	
 	GridBagConstraints gbc;
 	
-	public PanelPrincipalSiguienteAltaLineaDeTransporte(VentanaSiguienteAltaLineaDeTransporte frame) {
+	public PanelPrincipalSiguienteAltaLineaDeTransporte(VentanaSiguienteAltaLineaDeTransporte frame, String nombreLinea, Integer estadoLinea, Color colorLinea) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -33,7 +33,7 @@ public class PanelPrincipalSiguienteAltaLineaDeTransporte extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weighty = 0.0;
-		panelResumen = new PanelResumenAltaLinea(frame);
+		panelResumen = new PanelResumenAltaLinea(frame, nombreLinea, estadoLinea, colorLinea);
 		this.add(panelResumen, gbc);
 		
 		// Segundo componente - Panel tabla
