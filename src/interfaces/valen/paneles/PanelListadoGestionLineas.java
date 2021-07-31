@@ -22,6 +22,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import clases.CustomColor;
+import gestores.GestorColor;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.otros.ColorPicker;
 import interfaces.valen.otros.ElementoListaGestionTransporte;
@@ -40,10 +42,12 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 	JScrollPane panelScrollLista;
 	VentanaGestionLineasDeTransporte framePadre;
 	GridBagConstraints gbc;
+	GestorColor gestorColor;
 	
 	public PanelListadoGestionLineas(VentanaGestionLineasDeTransporte frame) {
 		
 		framePadre = frame;
+		gestorColor = GestorColor.getInstance();
 		
 		this.setBorder(BorderFactory.createTitledBorder("Listado"));
 		this.setLayout(new GridBagLayout());
@@ -53,14 +57,12 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		gbc.gridy = GridBagConstraints.RELATIVE;
 		
 		// Primer componente - JTextField
-//		panelBusqueda = new JPanel();
 		textoBusqueda = new JTextField();
 		TextPrompt tpTextoBusqueda = new TextPrompt("Busca una línea por nombre", textoBusqueda);
 		textoBusqueda.setPreferredSize(new Dimension(200,20));
-//		textoBusqueda.addActionListener(e -> System.out.println(textoBusqueda.getText()));
+		textoBusqueda.setMinimumSize(new Dimension(200,20));
 		textoBusqueda.getDocument().addDocumentListener(this);
 		
-//		panelBusqueda.add(textoBusqueda);
 		this.add(textoBusqueda, gbc);
 		
 		// Segundo componente - Panel con 2 checkboxes y un colorPicker
@@ -83,7 +85,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		
 		labelColor = new JLabel("Color:");
 		panelCheckboxesColorPicker.add(labelColor);
-		colorPicker = new ColorPicker(frame, Color.WHITE);
+		colorPicker = new ColorPicker(frame, this, gestorColor.buscarColorPorNombre("Ninguno"));
 		panelCheckboxesColorPicker.add(colorPicker);
 		this.add(panelCheckboxesColorPicker, gbc);
 		
@@ -91,9 +93,43 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
-		panelGridLista = new PanelGridListaGestionLineas(frame, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), "");		
-		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelGridLista = new PanelGridListaGestionLineas(frame, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), "", colorPicker.getColor());		
+		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
+		this.add(panelScrollLista, gbc);
+		
+		System.out.println(this.getSize());
+		System.out.println(this.getMaximumSize());
+		System.out.println(this.getMinimumSize());
+		System.out.println(this.getPreferredSize());
+		
+		System.out.println(textoBusqueda.getSize());
+		System.out.println(textoBusqueda.getMaximumSize());
+		System.out.println(textoBusqueda.getMinimumSize());
+		System.out.println(textoBusqueda.getPreferredSize());
+	}
+	
+	public void cambiarColorPicker(CustomColor color) {
+		panelCheckboxesColorPicker.remove(colorPicker);
+		
+		this.revalidate();
+    	this.repaint();
+    	
+    	colorPicker = new ColorPicker(framePadre, this, color);
+    	
+    	panelCheckboxesColorPicker.add(colorPicker);
+    	
+    	this.remove(panelGridLista);
+    	this.remove(panelScrollLista);
+    	
+    	this.revalidate();
+    	this.repaint();
+    	
+    	gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
+		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(panelScrollLista, gbc);
 	}
 	
@@ -112,7 +148,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 	    	gbc.weightx = 1.0;
 			gbc.weighty = 1.0;
 			gbc.fill = GridBagConstraints.BOTH;
-			panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText());		
+			panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 			panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			this.add(panelScrollLista, gbc);
 			
@@ -127,7 +163,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 	    	gbc.weightx = 1.0;
 			gbc.weighty = 1.0;
 			gbc.fill = GridBagConstraints.BOTH;
-			panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText());		
+			panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 			panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			this.add(panelScrollLista, gbc);
 	    } 
@@ -149,7 +185,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
     	gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
-		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText());		
+		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(panelScrollLista, gbc);
 	}
@@ -165,7 +201,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
     	gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
-		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText());		
+		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(panelScrollLista, gbc);
 	}
@@ -181,7 +217,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
     	gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
-		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText());		
+		panelGridLista = new PanelGridListaGestionLineas(framePadre, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(panelScrollLista, gbc);
 	}

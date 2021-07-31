@@ -14,16 +14,24 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import clases.CustomColor;
+import interfaces.valen.paneles.PanelListadoGestionLineas;
+
 public class ColorPicker extends JPanel implements ActionListener{
 
 	JPanel panelColor;
 	JButton botonElegir;
 	JFrame framePadre;
+	JPanel panelPadre;
+	CustomColor colorActual;
 	GridBagConstraints gbc;
 	
-	public ColorPicker(JFrame frame, Color colorActual) {
+	public ColorPicker(JFrame frame, JPanel panel, CustomColor color) {
 		
 		framePadre = frame;
+		panelPadre = panel;
+		colorActual = color;
+		
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -46,10 +54,14 @@ public class ColorPicker extends JPanel implements ActionListener{
 		this.add(botonElegir);
 	}
 
+	public CustomColor getColor() {
+		return colorActual;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == botonElegir) {
-			DialogoColorPicker prueba = new DialogoColorPicker(framePadre, true);
+			DialogoColorPicker prueba = new DialogoColorPicker(framePadre, panelPadre, true);
 		}
 		
 	}
