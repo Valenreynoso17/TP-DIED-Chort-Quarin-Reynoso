@@ -23,7 +23,7 @@ public class PanelGridListaGestionLineas extends JPanel{
 	GridBagConstraints gbc;
 	GestorLineaDeTransporte gestorLinea;
 
-	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame, Boolean ckbActiva, Boolean ckbNoActiva, String buscaNombre, CustomColor colorBusqueda) {
+	public PanelGridListaGestionLineas(VentanaGestionLineasDeTransporte frame, PanelListadoGestionLineas panel, Boolean ckbActiva, Boolean ckbNoActiva, String buscaNombre, CustomColor colorBusqueda) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -57,7 +57,7 @@ public class PanelGridListaGestionLineas extends JPanel{
 			Integer valorGridy = 0;
 			for(int i = 0; i < lista.size(); i++) {
 				
-				ElementoListaGestionTransporte auxElemento = new ElementoListaGestionTransporte(frame, lista.get(i));
+				ElementoListaGestionTransporte auxElemento = new ElementoListaGestionTransporte(frame, panel, lista.get(i));
 				
 				gbc.gridy = valorGridy;
 				this.add(auxElemento, gbc);

@@ -30,6 +30,7 @@ public class GestorLineaDeTransporte {
 	}
 	
 	public void borrarLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {
+		lineasDeTransporte.remove(lineaDeTransporte);
 		lineaDAO.eliminar(lineaDeTransporte);
 	}
 	

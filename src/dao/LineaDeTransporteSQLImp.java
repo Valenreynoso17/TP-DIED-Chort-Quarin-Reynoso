@@ -14,6 +14,7 @@ import clases.LineaDeTransporte;
 import clases.Recorrido;
 import clases.Trayecto;
 import enums.EstadoLineaDeTransporte;
+import gestores.GestorColor;
 
 public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
@@ -21,6 +22,11 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 	String port = "5432";
 	String usr = "postgres";
 	String pass = "ChortQuarinReynoso";
+	GestorColor gestorColor;
+	
+	public LineaDeTransporteSQLImp() {
+		gestorColor = GestorColor.getInstance();
+	}
 	
 	@Override
 	public List<LineaDeTransporte> buscar() {
@@ -35,7 +41,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			// Consulta para obtener todas las lineas de trayecto
 			st = conn.prepareStatement("SELECT * "
 									 + "FROM died.linea_de_transporte AS linea, died.color AS color "
-									 + "WHERE linea.id = color.id;");
+									 + "WHERE linea.id_color = color.id;");
 			
 			rs = st.executeQuery();
 //			conn.commit();
@@ -43,8 +49,9 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			List<LineaDeTransporte> lista = new ArrayList<LineaDeTransporte>();
 			
 			while(rs.next()) {
-//				Trayecto auxTrayecto = new Trayecto
-				LineaDeTransporte auxLinea = new LineaDeTransporte(rs.getInt("id"),rs.getString("nombre"),new Color(rs.getInt("r"), rs.getInt("g"), rs.getInt("b")), EstadoLineaDeTransporte.valueOf(rs.getString("estado")), null);
+				
+				
+				LineaDeTransporte auxLinea = new LineaDeTransporte(rs.getInt("id"),rs.getString("nombre"),gestorColor.buscarColorPorNombre(rs.getString("nombre_color")), EstadoLineaDeTransporte.valueOf(rs.getString("estado")), null);
 				lista.add(auxLinea);
 			}
 			
@@ -79,8 +86,9 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 									   "WHERE id = (?);");
 			st.setInt(1, lineaDeTransporte.getId());
 			
-			rs = st.executeQuery();
+			Integer nro = st.executeUpdate();
 			conn.commit();
+			
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch(SQLException e) {

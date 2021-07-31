@@ -19,7 +19,7 @@ public class GestorColor {
 	private GestorColor() {
 		customColorDAO = new CustomColorSQLImp();
 		listaColores = new ArrayList<CustomColor>(customColorDAO.buscar());
-		listaColores.add(0, new CustomColor(-1, "Ninguno", 255, 255, 255));
+		listaColores.add(0, new CustomColor(-1, "Ninguno", 255, 255, 255));		
 	}
 	
 	public static GestorColor getInstance() {
@@ -34,7 +34,7 @@ public class GestorColor {
 	}
 	
 	public CustomColor buscarColorPorNombre(String nom) {
-		Optional<CustomColor> occ = (listaColores.stream().filter(e -> e.getNombre() == nom).findFirst());
+		Optional<CustomColor> occ = (listaColores.stream().filter(e -> e.getNombre().equals(nom)).findFirst());
 		return occ.get();
 	}
 }
