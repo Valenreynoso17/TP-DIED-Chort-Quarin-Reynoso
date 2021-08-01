@@ -75,9 +75,11 @@ public class PanelVentaBoleto extends JPanel {
 		JComboBox<Estacion> comboBoxDestino = new JComboBox<>();
 		comboBoxDestino.setEnabled(false);
 		comboBoxDestino.addActionListener(e -> {
-			if (comboBoxDestino.getSelectedItem() != null) botonSiguiente.setEnabled(true);
+			if (comboBoxDestino.getSelectedItem() != null) {
+				botonSiguiente.setEnabled(true);
+				panelGrafico.pintarDestino((Estacion) comboBoxDestino.getSelectedItem());
+			}
 			else botonSiguiente.setEnabled(false);
-			if (comboBoxDestino.getSelectedItem() != null) panelGrafico.pintarDestino((Estacion) comboBoxDestino.getSelectedItem());
 		});
 		GridBagConstraints gbc_comboBoxDestino = new GridBagConstraints();
 		gbc_comboBoxDestino.anchor = GridBagConstraints.WEST;
