@@ -13,9 +13,12 @@ import java.util.List;
 import clases.Estacion;
 import clases.Ruta;
 import enums.EstadoEstacion;
+import enums.EstadoRuta;
+import gestores.GestorEstacion;
 
 public class RutaSQLImp implements RutaDAO{
 	private String ip, port, usr, psw;
+	private GestorEstacion gestorEstacion;
 	
 	public RutaSQLImp() {
 		// TODO Cambiar datos si hace falta
@@ -23,11 +26,15 @@ public class RutaSQLImp implements RutaDAO{
 		this.port = "5432";
 		this.usr = "postgres";
 		this.psw = "ChortQuarinReynoso";
+		
+		gestorEstacion = GestorEstacion.getInstance();
 	}
 	
 	@Override
 	public List<Ruta> buscar() {
-		List<Ruta> rutas = new ArrayList<>();
+		
+		List<Ruta> lista = new ArrayList<Ruta>();
+		
 		String consulta = "SELECT * "
 						+ "FROM died.ruta;"	;
 		
@@ -43,8 +50,9 @@ public class RutaSQLImp implements RutaDAO{
 			st = conn.prepareStatement(consulta);
 			rs = st.executeQuery();
 			
-			
-			while(rs.next()) {	
+			while(rs.next()) {
+				Ruta rutaAux = new Ruta(rs.getInt("id"), rs.getInt("id_trayecto"), gestorEstacion.getEstacionPorId(rs.getInt("id_estacino_origen")), gestorEstacion.getEstacionPorId(rs.getInt("id_estacion_destino")), rs.getInt("distancia"), rs.getInt("duracion"), rs.getInt("max_pasajeros"), EstadoRuta.valueOf(rs.getString("estado")), rs.getDouble("costo"));
+				lista.add(rutaAux);
 			}
 			
 		} 
@@ -81,7 +89,7 @@ public class RutaSQLImp implements RutaDAO{
 			}	
 		}
 		
-		return rutas;
+		return lista;
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
+	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, Point pos) {
 		estaciones.add(new Estacion(i, n, hA, hC));
 	}
 	
@@ -114,6 +114,10 @@ public class GestorEstacion {
 	
 	public List<String> getStringEstaciones(){
 		return this.getEstaciones().stream().map(e -> e.getNombre()).collect(Collectors.toList());
+	}
+	
+	public Estacion getEstacionPorId(Integer idEstacion) {
+		return (estaciones.stream().filter(e -> e.getId() == idEstacion).findFirst()).get();
 	}
 
 }
