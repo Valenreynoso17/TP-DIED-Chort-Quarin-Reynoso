@@ -19,11 +19,9 @@ public class TrayectoSQLImp implements TrayectoDAO{
 	String port = "5432";
 	String usr = "postgres";
 	String pass = "ChortQuarinReynoso";
-	GestorLineaDeTransporte gestorLineas;
 	GestorRuta gestorRutas;
 	
 	public TrayectoSQLImp() {
-		gestorLineas = GestorLineaDeTransporte.getInstance();
 		gestorRutas = GestorRuta.getInstance();
 	}
 	
@@ -49,7 +47,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 			conn.commit();
 			
 			while(rs.next()) { 
-				Trayecto auxTray = new Trayecto(rs.getInt("id_trayecto"), gestorLineas.buscarLineaPorId(rs.getInt("id_linea_de_transporte")), gestorRutas.buscarRutasAsociadasATrayectoPorID(rs.getInt("id_trayecto")));
+				Trayecto auxTray = new Trayecto(rs.getInt("id_trayecto"), rs.getInt("id_linea_de_transporte"), gestorRutas.buscarRutasAsociadasATrayectoPorID(rs.getInt("id_trayecto")));
 				lista.add(auxTray);
 			}
 			
@@ -57,7 +55,6 @@ public class TrayectoSQLImp implements TrayectoDAO{
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

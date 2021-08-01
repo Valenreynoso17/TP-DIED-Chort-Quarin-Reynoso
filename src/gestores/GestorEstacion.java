@@ -26,7 +26,6 @@ public class GestorEstacion {
 	private GestorEstacion() {
 		dao = new EstacionPostgreSQLImpl();
 		estaciones = new ArrayList<>(dao.buscar());
-		gestorRutas = GestorRuta.getInstance();
 	}
 	
 	public static GestorEstacion getInstance() {
@@ -102,6 +101,7 @@ public class GestorEstacion {
 	}*/
 	
 	public List<Estacion> getAdyacentes(Estacion estacion) {
+		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
 		List<Estacion> resultado = new ArrayList<>();
 		

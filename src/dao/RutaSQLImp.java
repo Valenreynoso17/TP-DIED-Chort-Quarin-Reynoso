@@ -51,7 +51,7 @@ public class RutaSQLImp implements RutaDAO{
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
-				Ruta rutaAux = new Ruta(rs.getInt("id"), rs.getInt("id_trayecto"), gestorEstacion.getEstacionPorId(rs.getInt("id_estacino_origen")), gestorEstacion.getEstacionPorId(rs.getInt("id_estacion_destino")), rs.getInt("distancia"), rs.getInt("duracion"), rs.getInt("max_pasajeros"), EstadoRuta.valueOf(rs.getString("estado")), rs.getDouble("costo"));
+				Ruta rutaAux = new Ruta(rs.getInt("id"), rs.getInt("id_trayecto"), gestorEstacion.getEstacionPorId(rs.getInt("id_estacion_origen")), gestorEstacion.getEstacionPorId(rs.getInt("id_estacion_destino")), rs.getInt("distancia"), rs.getInt("duracion"), rs.getInt("max_pasajeros"), EstadoRuta.valueOf(rs.getString("estado")), rs.getDouble("costo"));
 				lista.add(rutaAux);
 			}
 			
