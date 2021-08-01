@@ -140,11 +140,7 @@ public class Estacion implements Dibujable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
-		result = prime * result + ((horarioApertura == null) ? 0 : horarioApertura.hashCode());
-		result = prime * result + ((horarioCierre == null) ? 0 : horarioCierre.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((mantenimientos == null) ? 0 : mantenimientos.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
 		return result;
