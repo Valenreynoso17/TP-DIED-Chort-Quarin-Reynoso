@@ -11,6 +11,7 @@ import java.util.List;
 import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
+import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
 
 public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected DialogInfoFlechaInactivosVisibles ventanaInfoFlecha;

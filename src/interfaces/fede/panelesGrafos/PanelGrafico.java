@@ -31,6 +31,7 @@ import clases.Ruta;
 import gestores.GestorEstacion;
 import gestores.GestorFlecha;
 import gestores.GestorRuta;
+import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
 
 public class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
