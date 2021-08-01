@@ -12,7 +12,7 @@ import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 
-public class PanelPermiteCambiarPosicion extends PanelGrafico {
+public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected DialogInfoFlechaInactivosVisibles ventanaInfoFlecha;
 	protected Estacion seleccionada;
 	protected Point puntoRelativoAgarre;
@@ -88,13 +88,5 @@ public class PanelPermiteCambiarPosicion extends PanelGrafico {
 		});
 	}
 	
-	
-	@Override
-	protected void dibujarGrafo(Graphics2D g2d) {
-		for (Dibujable d : dibujables) {
-			d.dibujarse(g2d);
-		}
-		
-	}
 	
 }

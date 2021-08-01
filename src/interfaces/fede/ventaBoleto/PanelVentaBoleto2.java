@@ -32,6 +32,10 @@ import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
+import interfaces.fede.panelesGrafos.PanelPintaSoloVisibles;
+import interfaces.fede.panelesGrafos.PanelPintaTodo;
+import interfaces.fede.panelesGrafos.PanelSeleccionOrigenDestino;
+import interfaces.fede.panelesGrafos.PanelSoloEntreOrigenDestino;
 
 public class PanelVentaBoleto2 extends JPanel {
 	private JButton botonSiguiente;
@@ -49,8 +53,10 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbl.rowWeights = new double[]{0.5, 0.2, 0.0, 0.0};
 		this.setLayout(gbl);
 		
-		PanelPermiteCambiarPosicion panelGrafico = new PanelPermiteCambiarPosicion();
-		panelGrafico.setBackground(Color.WHITE);
+		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+		
+		//PanelPermiteCambiarPosicion panelGrafico = new PanelPermiteCambiarPosicion();
+		PanelSoloEntreOrigenDestino panelGrafico = new PanelSoloEntreOrigenDestino(recorridos);
 		
 		JScrollPane spPanelGrafico = new JScrollPane(panelGrafico);		
 		spPanelGrafico.setPreferredSize(new Dimension(600, 400));
@@ -60,7 +66,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbc_spPanelGrafico.insets = new Insets(5, 5, 5, 5);
 		this.add(spPanelGrafico, gbc_spPanelGrafico);
 		
-		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+
 		
 		JTable tablaRecorridos = new JTable(new ModeloTablaRecorridos(recorridos));
 		tablaRecorridos.setAutoCreateRowSorter(true);
@@ -69,6 +75,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		tablaRecorridos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaRecorridos.setFocusable(false);
 		tablaRecorridos.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (!botonSiguiente.isEnabled()) botonSiguiente.setEnabled(true);

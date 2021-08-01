@@ -1,7 +1,9 @@
 package gestores;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import clases.Estacion;
 import clases.Recorrido;
@@ -50,6 +52,20 @@ public class GestorRecorrido {
 	
 	public Recorrido crearRecorrido(Estacion origen, Estacion destino, Integer distancia, Integer duracion, Double costo) {
 		return new Recorrido(origen, destino, distancia, duracion, costo);
+	}
+	
+	public Set<Estacion> getEstacionesRecorridas(List<Recorrido> recorridos) {
+		Set<Estacion> estaciones = new HashSet<>();
+		List<Estacion> estacionesAux = null;
+		
+		for (Recorrido r : recorridos) {
+			estacionesAux = r.getEstacionesRecorridas();
+			for (Estacion e : estacionesAux) {
+				estaciones.add(e);
+			}
+		}
+		
+		return estaciones;
 	}
 	
 

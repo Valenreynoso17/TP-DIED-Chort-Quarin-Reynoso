@@ -57,7 +57,7 @@ public class PanelVentaBoleto3 extends JPanel {
 				((FrameVentaBoleto3) getPadre()).volverAlMenu();
 			}
 			catch (InputVacioException exc) {
-				JOptionPane.showMessageDialog(getPadre(),exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(getPadre(),"Faltan completar los siguientes campos:" + exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			catch (InputInvalidaException exc) {
 				JOptionPane.showMessageDialog(getPadre(),exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
