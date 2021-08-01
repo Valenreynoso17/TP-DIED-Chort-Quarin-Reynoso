@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clases.Ruta;
+import excepciones.TrayectoNoAsociadoException;
+import gestores.GestorRuta;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Flecha implements Dibujable{
 	private Point posOrigen, posDestino;
 	private List<Ruta> rutas;
-	private Color color;
+	private Color color = Color.BLACK;
 	private Double anguloFlecha;
 	private static Integer largoFlecha = 10;
 	private static Double anchoFlecha = 4.0;
@@ -24,14 +26,12 @@ public class Flecha implements Dibujable{
 	private Float escala;
 	
 	
-	public Flecha(Color color) {
-		this.color = color;
+	public Flecha() {
 		this.rutas = new ArrayList<>();
 		this.escala = 1.0f;
 	}
 	
 	public Flecha(Point posOrigen, Point posDestino, Double anguloFlecha, Color color) {
-		this(color);
 		this.posOrigen = posOrigen;
 		this.posDestino = posDestino;
 		this.anguloFlecha = anguloFlecha;
@@ -55,8 +55,37 @@ public class Flecha implements Dibujable{
 		return this.getEstacionOrigen().equals(r.getOrigen()) && this.getEstacionDestino().equals(r.getDestino());
 	}
 	
+	
+	public Boolean tieneUnaUnicaRutaActiva() {
+		Integer rutasActivas = 0;
+		
+		for (Ruta r : rutas) {
+			if (r.activa()) rutasActivas++;
+		}
+		
+		return rutasActivas == 1;
+		
+	}
+	
 	public void agregarRuta(Ruta r) {
 		rutas.add(r);
+		if (this.tieneUnaUnicaRutaActiva()) {
+			try {
+				color = r.getColorLinea();
+			}
+			catch (TrayectoNoAsociadoException exc1) {
+				GestorRuta gestorRutas = GestorRuta.getInstance();
+				gestorRutas.asociarATrayectos();
+				
+				try {
+					color = r.getColorLinea();
+				}
+				catch (TrayectoNoAsociadoException exc2) {
+					exc2.printStackTrace();
+				}
+			}
+		}
+		else color = Color.BLACK;
 	}
 	
 	public Double getAnguloFlecha() {

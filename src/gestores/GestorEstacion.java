@@ -62,6 +62,8 @@ public class GestorEstacion {
 		}
 		
 		if (resultado.isEmpty()) throw new SinEstacionesAccesiblesException();
+		
+		
 		return resultado;
 	}
 	
@@ -77,7 +79,7 @@ public class GestorEstacion {
 		while (!pendientes.isEmpty()) {
 			Estacion e = pendientes.pop();
 			resultado.add(e);
-			List<Estacion> adyacentes = this.getAdyacentes(e);
+			List<Estacion> adyacentes = this.getAdyacentesRutasActivas(e);
 			for (Estacion e2 : adyacentes) {
 				if (!marcados.contains(e2) && e2.operativa()) {
 					marcados.add(e2);

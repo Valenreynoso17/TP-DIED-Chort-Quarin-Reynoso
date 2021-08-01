@@ -49,8 +49,8 @@ public class PanelGrafico extends JPanel {
 	
 	public PanelGrafico() {
 		setBackground(Color.WHITE);
-		anchoVentana = 800;
-		altoVentana = 600;
+		anchoVentana = 100;
+		altoVentana = 100;
 		setPreferredSize(new Dimension(anchoVentana, altoVentana));
 		
 		gestorEstaciones = GestorEstacion.getInstance();
