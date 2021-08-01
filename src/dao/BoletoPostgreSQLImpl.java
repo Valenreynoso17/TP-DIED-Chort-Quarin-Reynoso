@@ -18,7 +18,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		this.ip = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
-		this.psw = "DarkSouls";
+		this.psw = "ChortQuarinReynoso";
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 			st.setInt(2, recorrido.getDistancia());
 			st.setInt(3, recorrido.getDuracion());
 			st.setDouble(4, recorrido.getCosto());
-			st.setInt(5, Integer.parseInt(recorrido.getOrigen().getId()));
+			st.setInt(5, recorrido.getOrigen().getId());
 			st.setInt(6, 2);
 			st.setInt(7, boleto.getNroBoleto());
 			st.setString(8, boleto.getNombreCliente());

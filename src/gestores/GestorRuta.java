@@ -7,14 +7,20 @@ import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Ruta;
+import clases.Trayecto;
+import dao.RutaDAO;
+import dao.RutaSQLImp;
 import enums.EstadoRuta;
 
 public class GestorRuta {
 	private List<Ruta> rutas;
 	private static GestorRuta gestor;
+	private RutaDAO rutaDAO;
+	private GestorTrayecto gestorTrayecto;
 	
 	private GestorRuta() {
-		rutas = new ArrayList<>();
+		rutaDAO = new RutaSQLImp();
+		rutas = new ArrayList<>(rutaDAO.buscar());
 	}
 	
 	public static GestorRuta getInstance() {
@@ -29,8 +35,8 @@ public class GestorRuta {
 		return rutas;
 	}
 	
-	public void agregarRuta(Estacion o, Estacion des,Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
-		rutas.add(new Ruta(o, des, d, du, mP, e, c));
+	public void agregarRuta(Integer id, Integer idTrayecto, Estacion o, Estacion des,Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
+		rutas.add(new Ruta(id, id, o, des, d, du, mP, e, c));
 	}
 	
 	// Devuelve una lista con todas las lista de rutas que pueden recorrerse para ir desde origen a destino
@@ -71,6 +77,16 @@ public class GestorRuta {
 		return retorno;
 	}
 	
+	public List<Ruta> buscarRutasAsociadasATrayectoPorID(Integer idTrayecto){
+		return rutas.stream().filter(r -> r.getIdTrayecto() == idTrayecto).collect(Collectors.toList());
+	}
 	
+	public void asociarATrayectos() {
+		gestorTrayecto = GestorTrayecto.getInstance();
+		for(Ruta unaRuta : this.rutas) {
+			Trayecto trayectoAux = (gestorTrayecto.getListaTrayectos().stream().filter(t -> t.getId() == unaRuta.getIdTrayecto()).findFirst()).get();
+			unaRuta.asociarTrayecto(trayectoAux);
+		}
+	}
 
 }

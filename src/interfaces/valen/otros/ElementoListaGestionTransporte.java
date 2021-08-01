@@ -11,8 +11,10 @@ import javax.swing.*;
 
 import clases.LineaDeTransporte;
 import enums.EstadoLineaDeTransporte;
+import gestores.GestorLineaDeTransporte;
 import interfaces.valen.frames.VentanaEdicionLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
+import interfaces.valen.paneles.PanelListadoGestionLineas;
 
 public class ElementoListaGestionTransporte extends JPanel{
 	
@@ -23,11 +25,13 @@ public class ElementoListaGestionTransporte extends JPanel{
 	JButton botonEditar;
 	JButton botonBorrar;
 	GridBagConstraints gbc;
+	GestorLineaDeTransporte gestorLineas;
 	
-	public ElementoListaGestionTransporte(VentanaGestionLineasDeTransporte frame, LineaDeTransporte linea) {
+	public ElementoListaGestionTransporte(VentanaGestionLineasDeTransporte frame,PanelListadoGestionLineas panel, LineaDeTransporte linea) {
 		
 		this.frameContenedor = frame;
 		this.lineaDeTransporte = linea;
+		gestorLineas = GestorLineaDeTransporte.getInstance();
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 		this.setLayout(new GridBagLayout());
@@ -66,28 +70,37 @@ public class ElementoListaGestionTransporte extends JPanel{
 			    options[1]);
 			
 			if(n==0) {
-				System.out.println("Se elimina");
-			} else {
-				System.out.println("Se cancela la eliminación");
-			}
+				gestorLineas.borrarLineaDeTransporte(linea);
+				panel.actualizarPanelGridLista();
+			} 
 		});
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.gridheight = 3;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		JPanel panelColor = new JPanel();
+		panelColor.setBackground(lineaDeTransporte.getColor());
+		this.add(panelColor, gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.gridheight = 1;
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
 		gbc.gridwidth = 2;
 		this.add(nombreLinea, gbc);
 		
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridwidth = 2;
 		this.add(estadoLinea, gbc);
 		
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		this.add(botonEditar, gbc);
 		
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		this.add(botonBorrar, gbc);	

@@ -7,6 +7,10 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
+import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
+
 public class PanelBotonesResumenAltaLinea extends JPanel{
 	
 	JButton botonCancelar;
@@ -14,7 +18,7 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 	JButton botonTerminado;
 	GridBagConstraints gbc;
 	
-	public PanelBotonesResumenAltaLinea() {
+	public PanelBotonesResumenAltaLinea(VentanaAltaLineaDeTransporte frameAbuelo,VentanaSiguienteAltaLineaDeTransporte framePadre) {
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -27,7 +31,11 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 		gbc.gridx = 0;
 		gbc.weightx = 0.1;
 		botonCancelar = new JButton("Cancelar");
-		botonCancelar.setFocusable(false);
+		// TODO: tengo que poner un JOptionPane para que pregunte si desea cancelar el alta
+		botonCancelar.addActionListener(e -> {
+			framePadre.dispose();
+			new VentanaGestionLineasDeTransporte();
+		});
 		this.add(botonCancelar, gbc);
 		
 		// Segundo componente - Boton anterior
@@ -35,7 +43,11 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 		gbc.weightx = 0.1;
 		gbc.anchor = GridBagConstraints.WEST;
 		botonAnterior = new JButton("Volver");
-		botonAnterior.setFocusable(false);
+		// TODO tengo que poner un JOptionPane para que pregunte si desea volver al frame alta
+		botonAnterior.addActionListener(e -> {
+			framePadre.dispose();
+			frameAbuelo.setVisible(true);
+		});
 		this.add(botonAnterior, gbc);
 		
 		// Tercer componente - Boton terminar
@@ -44,7 +56,6 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 		gbc.insets = new Insets(5,10,5,30);
 		gbc.anchor = GridBagConstraints.EAST;
 		botonTerminado = new JButton("Terminar");
-		botonTerminado.setFocusable(false);
 		this.add(botonTerminado, gbc);
 	}
 }

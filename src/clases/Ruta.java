@@ -6,6 +6,9 @@ import enums.EstadoRuta;
 
 public class Ruta {
 
+	private Integer id;
+	private Integer idTrayecto;
+	private Trayecto trayecto;
 	private Estacion origen;
 	private Estacion destino;
 	private Integer distancia;
@@ -14,7 +17,10 @@ public class Ruta {
 	private EstadoRuta estado;
 	private double costo;	
 	
-	public Ruta(Estacion estacionOrigen, Estacion estacionDestino,Integer distancia, Integer duracion, Integer cantMaxPasajeros, EstadoRuta estado, double costo) {
+	public Ruta(Integer id, Integer idTrayecto, Estacion estacionOrigen, Estacion estacionDestino,Integer distancia, Integer duracion, Integer cantMaxPasajeros, EstadoRuta estado, double costo) {
+		this.id = id;
+		this.idTrayecto = idTrayecto;
+		this.trayecto = null;
 		this.origen = estacionOrigen;
 		this.destino = estacionDestino;
 		this.distancia = distancia;
@@ -46,6 +52,14 @@ public class Ruta {
 	
 	public Integer getDuracion() {
 		return this.duracion;
+	}
+	
+	public Integer getIdTrayecto() {
+		return this.idTrayecto;
+	}
+	
+	public void asociarTrayecto(Trayecto unTrayecto) {
+		this.trayecto = unTrayecto;
 	}
 
 	// Hay que cambiarlo

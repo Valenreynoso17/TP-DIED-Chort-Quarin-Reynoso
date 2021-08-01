@@ -16,5 +16,12 @@ public class CustomColor extends Color{
 	public String getNombre() {
 		return nombreColor;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomColor [id=" + id + ", nombreColor=" + nombreColor + "]";
+	}
+	
+	
 	
 }

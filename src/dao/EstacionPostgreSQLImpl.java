@@ -23,7 +23,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		this.ip = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
-		this.psw = "DarkSouls";
+		this.psw = "ChortQuarinReynoso";
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			
 			
 			while(rs.next()) {				
-				String id = String.valueOf(rs.getInt("id"));
+				Integer id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
 				String estado = rs.getString("estado");
 				LocalTime horaApertura = rs.getTime("horarioapertura").toLocalTime();

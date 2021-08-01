@@ -24,7 +24,7 @@ public class EstacionAlta extends JFrame {
 	 * Create the frame.
 	 */
 	public EstacionAlta() {
-		super("Dar de alta Estación");
+		super("Sistema de Gestión de Transporte Multimodal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 		contentPane = new PanelEstacionAlta(this);

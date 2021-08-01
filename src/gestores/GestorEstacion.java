@@ -26,7 +26,6 @@ public class GestorEstacion {
 	private GestorEstacion() {
 		dao = new EstacionPostgreSQLImpl();
 		estaciones = new ArrayList<>(dao.buscar());
-		gestorRutas = GestorRuta.getInstance();
 	}
 	
 	public static GestorEstacion getInstance() {
@@ -45,7 +44,7 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(String i, String n, LocalTime hA, LocalTime hC, Point pos) {
+	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, Point pos) {
 		estaciones.add(new Estacion(i, n, hA, hC));
 	}
 	
@@ -102,6 +101,7 @@ public class GestorEstacion {
 	}*/
 	
 	public List<Estacion> getAdyacentes(Estacion estacion) {
+		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
 		List<Estacion> resultado = new ArrayList<>();
 		
@@ -114,6 +114,10 @@ public class GestorEstacion {
 	
 	public List<String> getStringEstaciones(){
 		return this.getEstaciones().stream().map(e -> e.getNombre()).collect(Collectors.toList());
+	}
+	
+	public Estacion getEstacionPorId(Integer idEstacion) {
+		return (estaciones.stream().filter(e -> e.getId() == idEstacion).findFirst()).get();
 	}
 
 }

@@ -31,14 +31,16 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		// PanelListado
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.weightx = 0.05;
+		gbc.weighty = 0.05;
 		panelListado = new PanelListadoGestionLineas(frame);
 		this.add(panelListado, gbc);
 		
 		// PanelGrafo
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
+		gbc.weightx = 0.95;
+		gbc.weighty = 0.95;
 		panelGrafo = new PanelGrafico();
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
 		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));

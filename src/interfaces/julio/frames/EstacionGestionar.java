@@ -15,7 +15,7 @@ public class EstacionGestionar extends JFrame {
 	private JPanel contentPane;
 
 	public EstacionGestionar() {
-		super("Gestionar Estación");
+		super("Sistema de Gestión de Transporte Multimodal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 		contentPane = new PanelEstacionGestionar(this);

@@ -50,7 +50,7 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		if (lineaDeTransporte.getEstado() == EstadoLineaDeTransporte.NO_ACTIVA) estado.setSelectedIndex(1);
 		
 		labelColor = new JLabel("Color:");
-		colorPicker = new ColorPicker(frame, lineaDeTransporte.getColor());
+		colorPicker = new ColorPicker(frame, new JPanel(), lineaDeTransporte.getColor());
 		
 		// Configuraciones gbc
 		gbc.anchor = GridBagConstraints.WEST;
