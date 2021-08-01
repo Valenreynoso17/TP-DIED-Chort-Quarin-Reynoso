@@ -15,6 +15,7 @@ import clases.Recorrido;
 import clases.Trayecto;
 import enums.EstadoLineaDeTransporte;
 import gestores.GestorColor;
+import gestores.GestorTrayecto;
 
 public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
@@ -23,13 +24,18 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 	String usr = "postgres";
 	String pass = "ChortQuarinReynoso";
 	GestorColor gestorColor;
+	GestorTrayecto gestorTrayecto;
 	
 	public LineaDeTransporteSQLImp() {
 		gestorColor = GestorColor.getInstance();
+		gestorTrayecto = GestorTrayecto.getInstance();
 	}
 	
 	@Override
 	public List<LineaDeTransporte> buscar() {
+		
+		List<LineaDeTransporte> lista = new ArrayList<LineaDeTransporte>();
+		
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -40,22 +46,16 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			
 			// Consulta para obtener todas las lineas de trayecto
 			st = conn.prepareStatement("SELECT * "
-									 + "FROM died.linea_de_transporte AS linea, died.color AS color "
-									 + "WHERE linea.id_color = color.id;");
+									 + "FROM died.linea_de_transporte AS linea, died.color AS color, died.trayecto AS trayecto "
+									 + "WHERE linea.id_color = color.id AND linea.id = trayecto.id_linea_de_transporte;");
 			
 			rs = st.executeQuery();
 //			conn.commit();
 			
-			List<LineaDeTransporte> lista = new ArrayList<LineaDeTransporte>();
-			
 			while(rs.next()) {
-				
-				
-				LineaDeTransporte auxLinea = new LineaDeTransporte(rs.getInt("id"),rs.getString("nombre"),gestorColor.buscarColorPorNombre(rs.getString("nombre_color")), EstadoLineaDeTransporte.valueOf(rs.getString("estado")), null);
+				LineaDeTransporte auxLinea = new LineaDeTransporte(rs.getInt("id"),rs.getString("nombre"),gestorColor.buscarColorPorNombre(rs.getString("nombre_color")), EstadoLineaDeTransporte.valueOf(rs.getString("estado")), gestorTrayecto.buscarTrayectoPorId(rs.getInt("id_trayecto")));
 				lista.add(auxLinea);
 			}
-			
-			return lista;
 			
 		}catch (SQLException e) {
 //			conn.rollback();
@@ -66,7 +66,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}
 		}
 
-		return null;
+		return lista;
 	}
 
 	@Override

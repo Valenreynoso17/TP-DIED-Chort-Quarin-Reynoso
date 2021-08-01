@@ -16,8 +16,8 @@ public class GestorTrayecto {
 	private TrayectoDAO trayectoDAO;
 	
 	private GestorTrayecto() {
-		listaTrayectos = new ArrayList<Trayecto>();
 		trayectoDAO = new TrayectoSQLImp();
+		listaTrayectos = new ArrayList<Trayecto>(trayectoDAO.buscar());
 	}
 	
 	public static GestorTrayecto getInstance() {
@@ -27,9 +27,11 @@ public class GestorTrayecto {
 		return gestor;
 	}
 	
-	public Trayecto buscarTrayectoPorIdLinea(Integer idLinea) {
-		trayectoDAO.buscarTrayectoPorIdLinea(idLinea);
-		
-		return null;
+	public List<Trayecto> getListaTrayectos(){
+		return listaTrayectos;
+	}
+	
+	public Trayecto buscarTrayectoPorId(Integer idTrayecto) {
+		return (listaTrayectos.stream().filter(t -> t.getId() == idTrayecto).findFirst()).get();
 	}
 }

@@ -17,7 +17,7 @@ import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Estacion implements Dibujable{
 	
-	private String id;
+	private Integer id;
 	private String nombre;
 	private EstadoEstacion estado;
 	private LocalTime horarioApertura;
@@ -29,7 +29,7 @@ public class Estacion implements Dibujable{
 	
 	private Point posicion; //VER 
 	
-	public Estacion(String i, String n, LocalTime hA, LocalTime hC) {
+	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
 		this.id = i;
 		this.nombre = n;
 		this.horarioApertura = hA;
@@ -41,7 +41,7 @@ public class Estacion implements Dibujable{
 	}
 	
 	// ver si lo dejamos
-	public Estacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, Point pos, EstadoEstacion estado, List<Mantenimiento> mantenimientos) {
+	public Estacion(Integer id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, Point pos, EstadoEstacion estado, List<Mantenimiento> mantenimientos) {
 		this.id = id;
 		this.nombre = nombre;
 		this.horarioApertura = horarioApertura;
@@ -52,11 +52,11 @@ public class Estacion implements Dibujable{
 		this.escala = 1.0f;
 	}
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

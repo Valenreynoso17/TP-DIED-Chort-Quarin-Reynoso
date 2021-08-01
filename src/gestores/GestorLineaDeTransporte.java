@@ -34,4 +34,7 @@ public class GestorLineaDeTransporte {
 		lineaDAO.eliminar(lineaDeTransporte);
 	}
 	
+	public LineaDeTransporte buscarLineaPorId(Integer idLinea) {
+		return (lineasDeTransporte.stream().filter(lt -> lt.getId() == idLinea).findFirst()).get();
+	}
 }
