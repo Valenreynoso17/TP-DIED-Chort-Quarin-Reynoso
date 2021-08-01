@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Ruta;
+import clases.Trayecto;
 import dao.RutaDAO;
 import dao.RutaSQLImp;
 import enums.EstadoRuta;
@@ -15,6 +16,7 @@ public class GestorRuta {
 	private List<Ruta> rutas;
 	private static GestorRuta gestor;
 	private RutaDAO rutaDAO;
+	private GestorTrayecto gestorTrayecto;
 	
 	private GestorRuta() {
 		rutaDAO = new RutaSQLImp();
@@ -79,5 +81,12 @@ public class GestorRuta {
 		return rutas.stream().filter(r -> r.getIdTrayecto() == idTrayecto).collect(Collectors.toList());
 	}
 	
+	public void asociarATrayectos() {
+		gestorTrayecto = GestorTrayecto.getInstance();
+		for(Ruta unaRuta : this.rutas) {
+			Trayecto trayectoAux = (gestorTrayecto.getListaTrayectos().stream().filter(t -> t.getId() == unaRuta.getIdTrayecto()).findFirst()).get();
+			unaRuta.asociarTrayecto(trayectoAux);
+		}
+	}
 
 }

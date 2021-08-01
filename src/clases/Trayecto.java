@@ -5,13 +5,15 @@ import java.util.List;
 public class Trayecto {
 	
 	private Integer id;
+	private Integer idLineaAsociada;
 	private LineaDeTransporte linea;
 	private List<Ruta> rutas;
 	private List<Estacion> estaciones;
 	
-	public Trayecto(Integer id, LineaDeTransporte linea, List<Ruta> rutas) {
+	public Trayecto(Integer id, Integer lineaAsociada, List<Ruta> rutas) {
 		this.id = id;
-		this.linea = linea;
+		this.idLineaAsociada = lineaAsociada;
+		this.linea = null;
 		this.rutas = rutas;
 		this.estaciones = new ArrayList<Estacion>();
 	}
@@ -26,6 +28,14 @@ public class Trayecto {
 	
 	public Integer getId() {
 		return id;
+	}
+	
+	public Integer getIdLineaAsociada() {
+		return idLineaAsociada;
+	}
+	
+	public void asociarLinea(LineaDeTransporte unaLinea) {
+		this.linea = unaLinea;
 	}
 
 }

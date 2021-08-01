@@ -13,6 +13,7 @@ import dao.TrayectoSQLImp;
 public class GestorTrayecto {
 	private List<Trayecto> listaTrayectos;
 	private static GestorTrayecto gestor;
+	private GestorLineaDeTransporte gestorLinea;
 	private TrayectoDAO trayectoDAO;
 	
 	private GestorTrayecto() {
@@ -33,5 +34,13 @@ public class GestorTrayecto {
 	
 	public Trayecto buscarTrayectoPorId(Integer idTrayecto) {
 		return (listaTrayectos.stream().filter(t -> t.getId() == idTrayecto).findFirst()).get();
+	}
+	
+	public void asociarALineas() {
+		gestorLinea = GestorLineaDeTransporte.getInstance();
+		for(Trayecto unTrayecto : listaTrayectos) {
+			LineaDeTransporte auxLinea = (gestorLinea.getLineasDeTransporte().stream().filter(lt -> lt.getId() == unTrayecto.getIdLineaAsociada()).findFirst()).get();
+			unTrayecto.asociarLinea(auxLinea);
+		}
 	}
 }
