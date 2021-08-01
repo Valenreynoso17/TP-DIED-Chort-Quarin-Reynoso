@@ -126,7 +126,6 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridwidth = 1;
 		
 		button = new JButton("Volver");
-		//button.setFocusable(false);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -160,7 +159,7 @@ public class PanelEstacionAlta extends JPanel{
 				}catch (InputInvalidaException IIE) {
 					
 					JOptionPane.showMessageDialog(frame,
-							IIE.getMessage(),	//VER
+							IIE.getMessage(),	
 						    "Error",
 						    JOptionPane.ERROR_MESSAGE);
 				}
@@ -202,31 +201,85 @@ public class PanelEstacionAlta extends JPanel{
 	}
 	
 	public void inputEsValida() throws InputInvalidaException{
-		//TODO
-		if(validarDatoInteger(horaApertura) || validarDatoInteger(minutoApertura) ||
-		   validarDatoInteger(horaCierre) || validarDatoInteger(minutoCierre) || validarDatoString(nombre))
+		
+		if(!validarHora(horaApertura) || !validarMinuto(minutoApertura) ||
+		   !validarHora(horaCierre)   || !validarMinuto(minutoCierre)   || !validarNombre(nombre)
+		   || !horasValidas(horaApertura, minutoApertura, horaCierre, minutoCierre))
 
 				throw new InputInvalidaException();
 	}
 	
-	public boolean validarDatoInteger(JTextField field) {
+	public boolean validarHora(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 23]
 		
 		try {
-			Integer.parseInt(field.getText());
+			Integer hora = Integer.parseInt(field.getText());
+			
+			if(hora > -1 && hora < 24) {
+				
+				return true; 
+			}
+			else {
+				
+				return false;
+			}
+			
 		} catch(NumberFormatException e) {
 			
-			return true;
+			return false;
 		}
-		
-		return false;
 	}
 	
-	public boolean validarDatoString(JTextField field) {
+	public boolean validarMinuto(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 59]
+		
+		try {
+			
+			Integer minuto = Integer.parseInt(field.getText());
+			
+			if(minuto > -1 && minuto < 60) {
+				
+				return true; 
+			}
+			else {
+				
+				return false;
+			}
+			
+		} catch(NumberFormatException e) {
+			
+			return false;
+		}
+	}
+	
+	public boolean validarNombre(JTextField field) { //Retorna false si la longitud del string es mayor a 30
 		
 		if(field.getText().length() > 30)
-			return true;
+			return false;
 		
-		return false;
+		return true;
+	}
+	
+	public boolean horasValidas(JTextField horaApertura, JTextField minutoApertura, JTextField horaCierre, JTextField minutoCierre) {
+		
+		Integer horaA = Integer.parseInt(horaApertura.getText());
+		Integer horaC = Integer.parseInt(horaCierre.getText());
+		Integer minutoA = Integer.parseInt(minutoApertura.getText());
+		Integer minutoC = Integer.parseInt(minutoCierre.getText());
+		
+		if(horaC > horaA) {	//Si la hora de cierre es mayor, los minutos no importan (horas validas)
+			return true;
+		}
+		else if(horaC == horaA){	//Si las horas son iguales, debo comparar minutos
+			
+			if(minutoC > minutoA) { //Minuto de cierre mayor (horas validas)
+				return true;
+			}
+			else {
+				return false;	//Minuto de apertura mayor (horas invalidas)
+			}
+		}
+		else {	//Si la hora de apertura es mayor a la de cierre, los minutos no importan (horas invalidas)
+			return false;
+		}
 	}
 
 }

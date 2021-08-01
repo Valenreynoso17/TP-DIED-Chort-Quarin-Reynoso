@@ -125,13 +125,6 @@ public class PanelEstacionTablaResultado extends JPanel{
 		botonBorrar.setEnabled(false); 		//Deshabilitado por defecto
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-//				if(filaSeleccionada == null) {
-//					JOptionPane.showMessageDialog(frame,
-//						    "Debe seleccionar una fila a ser borrada.",
-//						    "Error",
-//						    JOptionPane.ERROR_MESSAGE);
-//				}else {
 					
 				Object[] options = {"Cancelar", "Borrar"};
 				
@@ -178,14 +171,14 @@ public class PanelEstacionTablaResultado extends JPanel{
 	
 	Estacion[] estaciones = new Estacion[8];
 	
-	estaciones[0] = new Estacion("1", "A", LocalTime.of(8, 05), LocalTime.of(18, 45));
-	estaciones[1] = new Estacion("2", "B", LocalTime.of(8, 15), LocalTime.of(15, 25));
-	estaciones[2] = new Estacion("3", "C", LocalTime.of(11, 25), LocalTime.of(23, 45));
-	estaciones[3] = new Estacion("4", "D", LocalTime.of(10, 35), LocalTime.of(20, 05));
-	estaciones[4] = new Estacion("5", "E", LocalTime.of(9, 55), LocalTime.of(14, 50));
-	estaciones[5] = new Estacion("6", "F", LocalTime.of(6, 55), LocalTime.of(10, 10));
-	estaciones[6] = new Estacion("7", "G", LocalTime.of(7, 30), LocalTime.of(13, 15));
-	estaciones[7] = new Estacion("8", "H", LocalTime.of(11, 15), LocalTime.of(16, 20));
+	estaciones[0] = new Estacion(1, "A", LocalTime.of(8, 05), LocalTime.of(18, 45));
+	estaciones[1] = new Estacion(2, "B", LocalTime.of(8, 15), LocalTime.of(15, 25));
+	estaciones[2] = new Estacion(3, "C", LocalTime.of(11, 25), LocalTime.of(23, 45));
+	estaciones[3] = new Estacion(4, "D", LocalTime.of(10, 35), LocalTime.of(20, 05));
+	estaciones[4] = new Estacion(5, "E", LocalTime.of(9, 55), LocalTime.of(14, 50));
+	estaciones[5] = new Estacion(6, "F", LocalTime.of(6, 55), LocalTime.of(10, 10));
+	estaciones[6] = new Estacion(7, "G", LocalTime.of(7, 30), LocalTime.of(13, 15));
+	estaciones[7] = new Estacion(8, "H", LocalTime.of(11, 15), LocalTime.of(16, 20));
 	
 	estaciones[5].setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 	estaciones[6].setEstado(EstadoEstacion.EN_MANTENIMIENTO);

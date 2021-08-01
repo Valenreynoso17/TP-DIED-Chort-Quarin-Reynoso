@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import clases.CustomColor;
+import gestores.GestorColor;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.otros.ColorPicker;
 import interfaces.valen.otros.TextPrompt;
@@ -24,9 +26,15 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 	JLabel labelEstado;
 	JComboBox<String> estado;
 	JLabel labelColor;
+	ColorPicker colorPicker;
 	String[] opcionesEstado = {"Activa", "No activa"};
+	GestorColor gestorColor;
+	VentanaAltaLineaDeTransporte framePadre;
 	
 	public PanelAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame) {
+		
+		framePadre = frame;
+		gestorColor = GestorColor.getInstance();
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -44,7 +52,6 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		labelEstado = new JLabel("Estado:");
 		estado = new JComboBox<String>(opcionesEstado);
 		labelColor = new JLabel("Color:");
-		ColorPicker colorPicker;
 		
 		// Agregando padding
 		gbc.insets = new Insets(5,5,5,5);
@@ -76,8 +83,21 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		
 		gbc.gridx = 3;
 		gbc.gridy = 1;
-		colorPicker = new ColorPicker(frame, Color.WHITE);
+		colorPicker = new ColorPicker(frame, this, gestorColor.buscarColorPorNombre("Ninguno"));
 		this.add(colorPicker, gbc);
+	}
+	
+	public void cambiarColorPicker(CustomColor color) {
+		this.remove(colorPicker);
+		
+		this.revalidate();
+    	this.repaint();
+    	
+    	gbc.gridx = 3;
+		gbc.gridy = 1;
+    	colorPicker = new ColorPicker(framePadre, this, color);
+    	
+    	this.add(colorPicker, gbc);
 	}
 	
 	public String getNombreLinea() {
@@ -88,7 +108,7 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		return this.estado.getSelectedIndex();
 	}
 	
-	public Color getColorLinea() {
-		return Color.yellow;
+	public CustomColor getColorLinea() {
+		return colorPicker.getColor();
 	}
 }

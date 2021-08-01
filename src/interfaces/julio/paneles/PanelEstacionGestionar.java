@@ -22,6 +22,7 @@ import clases.Estacion;
 import enums.EstadoEstacion;
 import interfaces.julio.frames.EstacionAlta;
 import interfaces.julio.frames.EstacionGestionar;
+import interfaces.julio.frames.MenuPrincipal;
 
 public class PanelEstacionGestionar extends JPanel{
 	
@@ -32,6 +33,7 @@ public class PanelEstacionGestionar extends JPanel{
 	//private JTable tabla;
 	
 	private EstacionAlta frameAlta;
+	private MenuPrincipal frameAnterior;
 	
 	public PanelEstacionGestionar(EstacionGestionar frame) {
 		
@@ -71,8 +73,7 @@ public class PanelEstacionGestionar extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				//frameAnterior = new MenuPrincipal??();
-				//frameAnterior.setVisible(true);
+				frameAnterior = new MenuPrincipal();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

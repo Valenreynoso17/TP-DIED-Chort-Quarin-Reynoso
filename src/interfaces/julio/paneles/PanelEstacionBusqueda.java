@@ -26,7 +26,7 @@ public class PanelEstacionBusqueda extends JPanel {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		label = new JLabel("Id:? ");
+		label = new JLabel("Id: ");
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0; c.gridy = 0;
 		c.weighty = 0.1;
