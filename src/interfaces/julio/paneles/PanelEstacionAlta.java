@@ -159,7 +159,10 @@ public class PanelEstacionAlta extends JPanel{
 				}catch (InputInvalidaException IIE) {
 					
 					JOptionPane.showMessageDialog(frame,
-							IIE.getMessage(),	
+							IIE.getMessage()+"- El nombre puede tener como máximo 30 caracteres de longitud. \n"+
+									  "- La hora debe encontrarse en el intervalo [0, 23]. \n"+
+									  "- Los minutos deben encontrarse en el intervalo [0,59].\n"+
+									  "- La hora de cierre debe ser mayor a la hora de inicio.\n",	
 						    "Error",
 						    JOptionPane.ERROR_MESSAGE);
 				}
