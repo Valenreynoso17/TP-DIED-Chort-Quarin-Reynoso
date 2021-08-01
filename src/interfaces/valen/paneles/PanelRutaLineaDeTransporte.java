@@ -11,11 +11,17 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import clases.Estacion;
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
 import gestores.GestorEstacion;
+import interfaces.julio.frames.EstacionGestionar;
+import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
+import interfaces.valen.otros.ElementoListaTrayecto;
 import interfaces.valen.otros.TextPrompt;
 
 public class PanelRutaLineaDeTransporte extends JPanel{
@@ -36,13 +42,20 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 	JLabel labelCosto;
 	JTextField costo;
 	JButton botonAgregar;
+	JButton botonEliminar;
+	List<ElementoListaTrayecto> listaTrayecto;
+	PanelPrincipalAltaLineaDeTransporte panelPadre;
+	VentanaAltaLineaDeTransporte frame;
 	GridBagConstraints gbc;
 	String[] opcionesEstaciones = {"A", "B", "C"};
 	String[] opcionesEstado = {"Activa", "No activa"};
 	
-	public PanelRutaLineaDeTransporte() {
+	public PanelRutaLineaDeTransporte(VentanaAltaLineaDeTransporte frame, PanelPrincipalAltaLineaDeTransporte panel, List<ElementoListaTrayecto> listaTrayecto) {
 		
 		gestorEstacion = GestorEstacion.getInstance();
+		this.listaTrayecto = listaTrayecto;
+		this.panelPadre = panel;
+		this.frame = frame;
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -71,6 +84,8 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		costo = new JTextField();
 		TextPrompt tpCosto = new TextPrompt("Pesos", costo);
 		botonAgregar = new JButton("Agregar nueva ruta");
+		botonAgregar.addActionListener(e -> this.agregarRuta());
+		botonEliminar = new JButton("Eliminar ruta");
 		
 		// Agregando padding
 //		gbc.insets = new Insets(5,5,5,5);
@@ -141,13 +156,98 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		this.add(costo, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 7;
-		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(botonAgregar, gbc);
-		gbc.gridwidth = 1;
 		
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		gbc.anchor = GridBagConstraints.CENTER;
+		this.add(botonEliminar, gbc);
+		
+	}
+	
+	private void agregarRuta() {
+		
+		try {
+			
+			inputEstaVacia();
+			inputEsValida(distancia.getText(), duracion.getText(), cantMaxPasajeros.getText(), costo.getText());
+			this.checkOrigenDistinoDestino(estacionOrigen.getSelectedItem(), estacionDestino.getSelectedItem());
+		
+			// En principio llegan sólo valores válidos
+			ElementoListaTrayecto elementoAux = new ElementoListaTrayecto((String) estacionOrigen.getSelectedItem(),
+																		  (String) estacionDestino.getSelectedItem(),
+																		  Integer.parseInt(distancia.getText()),
+																		  Integer.parseInt(duracion.getText()),
+																		  Integer.parseInt(cantMaxPasajeros.getText()),
+																		  Integer.parseInt(costo.getText()),
+																		  (String) estadoRuta.getSelectedItem());
+			
+			listaTrayecto.add(elementoAux);
+			panelPadre.actualizar();
+		}catch (InputVacioException IVE) {
+		
+			JOptionPane.showMessageDialog(frame,
+										  "Faltan completar los siguientes campos:\n\n"+IVE.getMessage(),
+										  "Error",
+										  JOptionPane.ERROR_MESSAGE);
+		}catch (InputInvalidaException IIE) {
+		
+			JOptionPane.showMessageDialog(frame,
+										  IIE.getMessage(),	
+										  "Error",
+										  JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void inputEstaVacia() throws InputVacioException{
+		String error = "";
+		boolean algunoVacio = false;
+		
+		if(distancia.getText().isEmpty()) {
+			error += "- Distancia\n";
+			algunoVacio = true;
+		}
+		
+		if(duracion.getText().isEmpty()) {
+			error += "- Duración\n";
+			algunoVacio = true;
+		}
+		
+		if(cantMaxPasajeros.getText().isEmpty()) {
+			error += "- Cantidad máxima de pasajeros\n";
+			algunoVacio = true;
+		}
+		
+		if(costo.getText().isEmpty()) {
+			error += "- Costo\n";
+			algunoVacio = true;
+		}
+		
+		if(algunoVacio) {
+			
+			throw new InputVacioException(error);
+		}
+			
+				
+	}
+	
+	public void inputEsValida(String dist, String dur, String cantPasa, String costo) throws InputInvalidaException{
+		
+		// Checkear que son todos numeros y mayores a 0
+		try {
+			if(!(Integer.parseInt(dist) >= 0 && Integer.parseInt(dur) >= 0 && Integer.parseInt(cantPasa) >= 0 && Double.parseDouble(costo) >= 0)) {
+				throw new InputInvalidaException();
+			}
+		}catch (NumberFormatException nfe) {
+			throw new InputInvalidaException();
+		}
+	}
+	
+	private void checkOrigenDistinoDestino(Object estacionOrigen, Object estacionDestino) {
+		System.out.println(estacionOrigen.equals(estacionDestino));
 	}
 	
 	private void obtenerEstaciones() {
@@ -156,8 +256,5 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		listaEstaciones.toArray(arrayEstaciones);
 		opcionesEstaciones = new String[listaEstaciones.size()];
 		listaEstaciones.toArray(opcionesEstaciones);
-		
-//		Foo[] array = new Foo[list.size()];
-//		list.toArray(array); // fill the array
 	}
 }

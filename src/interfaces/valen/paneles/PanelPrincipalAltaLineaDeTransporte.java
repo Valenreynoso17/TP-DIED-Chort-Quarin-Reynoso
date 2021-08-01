@@ -2,16 +2,21 @@ package interfaces.valen.paneles;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
+import clases.CustomColor;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
+import interfaces.valen.otros.ElementoListaTrayecto;
 
 public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 	
@@ -21,8 +26,14 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 	GridBagConstraints gbc;
 	JButton botonCancelar;
 	JButton botonSiguiente;
+	VentanaAltaLineaDeTransporte frame;
+	
+	List<ElementoListaTrayecto> listaTrayecto;
 	
 	public PanelPrincipalAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame) {
+		
+		this.frame = frame;
+		listaTrayecto = new ArrayList<ElementoListaTrayecto>();
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -56,7 +67,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
 		gbc.gridheight = 2;
-		panelRuta = new PanelRutaLineaDeTransporte();
+		panelRuta = new PanelRutaLineaDeTransporte(frame, this, listaTrayecto);
 		this.add(panelRuta, gbc);
 		gbc.gridheight = 1;
 		
@@ -67,7 +78,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weighty = 0.0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		panelTrayecto = new PanelTrayectoLineaDeTransporte();
+		panelTrayecto = new PanelTrayectoLineaDeTransporte(listaTrayecto);
 		this.add(panelTrayecto, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
@@ -88,10 +99,47 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
 		botonSiguiente = new JButton("Siguiente");
-		botonSiguiente.addActionListener(e -> {
-			frame.setVisible(false);
-			new VentanaSiguienteAltaLineaDeTransporte(frame, panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea());
-		});
+		botonSiguiente.addActionListener(e -> this.checkearAntesDeSiguiente());
 		this.add(botonSiguiente, gbc);
+	}
+	
+	public void actualizar() {
+
+		this.remove(panelRuta);
+    	this.remove(panelTrayecto);
+    	
+    	this.revalidate();
+    	this.repaint();
+    	
+    	gbc.fill = GridBagConstraints.BOTH;
+    	gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.gridheight = 2;
+		panelRuta = new PanelRutaLineaDeTransporte(frame, this, listaTrayecto);
+		this.add(panelRuta, gbc);
+		gbc.gridheight = 1;
+    	
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		panelTrayecto = new PanelTrayectoLineaDeTransporte(listaTrayecto);
+		this.add(panelTrayecto, gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.gridwidth = 1;
+	}
+	
+	public void checkearAntesDeSiguiente() {
+		frame.setVisible(false);
+		this.checkearDatosDeLineaValidos(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
+		new VentanaSiguienteAltaLineaDeTransporte(frame, panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea());
+	}
+	
+	public void checkearDatosDeLineaValidos(String nombre, CustomColor color) {
+		
 	}
 }
