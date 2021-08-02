@@ -1,4 +1,4 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,6 +32,8 @@ import gestores.GestorRecorrido;
 import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
+import interfaces.fede.otros.ModeloTablaRecorridoExtendida;
+import interfaces.fede.otros.ModeloTablaRecorridos;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.fede.panelesGrafos.PanelPintaSoloVisibles;
@@ -163,7 +165,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.gridx = 0;
 		gbc_botonAtras.gridy = 4;
-		gbc_botonAtras.insets = new Insets(5, 5, 5, 5);
+		gbc_botonAtras.insets = new Insets(5, 20, 10, 5);
 		this.add(botonAtras, gbc_botonAtras);
 		
 		botonSiguiente = new JButton("Siguiente");
@@ -175,7 +177,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
 		gbc_botonSiguiente.gridx = 3;
 		gbc_botonSiguiente.gridy = 4;
-		gbc_botonSiguiente.insets = new Insets(5, 5, 5, 5);
+		gbc_botonSiguiente.insets = new Insets(5, 5, 10, 20);
 		this.add(botonSiguiente, gbc_botonSiguiente);
 		
 		

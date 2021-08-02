@@ -1,15 +1,12 @@
 package interfaces.fede.dialogs;
 
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import clases.Recorrido;
-import interfaces.fede.ventaBoleto.ModeloTablaRecorridoExtendida;
+import interfaces.fede.otros.ModeloTablaRecorridoExtendida;
 
 public class DialogInfoRecorridoExtendido extends JDialog {
 	public DialogInfoRecorridoExtendido(Recorrido recorrido) {

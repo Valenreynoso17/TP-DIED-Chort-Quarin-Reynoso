@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import clases.Estacion;
-import interfaces.fede.ventaBoleto.PanelVentaBoleto2;
+import interfaces.fede.paneles.PanelVentaBoleto2;
 
 public class FrameVentaBoleto2 extends JFrame {
 	private FrameVentaBoleto padre;

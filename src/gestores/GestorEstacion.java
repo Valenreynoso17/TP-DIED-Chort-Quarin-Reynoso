@@ -94,14 +94,6 @@ public class GestorEstacion {
 		
 	}
 	
-	/*public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
-		List<Estacion> accesibles =	this.getEstacionesAccesibles(estacion)
-										.stream()
-										.filter(e -> e.operativa())
-										.collect(Collectors.toList());
-		if (accesibles.isEmpty()) throw new SinEstacionesAccesiblesException();
-		return accesibles;
-	}*/
 	List<Estacion> getAdyacentesRutasActivas(Estacion estacion) {
 		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
@@ -135,5 +127,7 @@ public class GestorEstacion {
 	public Estacion getEstacionPorId(Integer idEstacion) {
 		return (estaciones.stream().filter(e -> e.getId() == idEstacion).findFirst()).get();
 	}
+	
+
 
 }

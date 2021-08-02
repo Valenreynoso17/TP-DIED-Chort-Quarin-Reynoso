@@ -1,4 +1,4 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.otros;
 
 import java.util.List;
 

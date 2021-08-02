@@ -33,6 +33,10 @@ public class Ruta {
 		this.costo = costo;
 	}
 	
+	public Integer getID() {
+		return this.id;
+	}
+	
 	public Boolean activa() {
 		return estado == EstadoRuta.ACTIVA;
 	}
@@ -65,7 +69,10 @@ public class Ruta {
 		this.trayecto = unTrayecto;
 	}
 
-	// Hay que cambiarlo
+	public Integer getCantMaxPasajeros() {
+		return this.cantMaxPasajeros;
+	}
+	
 	public Color getColorLinea() throws TrayectoNoAsociadoException {
 		if (trayecto == null) throw new TrayectoNoAsociadoException("Esta ruta no tiene su entidad trayecto asociada");
 		

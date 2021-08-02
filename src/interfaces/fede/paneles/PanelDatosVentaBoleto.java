@@ -1,38 +1,27 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.DefaultFormatter;
-import javax.swing.text.MaskFormatter;
 
-import clases.Boleto;
 import clases.Recorrido;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
 import gestores.GestorBoleto;
+import interfaces.fede.otros.ModeloTablaRecorridoExtendida;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JFormattedTextField;
 
 public class PanelDatosVentaBoleto extends JPanel {
 	private JTextField txtFFechaVenta;

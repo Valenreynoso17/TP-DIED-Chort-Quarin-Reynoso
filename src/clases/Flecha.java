@@ -9,10 +9,8 @@ import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import clases.Ruta;
 import excepciones.TrayectoNoAsociadoException;
 import gestores.GestorRuta;
-import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Flecha implements Dibujable{
 	private Point posOrigen, posDestino;

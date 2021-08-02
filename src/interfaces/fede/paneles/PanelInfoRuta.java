@@ -1,4 +1,4 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

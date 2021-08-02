@@ -67,6 +67,7 @@ public class GestorRuta {
 		}
 	}
 	
+	
 	public List<Ruta> getRutasSaliente(Estacion e) {
 		List<Ruta> retorno = new ArrayList<>();
 		

@@ -10,6 +10,7 @@ import java.util.List;
 
 import clases.Boleto;
 import clases.Recorrido;
+import clases.Ruta;
 
 public class BoletoPostgreSQLImpl implements BoletoDAO {
 	private String ip, port, usr, psw;
@@ -35,7 +36,9 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		String insercionRecorrido = 	"INSERT INTO died.recorrido "
 									+ 	"VALUES (?, ?, ?, ?, ?, ?); ";
 		String insercionBoleto = 	"INSERT INTO died.boleto "
-								+ 	"VALUES (?, ?, ?, ?, ?);";
+								+ 	"VALUES (?, ?, ?, ?, ?); ";
+		String insercionRutaRecorrido = 	"INSERT INTO died.ruta_recorrido "
+										+ 	"VALUES (?, ?)";
 		Integer id = null;
 		
 		Connection conn = null;
@@ -56,8 +59,11 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 			rs.close();
 			st.close();
 			
+			List<Ruta> rutas = recorrido.getRutas();
+			for (int i = 1; i<rutas.size(); i++) insercionRutaRecorrido += ", (?, ?)";
+			insercionRutaRecorrido += ";";
 			
-			st = conn.prepareStatement(insercionRecorrido + insercionBoleto);
+			st = conn.prepareStatement(insercionRecorrido + insercionBoleto + insercionRutaRecorrido);
 			st.setInt(1, id);
 			st.setInt(2, recorrido.getDistancia());
 			st.setInt(3, recorrido.getDuracion());
@@ -69,7 +75,11 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 			st.setString(9, boleto.getCorreoCliente());
 			System.out.println(boleto.getFechaVenta());
 			st.setDate(10, Date.valueOf(boleto.getFechaVenta()));
-			st.setInt(11, id);		
+			st.setInt(11, id);	
+			for (int i=0; i<rutas.size(); i++) {
+				st.setInt(12 + i*2, rutas.get(i).getID());
+				st.setInt(13 + i*2, id);
+			}
 			st.executeUpdate();
 			
 		} 

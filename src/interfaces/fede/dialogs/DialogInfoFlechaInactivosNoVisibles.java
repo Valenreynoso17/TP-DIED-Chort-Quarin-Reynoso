@@ -12,18 +12,20 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.WindowConstants;
 
 import clases.Estacion;
 import clases.Flecha;
 import clases.Ruta;
 import enums.EstadoRuta;
+import interfaces.fede.otros.RenderInfoFlecha;
 
 public class DialogInfoFlechaInactivosNoVisibles extends JDialog {
-	public DialogInfoFlechaInactivosNoVisibles(Flecha f) {
+	public DialogInfoFlechaInactivosNoVisibles(Flecha f, ListCellRenderer<Ruta> render) {
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
-		this.setSize(200, 250);
+		this.setSize(300, 300);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Info " + f.getEstacionOrigen().getNombre() + " --> " + f.getEstacionDestino().getNombre());
 		
@@ -35,12 +37,10 @@ public class DialogInfoFlechaInactivosNoVisibles extends JDialog {
 		DefaultListModel<Ruta> model = new DefaultListModel<>();
 		JList<Ruta> lista = new JList<>(model);
 		model.addAll(f.getRutasActivas());	
-		lista.setCellRenderer(new RenderInfoFlecha<Ruta>());
-		lista.setOpaque(false);
+		lista.setCellRenderer(render);
 		
 		
 		JScrollPane scrollPane = new JScrollPane(lista);
-		//scrollPane.setPreferredSize(new Dimension(60, 80));
 		
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(5, 5, 5, 5);
