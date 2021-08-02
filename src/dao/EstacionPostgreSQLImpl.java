@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ import clases.Recorrido;
 import enums.EstadoEstacion;
 
 public class EstacionPostgreSQLImpl implements EstacionDAO {
-	private String ip, port, usr, psw;
+	private String host, port, usr, psw;
 	
 	public EstacionPostgreSQLImpl() {
 		// TODO Cambiar datos si hace falta
-		this.ip = "localhost";
+		this.host = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
 		this.psw = "ChortQuarinReynoso";
@@ -38,7 +39,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(consulta);
@@ -98,19 +99,200 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	}
 
 	@Override
-	public void eliminar() {
-		// TODO Auto-generated method stub
+	public void eliminar(Estacion estacion) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			conn.setAutoCommit(false);
+			
+			// Borrar una tupla de la tabla
+			st = conn.prepareStatement("DELETE FROM died.estacion " +
+									   "WHERE id = (?);");
+			st.setInt(1, estacion.getId());
+			
+			Integer nro = st.executeUpdate();
+			conn.commit();
+			
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch(SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			if (st != null) {
+				try {
+					st.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}
 		
 	}
 
 	@Override
-	public void insertar() {
-		// TODO Auto-generated method stub
+	public void insertar(Estacion estacion) {
+		//Tener en cuenta que copie y pegue de boleto
+		String obtenerID = 		"SELECT max(id)"
+							+ 	"FROM died.estacion;";
+
+		String insercionEstacion = 	"INSERT INTO died.estacion "
+								+ 	"VALUES (?, ?, ?, ?, ?);";
+		Integer id = null;
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			// TODO Falta cargar la relacion con ruta
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			
+			// Se realiza una consulta para encontrar el id correspondiente a la siguiente estación
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 1;
+			else id += 1;
+			rs.close();
+			st.close();
+			
+			
+			st = conn.prepareStatement(insercionEstacion);
+			st.setInt(1, id);
+			st.setString(2, estacion.getNombre());
+			st.setString(3, estacion.getEstado().toString());
+			st.setTime(4, Time.valueOf(estacion.getHorarioApertura()));
+			st.setTime(5, Time.valueOf(estacion.getHorarioCierre()));	
+			st.executeUpdate();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}
 		
 	}
 
 	@Override
-	public void modificar() {
+	public void modificar(Estacion estacion) {
+		//Tener en cuenta que copie y pegue de boleto
+
+		String modificacionEstacion = 	"INSERT INTO died.estacion "
+									+ 	"VALUES (?, ?, ?, ?, ?);";
+		Integer id = null;
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			// TODO Falta cargar la relacion con ruta
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			
+			// Se realiza una consulta para encontrar el id correspondiente a la siguiente estación
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 1;
+			else id += 1;
+			rs.close();
+			st.close();
+			
+			
+			st = conn.prepareStatement(insercionEstacion);
+			st.setInt(1, id);
+			st.setString(2, estacion.getNombre());
+			st.setString(3, estacion.getEstado().toString());
+			st.setTime(4, Time.valueOf(estacion.getHorarioApertura()));
+			st.setTime(5, Time.valueOf(estacion.getHorarioCierre()));	
+			st.executeUpdate();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
+	}
+
+	@Override
+	public void actualizarPosicion(Estacion estacion) {
 		// TODO Auto-generated method stub
 		
 	}

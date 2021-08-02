@@ -33,7 +33,7 @@ public class PanelProximoMantenimiento extends JPanel{
 	
 	public PanelProximoMantenimiento(ProximoMantenimiento frame) {
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Dar de alta Estación"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Próximo mantenimiento"));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

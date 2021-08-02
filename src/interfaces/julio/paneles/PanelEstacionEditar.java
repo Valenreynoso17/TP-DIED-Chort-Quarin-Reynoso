@@ -253,16 +253,6 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridx = 5; c.gridy = 5;
 		this.add(button, c);
 		
-		button = new JButton("Editar ubicación");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { }
-		
-					
-		});
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridx = 4; c.gridy = 5;
-		this.add(button, c);
-		
 	}
 	
 	public void inputEstaVacia() throws InputVacioException{

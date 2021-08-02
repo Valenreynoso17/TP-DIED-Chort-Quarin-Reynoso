@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
 import interfaces.julio.frames.EstacionAlta;
+import interfaces.julio.frames.EstacionAltaGrafo;
 import interfaces.julio.frames.EstacionGestionar;
 
 public class PanelEstacionAlta extends JPanel{
@@ -39,6 +40,7 @@ public class PanelEstacionAlta extends JPanel{
 	private JTextField estado;
 	
 	private EstacionGestionar frameAnterior;
+	private EstacionAltaGrafo frameSiguiente;
 	
 	public PanelEstacionAlta(EstacionAlta frame) {
 		
@@ -139,7 +141,7 @@ public class PanelEstacionAlta extends JPanel{
 		c.gridy = 4;
 		this.add(button, c);
 
-		button = new JButton("Crear");
+		button = new JButton("Siguiente");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -148,7 +150,7 @@ public class PanelEstacionAlta extends JPanel{
 						inputEsValida();
 						
 						frame.dispose();
-						frameAnterior = new EstacionGestionar();
+						frameSiguiente = new EstacionAltaGrafo(frame);
 					
 				}catch (InputVacioException IVE) {
 					

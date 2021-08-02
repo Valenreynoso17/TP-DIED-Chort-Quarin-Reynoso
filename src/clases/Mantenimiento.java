@@ -7,10 +7,16 @@ public class Mantenimiento {
 	private LocalDate fechaFin;
 	private String observaciones;
 	
-	public Mantenimiento(LocalDate fI, LocalDate fF, String o) {
+	private Integer id;
+	
+	public Mantenimiento(Integer i, LocalDate fI, String o) {
+		this.id = i;
 		this.fechaInicio = fI;
-		this.fechaFin = fF;
 		this.observaciones = o;
+	}
+	
+	public void finalizarMantenimiento(LocalDate fF) {
+		this.fechaFin = fF;
 	}
 
 }

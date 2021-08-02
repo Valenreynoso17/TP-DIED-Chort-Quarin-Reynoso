@@ -17,6 +17,9 @@ import javax.swing.border.TitledBorder;
 
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.frames.MenuPrincipal;
+import interfaces.julio.frames.PageRank;
+import interfaces.julio.frames.ProximoMantenimiento;
+import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 
 public class PanelMenuPrincipal extends JPanel{
 	
@@ -26,7 +29,9 @@ public class PanelMenuPrincipal extends JPanel{
 	private Dimension dimEstandar = new Dimension(350,40);
 	
 	private EstacionGestionar frameEstacionGestionar;
-	
+	private PageRank framePageRank;
+	private ProximoMantenimiento frameProximoMantenimiento;	
+	private VentanaGestionLineasDeTransporte frameLineaGestionar;
 	
 	public PanelMenuPrincipal(MenuPrincipal frame) {
 		
@@ -41,7 +46,7 @@ public class PanelMenuPrincipal extends JPanel{
 	label.setFont(fuente);
 	c.anchor = GridBagConstraints.CENTER;
 	c.gridx = 0; c.gridy = 0;
-	c.weighty = 0.5;
+	c.weighty = 0.4;
 	this.add(label, c);
 	c.weighty = 0.1;
 	
@@ -64,28 +69,62 @@ public class PanelMenuPrincipal extends JPanel{
 	button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			frame.dispose();
+			frame.dispose(); 
+			frameLineaGestionar = new VentanaGestionLineasDeTransporte();
 		}
 	});
 	c.gridy = 2;
 	this.add(button, c);
 	
-	button = new JButton("Flujo máximo");
+	button = new JButton("Comprar boleto");
 	button.setBorder(new LineBorder (Color.black, 1));
 	button.setPreferredSize(dimEstandar);
-	c.gridx = 0; c.gridy = 3;
+	button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			frame.dispose();
+		}
+	});
+	c.gridy = 3;
 	this.add(button, c);
 	
-	button = new JButton("Page Rank de Estaciones");
+	button = new JButton("Flujo máximo");
+	button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			frame.dispose();
+			//frameEstacionGestionar = new EstacionGestionar();
+		}
+	});
 	button.setBorder(new LineBorder (Color.black, 1));
 	button.setPreferredSize(dimEstandar);
 	c.gridy = 4;
 	this.add(button, c);
 	
-	button = new JButton("Próximo mantenimiento");
+	button = new JButton("Page Rank de Estaciones");
+	button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			frame.dispose();
+			framePageRank = new PageRank();
+		}
+	});
 	button.setBorder(new LineBorder (Color.black, 1));
 	button.setPreferredSize(dimEstandar);
 	c.gridy = 5;
+	this.add(button, c);
+	
+	button = new JButton("Próximo mantenimiento");
+	button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			frame.dispose();
+			frameProximoMantenimiento = new ProximoMantenimiento();
+		}
+	});
+	button.setBorder(new LineBorder (Color.black, 1));
+	button.setPreferredSize(dimEstandar);
+	c.gridy = 6;
 	this.add(button, c);
 	
 	button = new JButton("SALIR");
@@ -98,7 +137,7 @@ public class PanelMenuPrincipal extends JPanel{
 			frame.dispose();
 		}
 	});
-	c.gridy = 6;
+	c.gridy = 7;
 	this.add(button, c);
 	
 	Font fuente2 =new Font("Monospaced", Font.ITALIC, 10);	//TODO: Ver si se puede cambiar el tamaño de "fuente"
@@ -107,7 +146,7 @@ public class PanelMenuPrincipal extends JPanel{
 	
 	label.setFont(fuente2);
 	c.anchor = GridBagConstraints.SOUTH;
-	c.gridx = 0; c.gridy = 7;
+	c.gridy = 0;
 	c.weighty = 0.0;
 	c.weightx = 0.0;
 	this.add(label, c);

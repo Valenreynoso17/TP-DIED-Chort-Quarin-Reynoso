@@ -28,10 +28,6 @@ public class MenuPrincipal extends JFrame {
 		
 		this.setVisible(true);
 		
-		
-		
-
-		
 	}
 	
-	}
+}
