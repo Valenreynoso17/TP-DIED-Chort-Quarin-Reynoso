@@ -7,7 +7,8 @@ import clases.Estacion;
 
 public interface EstacionDAO {
 	public List<Estacion> buscar();
-	public void eliminar();
-	public void insertar() ;
-	public void modificar();
+	public void eliminar(Estacion estacion);
+	public void insertar(Estacion estacion) ;
+	public void modificar(Estacion estacion);
+	public void actualizarPosicion(Estacion estacion);
 }

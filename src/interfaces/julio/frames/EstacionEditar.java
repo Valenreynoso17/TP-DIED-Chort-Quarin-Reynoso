@@ -15,9 +15,6 @@ public class EstacionEditar extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Create the frame.
-	 */
 	public EstacionEditar(Vector filaSeleccionada) {
 		super("Sistema de Gestión de Transporte Multimodal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

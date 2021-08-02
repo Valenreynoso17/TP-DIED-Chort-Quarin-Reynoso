@@ -10,7 +10,6 @@ import interfaces.julio.paneles.PanelProximoMantenimiento;
 public class ProximoMantenimiento extends JFrame{
 
 	private JPanel contentPane;
-	private JTextField textField;
 
 	public ProximoMantenimiento() {
 		super("Sistema de Gestión de Transporte Multimodal");
@@ -21,9 +20,6 @@ public class ProximoMantenimiento extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		this.setVisible(true);
-		
-		//this.setLayout(new GridBagLayout());
-		//GridBagConstraints c = new GridBagConstraints();
 	
 	}
 	

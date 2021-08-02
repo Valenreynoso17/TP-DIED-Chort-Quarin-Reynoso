@@ -11,7 +11,6 @@ import interfaces.julio.paneles.PanelPageRank;
 public class PageRank extends JFrame{
 
 	private JPanel contentPane;
-	private JTextField textField;
 
 	public PageRank() {
 		super("Sistema de Gestión de Transporte Multimodal");
@@ -22,9 +21,6 @@ public class PageRank extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		this.setVisible(true);
-		
-		//this.setLayout(new GridBagLayout());
-		//GridBagConstraints c = new GridBagConstraints();
 	
 	}
 	

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -51,6 +52,7 @@ public class PopUpMantenimiento extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(frame);
 		
 		this.setVisible(true);
 		
@@ -63,8 +65,7 @@ public class PopUpMantenimiento extends JFrame {
 		
 		label = new JLabel("Fecha de inicio: ");
 		c.anchor = GridBagConstraints.EAST;
-		c.gridx = 0;
-		c.gridy = 0;
+		c.gridx = 0; c.gridy = 0;
 		contentPane.add(label, c);
 		
 		//c.anchor = GridBagConstraints.NONE;
@@ -118,6 +119,7 @@ public class PopUpMantenimiento extends JFrame {
 		
 		
 		label = new JLabel("Observaciones: ");
+		c.insets = new Insets(0,10,0,0);
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridx = 0; c.gridy = 1;
 
@@ -129,6 +131,7 @@ public class PopUpMantenimiento extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(texto);
 		texto.setLineWrap(true);
 		texto.setWrapStyleWord(true);
+		c.insets = new Insets(0,0,0,20);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 1; c.gridy = 1;
 		c.gridheight = 2; c.gridwidth = 6;
@@ -148,6 +151,7 @@ public class PopUpMantenimiento extends JFrame {
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(0,10,0,0);
 		c.gridx = 0;
 		c.gridy = 3;
 		c.weighty = 0.05;
@@ -162,6 +166,7 @@ public class PopUpMantenimiento extends JFrame {
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(0,0,0,20);
 		c.gridx = 6; c.gridy = 3;
 		contentPane.add(button, c);
 		

@@ -15,6 +15,7 @@ import clases.Estacion;
 import clases.Ruta;
 import dao.EstacionDAO;
 import dao.EstacionPostgreSQLImpl;
+import enums.EstadoEstacion;
 import excepciones.SinEstacionesAccesiblesException;
 
 public class GestorEstacion {
@@ -44,8 +45,8 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, Point pos) {
-		estaciones.add(new Estacion(i, n, hA, hC));
+	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
+		estaciones.add(new Estacion(i, n, hA, hC, ee));
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {

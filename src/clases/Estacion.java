@@ -29,12 +29,14 @@ public class Estacion implements Dibujable{
 	
 	private Point posicion; //VER 
 	
-	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
+	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
 		this.id = i;
 		this.nombre = n;
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
-		this.estado = EstadoEstacion.OPERATIVA;
+		this.estado = ee;
+		this.posicion = new Point();
+		this.posicion.x = 100; this.posicion.y = 100;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
 		this.escala = 1.0f;
 		//this.colorGrafico = GamaColor.AZUL;

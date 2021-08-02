@@ -9,11 +9,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-public class PanelEstacionBusqueda extends JPanel {
+import interfaces.valen.paneles.PanelGridListaGestionLineas;
+
+public class PanelEstacionBusqueda extends JPanel{
 	
 	private JLabel label;
 	private JButton button;
