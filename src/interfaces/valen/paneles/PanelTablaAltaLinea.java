@@ -2,6 +2,7 @@ package interfaces.valen.paneles;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -12,19 +13,17 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import interfaces.valen.otros.ElementoListaTrayecto;
 import interfaces.valen.otros.ModeloTablaAltaResumen;
 
 public class PanelTablaAltaLinea extends JPanel{
 
 	JScrollPane panelScroll;
 	JTable tabla;
-	TableModel modeloTabla;
+	ModeloTablaAltaResumen modeloTabla;
 	GridBagConstraints gbc;
 	
-//	int[] columnsWidth = {200, 25, 25, 25, 25, 25, 25, 25, 50};
-	Object[][] data = {{"A", "B", 100, 50, 80, "Activo", 35}};
-	
-	public PanelTablaAltaLinea() {
+	public PanelTablaAltaLinea(List<ElementoListaTrayecto> listaTrayecto) {
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		
@@ -33,28 +32,42 @@ public class PanelTablaAltaLinea extends JPanel{
 		gbc.weightx = 1.0;
 		
 		modeloTabla = new ModeloTablaAltaResumen();
+		cargarDatos(listaTrayecto);
 		tabla = new JTable(modeloTabla);
+		tabla.getTableHeader().setReorderingAllowed(false);
+		tabla.setAutoCreateRowSorter(true);
 		
-		
-		
-//		// Configures table's column width.
-//        int i = 0;
-//        for (int width : columnsWidth) {
-//            TableColumn column = tabla.getColumnModel().getColumn(i++);
-//            column.setMinWidth(width);
-//            column.setMaxWidth(width);
-//            column.setPreferredWidth(width);
-//        }
-//		tabla.setAutoCreateRowSorter(true);
-//		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		tabla.doLayout();
+		// Configures table's column width.
+		TableColumn column = null;
+        for (int i = 0; i < 7; i++) {
+        	column = tabla.getColumnModel().getColumn(i);
+        	if (i == 4) column.setPreferredWidth(120);
+        }
 		
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		panelScroll = new JScrollPane(tabla);
 		
 		this.add(panelScroll, gbc);
+	}
+	
+	public void cargarDatos(List<ElementoListaTrayecto> listaTrayecto) {
+		
+		modeloTabla.addColumn("Estación origen");
+		modeloTabla.addColumn("Estación destino");
+		modeloTabla.addColumn("Distancia");
+		modeloTabla.addColumn("Duración de viaje");
+		modeloTabla.addColumn("Cantidad máxima de pasajeros");
+		modeloTabla.addColumn("Estado ruta");
+		modeloTabla.addColumn("Costo");
+		
+		for(ElementoListaTrayecto unElemento : listaTrayecto) {
+			modeloTabla.addRow(new Object[] {unElemento.getEstacionOrigen(), unElemento.getEstacionDestino(),
+											 unElemento.getDistancia(), unElemento.getDuracion(),
+											 unElemento.getCantMaxPasajeros(), unElemento.getEstado(),
+											 unElemento.getCosto()});
+		}
 	}
 }

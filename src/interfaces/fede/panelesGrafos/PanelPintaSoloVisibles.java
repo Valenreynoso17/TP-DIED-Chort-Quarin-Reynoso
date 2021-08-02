@@ -10,6 +10,7 @@ import java.util.List;
 import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
+import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
 
 public class PanelPintaSoloVisibles extends PanelGrafico {
 	protected Estacion origen, destino;

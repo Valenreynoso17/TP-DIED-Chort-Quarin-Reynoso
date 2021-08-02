@@ -35,8 +35,8 @@ public class GestorRuta {
 		return rutas;
 	}
 	
-	public void agregarRuta(Integer id, Integer idTrayecto, Estacion o, Estacion des,Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
-		rutas.add(new Ruta(id, id, o, des, d, du, mP, e, c));
+	public void agregarRuta(Integer id, Integer idTrayecto, Estacion o, Estacion des, Integer d, Integer du, Integer mP, EstadoRuta e, double c) {
+		rutas.add(new Ruta(id, idTrayecto, o, des, d, du, mP, e, c));
 	}
 	
 	// Devuelve una lista con todas las lista de rutas que pueden recorrerse para ir desde origen a destino

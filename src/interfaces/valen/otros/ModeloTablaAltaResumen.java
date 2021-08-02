@@ -1,44 +1,28 @@
 package interfaces.valen.otros;
 
+import java.time.LocalTime;
+
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
-public class ModeloTablaAltaResumen extends AbstractTableModel{
+import enums.EstadoEstacion;
 
-	String[] nombreColumnas = {"Estación origen", "Estación destino", "Distancia",
-			"Duración de viaje", "Cantidad máxima de pasajeros",
-			"Estado ruta", "Costo"};
-	
-	// TODO: Ver como le paso los datos
-	
-	// TODO
-	@Override
-	public int getRowCount() {
-		return 1;
-	}
+public class ModeloTablaAltaResumen extends DefaultTableModel{
 
-	@Override
-	public int getColumnCount() {
-		return nombreColumnas.length;
-	}
-
-	// TODO
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return null;
+	public boolean isCellEditable (int row, int column){
+		return false;
 	}
 	
-	@Override
-	public String getColumnName(int col) {
-		return nombreColumnas[col].toString();
+	/** Primera columna Boolean, segunda Integer y el resto Object */
+	public Class getColumnClass(int columna){
+		if (columna == 0) return String.class;
+		if (columna == 1) return String.class;
+		if (columna == 2) return Integer.class;
+		if (columna == 3) return Integer.class;
+		if (columna == 4) return Integer.class;
+		if (columna == 5) return String.class;
+		if (columna == 6) return Double.class;
+		return Object.class;
 	}
-	
-	@Override
-	public boolean isCellEditable(int row, int col){
-		return false; 
-    }
-	
-//	public Class getColumnClass(int c) {
-//        return getValueAt(0, c).getClass();
-//    }
 
 }

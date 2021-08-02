@@ -23,13 +23,17 @@ public class Estacion implements Dibujable{
 	private LocalTime horarioApertura;
 	private LocalTime horarioCierre;
 	private Float escala;
-	//private GamaColor colorGrafico;
 	
 	private List<Mantenimiento> mantenimientos;
 	
 	private Point posicion; //VER 
 	
+<<<<<<< HEAD
 	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+=======
+	
+	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
+>>>>>>> master
 		this.id = i;
 		this.nombre = n;
 		this.horarioApertura = hA;
@@ -39,7 +43,6 @@ public class Estacion implements Dibujable{
 		this.posicion.x = 100; this.posicion.y = 100;
 		this.mantenimientos = new ArrayList<Mantenimiento>();
 		this.escala = 1.0f;
-		//this.colorGrafico = GamaColor.AZUL;
 	}
 	
 	// ver si lo dejamos
@@ -53,6 +56,8 @@ public class Estacion implements Dibujable{
 		this.mantenimientos = mantenimientos;
 		this.escala = 1.0f;
 	}
+	
+	
 	
 	public Integer getId() {
 		return id;

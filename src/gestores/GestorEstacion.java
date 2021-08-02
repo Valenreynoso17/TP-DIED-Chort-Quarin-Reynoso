@@ -52,7 +52,7 @@ public class GestorEstacion {
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
 		List<Estacion> resultado = new ArrayList<>();
 		HashSet<Estacion> marcados = new HashSet<>();
-		List<Estacion> adyacentes = this.getAdyacentes(estacion);
+		List<Estacion> adyacentes = this.getAdyacentesRutasActivas(estacion);
 		
 		marcados.add(estacion);
 		
@@ -63,6 +63,8 @@ public class GestorEstacion {
 		}
 		
 		if (resultado.isEmpty()) throw new SinEstacionesAccesiblesException();
+		
+		
 		return resultado;
 	}
 	
@@ -78,7 +80,7 @@ public class GestorEstacion {
 		while (!pendientes.isEmpty()) {
 			Estacion e = pendientes.pop();
 			resultado.add(e);
-			List<Estacion> adyacentes = this.getAdyacentes(e);
+			List<Estacion> adyacentes = this.getAdyacentesRutasActivas(e);
 			for (Estacion e2 : adyacentes) {
 				if (!marcados.contains(e2) && e2.operativa()) {
 					marcados.add(e2);
@@ -100,8 +102,20 @@ public class GestorEstacion {
 		if (accesibles.isEmpty()) throw new SinEstacionesAccesiblesException();
 		return accesibles;
 	}*/
+	List<Estacion> getAdyacentesRutasActivas(Estacion estacion) {
+		gestorRutas = GestorRuta.getInstance();
+		List<Ruta> rutas = gestorRutas.getRutas();
+		List<Estacion> resultado = new ArrayList<>();
+		
+		for (Ruta r : rutas) {
+			if (r.activa() && r.getOrigen().equals(estacion) && !resultado.contains(r.getOrigen())) resultado.add(r.getDestino());
+			
+		}
+
+		return resultado;
+	}
 	
-	public List<Estacion> getAdyacentes(Estacion estacion) {
+	List<Estacion> getAdyacentes(Estacion estacion) {
 		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
 		List<Estacion> resultado = new ArrayList<>();
@@ -110,6 +124,7 @@ public class GestorEstacion {
 			if (r.getOrigen().equals(estacion) && !resultado.contains(r.getOrigen())) resultado.add(r.getDestino());
 			
 		}
+
 		return resultado;
 	}
 	

@@ -238,8 +238,12 @@ public class PanelDatosVentaBoleto extends JPanel {
 	
 	
 	public void validarCamposNoVacios() throws InputVacioException {
-		if (txtFNombreCliente.getText().isEmpty() || txtFNombreCliente.getText().isBlank() 
-				|| txtFCorreoCliente.getText().isEmpty() || txtFCorreoCliente.getText().isBlank()) throw new InputVacioException();
+		String error = "";
+		if (txtFNombreCliente.getText().isEmpty() || txtFNombreCliente.getText().isBlank()) error += "\n - Nombre";
+		if (txtFCorreoCliente.getText().isEmpty() || txtFCorreoCliente.getText().isBlank()) error += "\n - Correo";
+			
+			
+		if (!error.isEmpty()) throw new InputVacioException(error);
 	}
 	
 	public void validarNombre() throws InputInvalidaException {

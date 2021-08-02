@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import clases.Estacion;
@@ -32,35 +34,53 @@ import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
+import interfaces.fede.panelesGrafos.PanelPintaSoloVisibles;
+import interfaces.fede.panelesGrafos.PanelPintaTodo;
+import interfaces.fede.panelesGrafos.PanelSeleccionOrigenDestino;
+import interfaces.fede.panelesGrafos.PanelSoloEntreOrigenDestino;
 
 public class PanelVentaBoleto2 extends JPanel {
 	private JButton botonSiguiente;
 	private Estacion origen, destino;
 	private GestorRecorrido gestorRecorridos;
 	private Recorrido seleccionado;
+	private JTable tablaRecorridoExtendido;
 	
 	public PanelVentaBoleto2(Estacion origen, Estacion destino) {
+		this.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Seleccione un recorrido"));
+		
 		this.origen = origen;
 		this.destino = destino;
 		this.gestorRecorridos = GestorRecorrido.getInstance();
 		
 		GridBagLayout gbl = new GridBagLayout();
-		gbl.columnWeights = new double[]{0.1, 0.5, 0.1};
-		gbl.rowWeights = new double[]{0.5, 0.2, 0.0, 0.0};
+		gbl.columnWeights = new double[]{0.1, 0.8, 0.8, 0.1};
+		gbl.rowWeights = new double[]{0.1, 10.0, 0.1, 10.0, 0.1};
 		this.setLayout(gbl);
 		
-		PanelPermiteCambiarPosicion panelGrafico = new PanelPermiteCambiarPosicion();
-		panelGrafico.setBackground(Color.WHITE);
+		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+		
+		PanelSoloEntreOrigenDestino panelGrafico = new PanelSoloEntreOrigenDestino(recorridos);
 		
 		JScrollPane spPanelGrafico = new JScrollPane(panelGrafico);		
 		spPanelGrafico.setPreferredSize(new Dimension(600, 400));
 		GridBagConstraints gbc_spPanelGrafico = new GridBagConstraints();
-		gbc_spPanelGrafico.gridx = 1;
+		gbc_spPanelGrafico.gridx = 2;
 		gbc_spPanelGrafico.gridy = 0;
-		gbc_spPanelGrafico.insets = new Insets(5, 5, 5, 5);
+		gbc_spPanelGrafico.gridheight = 4;
+		gbc_spPanelGrafico.insets = new Insets(20, 10, 20, 10);
+		gbc_spPanelGrafico.fill = GridBagConstraints.BOTH;
 		this.add(spPanelGrafico, gbc_spPanelGrafico);
 		
-		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+		
+		JLabel lblTablaRecorridos = new JLabel("Recorridos disponibles");
+		GridBagConstraints gbc_lblTablaRecorridos = new GridBagConstraints();
+		gbc_lblTablaRecorridos.gridx = 1;
+		gbc_lblTablaRecorridos.gridy = 0;
+		gbc_lblTablaRecorridos.anchor = GridBagConstraints.WEST;
+		gbc_lblTablaRecorridos.insets = new Insets(10, 5, 5, 5);
+		this.add(lblTablaRecorridos, gbc_lblTablaRecorridos);
+		
 		
 		JTable tablaRecorridos = new JTable(new ModeloTablaRecorridos(recorridos));
 		tablaRecorridos.setAutoCreateRowSorter(true);
@@ -73,29 +93,76 @@ public class PanelVentaBoleto2 extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (!botonSiguiente.isEnabled()) botonSiguiente.setEnabled(true);
 				seleccionado = recorridos.get(tablaRecorridos.convertRowIndexToModel(tablaRecorridos.getSelectedRow()));
-				System.out.println(seleccionado);
+				tablaRecorridoExtendido.setModel(new ModeloTablaRecorridoExtendida(seleccionado));
+				
 			}
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (!botonSiguiente.isEnabled()) botonSiguiente.setEnabled(true);
 				seleccionado = recorridos.get(tablaRecorridos.convertRowIndexToModel(tablaRecorridos.getSelectedRow()));
-				System.out.println(seleccionado);
+				tablaRecorridoExtendido.setModel(new ModeloTablaRecorridoExtendida(seleccionado));
 			}
 		});
+		
+		
+		
 		JScrollPane spTablaRecorridos = new JScrollPane(tablaRecorridos);
-		spTablaRecorridos.setPreferredSize(new Dimension(500, 100));
+		spTablaRecorridos.setPreferredSize(new Dimension(400, 100));
 		GridBagConstraints gbc_spTablaRecorridos = new GridBagConstraints();
 		gbc_spTablaRecorridos.gridx = 1;
 		gbc_spTablaRecorridos.gridy = 1;
-		gbc_spTablaRecorridos.insets = new Insets(5, 5, 5, 5);
+		gbc_spTablaRecorridos.insets = new Insets(10, 10, 20, 10);
+		gbc_spTablaRecorridos.fill = GridBagConstraints.BOTH;
 		this.add(spTablaRecorridos, gbc_spTablaRecorridos);
 		
-		JButton botonAtras = new JButton("Atras");
+		
+		/*JPanel panelTablaRecorridos = new JPanel();	
+		panelTablaRecorridos.add(spTablaRecorridos);
+		panelTablaRecorridos.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Recorridos disponibles"));
+		GridBagConstraints gbc_panelTablaRecorridos = new GridBagConstraints();
+		gbc_panelTablaRecorridos.gridx = 1;
+		gbc_panelTablaRecorridos.gridy = 0;
+		gbc_panelTablaRecorridos.insets = new Insets(5, 5, 5, 5);
+		this.add(panelTablaRecorridos, gbc_panelTablaRecorridos);*/
+		
+		JLabel lbltablaRecorridoExtendido = new JLabel("Mas información recorridos");
+		GridBagConstraints gbc_lbltablaRecorridoExtendido = new GridBagConstraints();
+		gbc_lbltablaRecorridoExtendido.gridx = 1;
+		gbc_lbltablaRecorridoExtendido.gridy = 2;
+		gbc_lbltablaRecorridoExtendido.anchor = GridBagConstraints.WEST;
+		gbc_lbltablaRecorridoExtendido.insets = new Insets(10, 5, 5, 5);
+		this.add(lbltablaRecorridoExtendido, gbc_lbltablaRecorridoExtendido);
+		
+		
+		tablaRecorridoExtendido = new JTable(new ModeloTablaRecorridoExtendida(gestorRecorridos.recorridoSinRutas()));
+		tablaRecorridoExtendido.getTableHeader().setReorderingAllowed(false);
+		tablaRecorridoExtendido.setRowSelectionAllowed(false);
+		tablaRecorridoExtendido.setFocusable(false);
+		
+		JScrollPane spTablaRecorridoExtendido = new JScrollPane(tablaRecorridoExtendido);
+		spTablaRecorridoExtendido.setPreferredSize(new Dimension(400, 100));
+		GridBagConstraints gbc_spTablaRecorridoExtendido = new GridBagConstraints();
+		gbc_spTablaRecorridoExtendido.gridx = 1;
+		gbc_spTablaRecorridoExtendido.gridy = 3;
+		gbc_spTablaRecorridoExtendido.insets = new Insets(10, 10, 20, 10);
+		gbc_spTablaRecorridoExtendido.fill = GridBagConstraints.BOTH;
+		this.add(spTablaRecorridoExtendido, gbc_spTablaRecorridoExtendido);
+		
+		/*JPanel panelTablaRecorridoExtendido = new JPanel();	
+		panelTablaRecorridoExtendido.add(spTablaRecorridoExtendido);
+		panelTablaRecorridoExtendido.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Mas informacion recorrido"));
+		GridBagConstraints gbc_panelTablaRecorridoExtendido = new GridBagConstraints();
+		gbc_panelTablaRecorridoExtendido.gridx = 1;
+		gbc_panelTablaRecorridoExtendido.gridy = 1;
+		gbc_panelTablaRecorridoExtendido.insets = new Insets(5, 5, 5, 5);
+		this.add(panelTablaRecorridoExtendido, gbc_panelTablaRecorridoExtendido);*/
+		
+		JButton botonAtras = new JButton("  Atrás  ");
 		botonAtras.addActionListener(e -> volverAtras());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.gridx = 0;
-		gbc_botonAtras.gridy = 2;
+		gbc_botonAtras.gridy = 4;
 		gbc_botonAtras.insets = new Insets(5, 5, 5, 5);
 		this.add(botonAtras, gbc_botonAtras);
 		
@@ -106,8 +173,8 @@ public class PanelVentaBoleto2 extends JPanel {
 			getPadre().dispose();
 		});
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
-		gbc_botonSiguiente.gridx = 2;
-		gbc_botonSiguiente.gridy = 2;
+		gbc_botonSiguiente.gridx = 3;
+		gbc_botonSiguiente.gridy = 4;
 		gbc_botonSiguiente.insets = new Insets(5, 5, 5, 5);
 		this.add(botonSiguiente, gbc_botonSiguiente);
 		

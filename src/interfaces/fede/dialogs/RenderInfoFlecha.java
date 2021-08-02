@@ -1,4 +1,4 @@
-package interfaces.fede.panelesGrafos;
+package interfaces.fede.dialogs;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,6 +13,9 @@ import javax.swing.border.Border;
 
 import clases.Estacion;
 import clases.Ruta;
+import excepciones.LineaNoAsociadaException;
+import excepciones.TrayectoNoAsociadoException;
+import gestores.GestorRuta;
 
 
 public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
@@ -24,20 +27,39 @@ public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
 		
 		if (value instanceof Ruta) {
 			Ruta r = (Ruta) value;
+			Color colorLinea = Color.white;
+			String nombreLinea = "Error";
+			
+			try {
+				colorLinea = r.getColorLinea();
+				nombreLinea = r.getNombreLinea();
+			}
+			catch (TrayectoNoAsociadoException exc) {
+				GestorRuta gestor = GestorRuta.getInstance();
+				gestor.asociarATrayectos();
+				
+				try {
+					colorLinea = r.getColorLinea();
+					nombreLinea = r.getNombreLinea();
+				} catch (TrayectoNoAsociadoException e) {
+					System.out.println("f");
+					e.printStackTrace();
+				}
+				
+			}
+			
 			if (r.activa()) {
-				setForeground(r.getColorLinea());
+				setForeground(colorLinea);
 				setFont(list.getFont());
-				setText(r.linea());
+				setText(nombreLinea);
 			}
 			else {
 				setForeground(new Color(90, 90, 90));
 				setFont(new Font("ff", Font.ITALIC, 12));
-				setText(r.linea() + " - No activa");
+				setText(nombreLinea + " - No activa");
 			}
 			
 		}
-			
-		
 			
 		return this;
 	}
