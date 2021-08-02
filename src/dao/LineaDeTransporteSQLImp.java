@@ -99,6 +99,11 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 			}
 			e.printStackTrace();
 		}
+		finally {
+			if (rs != null) {try {rs.close();} catch (Exception e) {e.printStackTrace();}}
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}
+		}
 	}
 
 	@Override
