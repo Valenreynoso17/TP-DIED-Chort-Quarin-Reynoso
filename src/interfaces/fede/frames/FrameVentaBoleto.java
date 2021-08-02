@@ -27,7 +27,7 @@ public class FrameVentaBoleto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					pruebaGrafico();
+					//pruebaGrafico();
 					FrameVentaBoleto frame = new FrameVentaBoleto();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -41,11 +41,12 @@ public class FrameVentaBoleto extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameVentaBoleto() {
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		this.setTitle("Sistema de Gestión de Transporte Multimodal");
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 1280, 720);
 		contentPane = new PanelVentaBoleto();
-		setContentPane(contentPane);
+		this.setContentPane(contentPane);
 		//this.pack();
 	}
 
@@ -94,7 +95,7 @@ public class FrameVentaBoleto extends JFrame {
 		//estaciones.get(1).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		//estaciones.get(5).setEstado(EstadoEstacion.EN_MANTENIMIENTO);
 		
-		gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		/*gestor2.agregarRuta(estaciones.get(0), estaciones.get(1), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(2), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(0), estaciones.get(6), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(1), estaciones.get(3), 2, 2, 2, EstadoRuta.ACTIVA, 2);
@@ -104,7 +105,7 @@ public class FrameVentaBoleto extends JFrame {
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(7), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(7), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
 		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.NO_ACTIVA, 2);
-		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);
+		gestor2.agregarRuta(estaciones.get(6), estaciones.get(5), 2, 2, 2, EstadoRuta.ACTIVA, 2);*/
 	}
 	
 }

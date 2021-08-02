@@ -38,4 +38,5 @@ public class LineaDeTransporte {
 	public Boolean estaActiva() {
 		return estado == EstadoLineaDeTransporte.ACTIVA;
 	}
+	
 }

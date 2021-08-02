@@ -31,6 +31,7 @@ import clases.Ruta;
 import gestores.GestorEstacion;
 import gestores.GestorFlecha;
 import gestores.GestorRuta;
+import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
 
 public class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
@@ -49,8 +50,8 @@ public class PanelGrafico extends JPanel {
 	
 	public PanelGrafico() {
 		setBackground(Color.WHITE);
-		anchoVentana = 800;
-		altoVentana = 600;
+		anchoVentana = 100;
+		altoVentana = 100;
 		setPreferredSize(new Dimension(anchoVentana, altoVentana));
 		
 		gestorEstaciones = GestorEstacion.getInstance();
@@ -86,17 +87,13 @@ public class PanelGrafico extends JPanel {
 		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-
 
 	}
 
 	
 	public void aumentarEscala() {
 		this.escala *= 1.5f;
-		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
+		this.setPreferredSize(new Dimension(Math.round(this.getPreferredSize().width*escala), Math.round(this.getPreferredSize().height*escala)));
 		this.revalidate();
 		for (Dibujable p : dibujables) {
 			p.reescalar(escala);
@@ -106,8 +103,8 @@ public class PanelGrafico extends JPanel {
 	
 	
 	public void disminuirEscala() {
-		escala /= 1.5f;
-		this.setPreferredSize(new Dimension(Math.round(anchoVentana*escala), Math.round(altoVentana*escala)));
+		this.setPreferredSize(new Dimension(Math.round(this.getPreferredSize().width/escala), Math.round(this.getPreferredSize().height/escala)));
+		escala /= 1.5f;		
 		this.revalidate();
 		for (Dibujable p : dibujables) {
 			p.reescalar(escala);
@@ -142,7 +139,7 @@ public class PanelGrafico extends JPanel {
 			this.setPreferredSize(new Dimension(this.getPreferredSize().width , e.getPosicion().y + radioEstaciones + margen));
 			revalidate();
 		}
-		else if (this.getPreferredSize().width <= e.getPosicion().x + radioEstaciones + margen) {
+		if (this.getPreferredSize().width <= e.getPosicion().x + radioEstaciones + margen) {
 			this.setPreferredSize(new Dimension(e.getPosicion().x + radioEstaciones + margen , this.getPreferredSize().height));
 			revalidate();
 		}

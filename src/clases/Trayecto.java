@@ -1,6 +1,9 @@
 package clases;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import excepciones.LineaNoAsociadaException;
 
 public class Trayecto {
 	
@@ -37,5 +40,14 @@ public class Trayecto {
 	public void asociarLinea(LineaDeTransporte unaLinea) {
 		this.linea = unaLinea;
 	}
-
+	
+	public Color getColorLinea() throws LineaNoAsociadaException {
+		if (linea == null) throw new LineaNoAsociadaException("El trayecto no tiene su entidad linea asociada");
+		return linea.getColor();
+	}
+	
+	public String getNombreLinea() throws LineaNoAsociadaException {
+		if (linea == null) throw new LineaNoAsociadaException("El trayecto no tiene su entidad linea asociada");
+		return linea.getNombre();
+	}
 }

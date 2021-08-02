@@ -26,12 +26,12 @@ public class FrameVentaBoleto2 extends JFrame {
 	
 	public FrameVentaBoleto2(FrameVentaBoleto padre, Estacion origen, Estacion destino) {
 		this.padre = padre;
-		
+		this.setTitle("Sistema de Gestión de Transporte Multimodal");
 		JPanel panel = new PanelVentaBoleto2(origen, destino);
-		setContentPane(panel);
+		this.setContentPane(panel);
 		
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setBounds(100, 100, 1280, 720);
 	}
 	
 
