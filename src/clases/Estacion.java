@@ -28,12 +28,9 @@ public class Estacion implements Dibujable{
 	
 	private Point posicion; //VER 
 	
-<<<<<<< HEAD
+
 	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
-=======
-	
-	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
->>>>>>> master
+
 		this.id = i;
 		this.nombre = n;
 		this.horarioApertura = hA;
