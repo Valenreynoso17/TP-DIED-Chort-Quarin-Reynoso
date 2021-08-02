@@ -131,7 +131,7 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_scrollPane.gridheight = 2;
 		add(scrollPane, gbc_scrollPane);
 		
-		JButton botonAtras = new JButton("Atrás");
+		JButton botonAtras = new JButton("  Atrás  ");
 		botonAtras.addActionListener(e -> getPadre().dispose());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.fill = GridBagConstraints.HORIZONTAL;

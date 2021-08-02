@@ -28,12 +28,12 @@ public class FrameVentaBoleto3 extends JFrame {
 	
 	public FrameVentaBoleto3(FrameVentaBoleto2 padre, Recorrido recorrido) {
 		this.padre = padre;
-		
+		this.setTitle("Sistema de Gestión de Transporte Multimodal");
 		JPanel panel = new PanelVentaBoleto3(recorrido);
-		setContentPane(panel);
+		this.setContentPane(panel);
 		
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setBounds(100, 100, 1280, 720);
 	}
 	
 	public void abriVentanaAnterior() {

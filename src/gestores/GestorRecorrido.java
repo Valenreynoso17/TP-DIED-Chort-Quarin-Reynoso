@@ -68,5 +68,9 @@ public class GestorRecorrido {
 		return estaciones;
 	}
 	
+	
+	public Recorrido recorridoSinRutas() {
+		return new Recorrido(null, null, 0, 0, 0.0);
+	}
 
 }

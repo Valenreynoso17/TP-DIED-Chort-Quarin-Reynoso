@@ -1,4 +1,4 @@
-package interfaces.fede.panelesGrafos;
+package interfaces.fede.dialogs;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -60,8 +60,6 @@ public class RenderInfoFlecha<E> extends JLabel implements ListCellRenderer<E> {
 			}
 			
 		}
-			
-		
 			
 		return this;
 	}
