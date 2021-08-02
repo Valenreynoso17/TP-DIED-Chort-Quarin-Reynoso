@@ -1,8 +1,10 @@
 package gestores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import clases.Estacion;
@@ -71,6 +73,36 @@ public class GestorRecorrido {
 	
 	public Recorrido recorridoSinRutas() {
 		return new Recorrido(null, null, 0, 0, 0.0);
+	}
+	
+	
+	public Integer calcularFlujoMaximo(List<Recorrido> recorridos) {
+		Map<Ruta, Integer> capacidadRestante = new HashMap<Ruta, Integer>();
+		Integer flujoMaximo = 0;
+		
+		for (Recorrido rec : recorridos) {
+			for (Ruta r : rec.getRutas()) {
+				if (!capacidadRestante.containsKey(r)) capacidadRestante.put(r, r.getCantMaxPasajeros());
+			}
+		}
+		
+		for (Recorrido rec : recorridos) {
+			Integer capacidadDeRutaLimitante = Integer.MAX_VALUE;
+			
+			for (Ruta r : rec.getRutas()) {
+				if (capacidadRestante.get(r) < capacidadDeRutaLimitante) capacidadDeRutaLimitante = capacidadRestante.get(r); 
+			}
+			
+			flujoMaximo += capacidadDeRutaLimitante;
+			final Integer aux = capacidadDeRutaLimitante;
+			
+			for (Ruta r : rec.getRutas()) {
+				capacidadRestante.compute(r, (k, v) -> v -= aux);
+			}
+			
+		}
+		
+		return flujoMaximo;
 	}
 
 }

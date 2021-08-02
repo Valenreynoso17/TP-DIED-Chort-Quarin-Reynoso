@@ -69,7 +69,10 @@ public class Ruta {
 		this.trayecto = unTrayecto;
 	}
 
-	// Hay que cambiarlo
+	public Integer getCantMaxPasajeros() {
+		return this.cantMaxPasajeros;
+	}
+	
 	public Color getColorLinea() throws TrayectoNoAsociadoException {
 		if (trayecto == null) throw new TrayectoNoAsociadoException("Esta ruta no tiene su entidad trayecto asociada");
 		

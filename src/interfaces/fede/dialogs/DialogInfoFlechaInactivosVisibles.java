@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 
 import clases.Flecha;
 import clases.Ruta;
+import interfaces.fede.otros.RenderInfoFlecha;
 
 public class DialogInfoFlechaInactivosVisibles extends JDialog {
 	public DialogInfoFlechaInactivosVisibles(Flecha f) {
@@ -32,7 +33,6 @@ public class DialogInfoFlechaInactivosVisibles extends JDialog {
 		lista.setCellRenderer(new RenderInfoFlecha<Ruta>());
 		
 		JScrollPane scrollPane = new JScrollPane(lista);
-		//scrollPane.setPreferredSize(new Dimension(60, 80));
 		
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(5, 5, 5, 5);

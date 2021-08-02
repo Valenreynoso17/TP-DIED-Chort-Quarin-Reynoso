@@ -12,6 +12,7 @@ import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
 import interfaces.fede.otros.GamaColor;
+import interfaces.fede.otros.RenderInfoFlecha;
 
 public class PanelPintaSoloVisibles extends PanelGrafico {
 	protected Estacion origen, destino;
@@ -28,7 +29,7 @@ public class PanelPintaSoloVisibles extends PanelGrafico {
 				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f);
+							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlecha<>());
 							ventanaInfoFlecha.setVisible(true);
 						}
 					}

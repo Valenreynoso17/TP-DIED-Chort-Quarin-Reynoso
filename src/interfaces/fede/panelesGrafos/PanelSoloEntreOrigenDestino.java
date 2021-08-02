@@ -22,6 +22,14 @@ public class PanelSoloEntreOrigenDestino extends PanelPintaSoloVisibles {
 		estRecorridas = gestorRecorridos.getEstacionesRecorridas(recorridos);
 	}
 	
+	public PanelSoloEntreOrigenDestino(Estacion origen, Estacion destino) {
+		super(origen, destino);
+		
+		gestorRecorridos = GestorRecorrido.getInstance();
+		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
+		estRecorridas = gestorRecorridos.getEstacionesRecorridas(recorridos);
+	}
+	
 	@Override
 	protected void dibujarGrafo(Graphics2D g2d){
 		for (Dibujable d : dibujables) {

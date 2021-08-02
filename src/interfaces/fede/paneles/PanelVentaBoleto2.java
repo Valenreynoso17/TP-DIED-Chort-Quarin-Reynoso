@@ -165,7 +165,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.gridx = 0;
 		gbc_botonAtras.gridy = 4;
-		gbc_botonAtras.insets = new Insets(5, 5, 5, 5);
+		gbc_botonAtras.insets = new Insets(5, 20, 10, 5);
 		this.add(botonAtras, gbc_botonAtras);
 		
 		botonSiguiente = new JButton("Siguiente");
@@ -177,7 +177,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
 		gbc_botonSiguiente.gridx = 3;
 		gbc_botonSiguiente.gridy = 4;
-		gbc_botonSiguiente.insets = new Insets(5, 5, 5, 5);
+		gbc_botonSiguiente.insets = new Insets(5, 5, 10, 20);
 		this.add(botonSiguiente, gbc_botonSiguiente);
 		
 		
