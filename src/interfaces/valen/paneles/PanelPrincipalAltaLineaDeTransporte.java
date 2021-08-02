@@ -4,14 +4,23 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import clases.CustomColor;
+import clases.LineaDeTransporte;
+import excepciones.InputInvalidaException;
+import excepciones.InputVacioException;
+import excepciones.NombreColorEnUsoException;
+import excepciones.RutaYaAgregadaException;
+import excepciones.TrayectoVacioException;
+import gestores.GestorLineaDeTransporte;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
@@ -99,7 +108,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
 		botonSiguiente = new JButton("Siguiente");
-		botonSiguiente.addActionListener(e -> this.checkearAntesDeSiguiente());
+		botonSiguiente.addActionListener(e -> this.siguientePantalla());
 		this.add(botonSiguiente, gbc);
 	}
 	
@@ -133,13 +142,85 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.gridwidth = 1;
 	}
 	
-	public void checkearAntesDeSiguiente() {
-		frame.setVisible(false);
-		this.checkearDatosDeLineaValidos(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
-		new VentanaSiguienteAltaLineaDeTransporte(frame, panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea());
+	public void siguientePantalla() {
+		
+		try {
+			
+			inputEstaVacia();
+			inputEsValida(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
+			nombreColorEnUso(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
+			trayectoVacio();
+		
+			frame.setVisible(false);
+			new VentanaSiguienteAltaLineaDeTransporte(frame, panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea(), listaTrayecto);
+			
+		}catch (InputVacioException IVE) {
+		
+			JOptionPane.showMessageDialog(frame,
+										  "Faltan completar los siguientes campos:\n\n"+IVE.getMessage(),
+										  "Error",
+										  JOptionPane.ERROR_MESSAGE);
+		}catch (InputInvalidaException IIE) {
+		
+			JOptionPane.showMessageDialog(frame,
+										  IIE.getMessage() + "- El nombre de la línea debe contener menos de 30 caracteres. \n"
+										  				   + "- El color seleccionado debe ser un color válido. \n",	
+										  "Error",
+										  JOptionPane.ERROR_MESSAGE);
+			
+		} catch (TrayectoVacioException TVE) {
+			
+			JOptionPane.showMessageDialog(frame,
+					  					  TVE.getMessage(),	
+					  					  "Error",
+					  					  JOptionPane.ERROR_MESSAGE);
+			
+		} catch (NombreColorEnUsoException NCEUE) {
+			
+			JOptionPane.showMessageDialog(frame,
+					  					  NCEUE.getMessage(),	
+					  					  "Error",
+					  					  JOptionPane.ERROR_MESSAGE);
+		}
+			
 	}
 	
-	public void checkearDatosDeLineaValidos(String nombre, CustomColor color) {
+	public void inputEstaVacia() throws InputVacioException{
+		String error = "";
+		boolean algunoVacio = false;
+		
+		if(panelAlta.getNombreLinea().isEmpty()) {
+			error += "- Nombre línea\n";
+			algunoVacio = true;
+		}
+		
+		if(algunoVacio) {
+			
+			throw new InputVacioException(error);
+		}
+			
+				
+	}
+	
+	public void inputEsValida(String nombreLinea, CustomColor colorL) throws InputInvalidaException{
+		
+		if(!(nombreLinea.length() <= 30 && colorL.getNombre() != "Ninguno")) {
+			throw new InputInvalidaException();
+		}
 		
 	}
+	
+	public void trayectoVacio() throws TrayectoVacioException{
+		if (listaTrayecto.isEmpty()) throw new TrayectoVacioException();
+	}
+	
+	public void nombreColorEnUso(String nomb, CustomColor col) throws NombreColorEnUsoException{
+		GestorLineaDeTransporte gestorLinea = GestorLineaDeTransporte.getInstance();
+		Optional<LineaDeTransporte> optionalLinea = gestorLinea.getLineasDeTransporte().stream().filter(lt -> (lt.getNombre().equals(nomb) || lt.getColor().equals(col))).findAny();
+		
+		if (!optionalLinea.isEmpty()) {
+			throw new NombreColorEnUsoException();
+		}
+	}
+
 }

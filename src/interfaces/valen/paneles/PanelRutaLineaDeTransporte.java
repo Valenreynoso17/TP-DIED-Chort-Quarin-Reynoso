@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import clases.Estacion;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
+import excepciones.RutaYaAgregadaException;
 import gestores.GestorEstacion;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
@@ -86,6 +87,7 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		botonAgregar = new JButton("Agregar nueva ruta");
 		botonAgregar.addActionListener(e -> this.agregarRuta());
 		botonEliminar = new JButton("Eliminar ruta");
+		botonEliminar.setEnabled(false);
 		
 		// Agregando padding
 //		gbc.insets = new Insets(5,5,5,5);
@@ -173,8 +175,7 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		try {
 			
 			inputEstaVacia();
-			inputEsValida(distancia.getText(), duracion.getText(), cantMaxPasajeros.getText(), costo.getText());
-			this.checkOrigenDistinoDestino(estacionOrigen.getSelectedItem(), estacionDestino.getSelectedItem());
+			inputEsValida(estacionOrigen.getSelectedItem(), estacionDestino.getSelectedItem(), distancia.getText(), duracion.getText(), cantMaxPasajeros.getText(), costo.getText());
 		
 			// En principio llegan sólo valores válidos
 			ElementoListaTrayecto elementoAux = new ElementoListaTrayecto((String) estacionOrigen.getSelectedItem(),
@@ -185,8 +186,11 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 																		  Integer.parseInt(costo.getText()),
 																		  (String) estadoRuta.getSelectedItem());
 			
+			if(listaTrayecto.contains(elementoAux)) throw new RutaYaAgregadaException();
+			
 			listaTrayecto.add(elementoAux);
 			panelPadre.actualizar();
+			
 		}catch (InputVacioException IVE) {
 		
 			JOptionPane.showMessageDialog(frame,
@@ -196,10 +200,22 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		}catch (InputInvalidaException IIE) {
 		
 			JOptionPane.showMessageDialog(frame,
-										  IIE.getMessage(),	
+										  IIE.getMessage() + "- La estacion de origen debe ser distinta a la estacion de destino. \n"
+										  				   + "- La distancia debe ser un número entero mayor a 0. \n"
+										  				   + "- La duración del viaje debe ser un número entero mayor a 0. \n"
+										  				   + "- La cantidad máxima de pasajeros debe ser un número entero mayor a 0. \n"
+										  				   + "- El costo debe ser un número mayor 0. \n",	
 										  "Error",
 										  JOptionPane.ERROR_MESSAGE);
+			
+		} catch (RutaYaAgregadaException RYAE) {
+			
+			JOptionPane.showMessageDialog(frame,
+					  					  RYAE.getMessage(),	
+					  					  "Error",
+					  					  JOptionPane.ERROR_MESSAGE);
 		}
+			
 	}
 	
 	public void inputEstaVacia() throws InputVacioException{
@@ -234,20 +250,16 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 				
 	}
 	
-	public void inputEsValida(String dist, String dur, String cantPasa, String costo) throws InputInvalidaException{
+	public void inputEsValida(Object estacionOrigen, Object estacionDestino, String dist, String dur, String cantPasa, String costo) throws InputInvalidaException{
 		
 		// Checkear que son todos numeros y mayores a 0
 		try {
-			if(!(Integer.parseInt(dist) >= 0 && Integer.parseInt(dur) >= 0 && Integer.parseInt(cantPasa) >= 0 && Double.parseDouble(costo) >= 0)) {
+			if(!(!estacionOrigen.equals(estacionDestino) && Integer.parseInt(dist) >= 0 && Integer.parseInt(dur) >= 0 && Integer.parseInt(cantPasa) >= 0 && Double.parseDouble(costo) >= 0)) {
 				throw new InputInvalidaException();
 			}
 		}catch (NumberFormatException nfe) {
 			throw new InputInvalidaException();
 		}
-	}
-	
-	private void checkOrigenDistinoDestino(Object estacionOrigen, Object estacionDestino) {
-		System.out.println(estacionOrigen.equals(estacionDestino));
 	}
 	
 	private void obtenerEstaciones() {
