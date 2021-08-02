@@ -1,4 +1,4 @@
-package interfaces.fede.dialogs;
+package interfaces.fede.otros;
 
 import java.awt.Color;
 import java.awt.Component;

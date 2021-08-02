@@ -20,12 +20,12 @@ public class PanelSeleccionOrigenDestino extends PanelPintaSoloVisibles {
 	}
 	
 	
-	@Override
+	/*@Override
 	protected void paintComponent (Graphics g) {
 		
 		Graphics2D g2d = (Graphics2D) g.create();
 		super.paintComponent(g2d);	
-	}
+	}*/
 	
 	public void pintarOrigen(Estacion e) {
 		if (origen != null) repaint(origen.getPosicion().x - radioEstaciones - 5, origen.getPosicion().y - radioEstaciones - 5, (radioEstaciones + 5)*2, (radioEstaciones + 5)*2);

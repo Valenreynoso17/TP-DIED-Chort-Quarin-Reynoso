@@ -1,6 +1,5 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,14 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 import clases.Recorrido;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
-import gestores.GestorBoleto;
-import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 
 public class PanelVentaBoleto3 extends JPanel {

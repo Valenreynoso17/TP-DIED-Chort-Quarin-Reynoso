@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import interfaces.fede.ventaBoleto.PanelVentaBoleto;
+import interfaces.fede.paneles.PanelVentaBoleto;
 
 public class FrameFlujoMaximo extends JFrame {
 	private JPanel contentPane;

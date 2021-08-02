@@ -1,14 +1,12 @@
 package interfaces.fede.panelesGrafos;
 
 import java.awt.Cursor;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 
-import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;

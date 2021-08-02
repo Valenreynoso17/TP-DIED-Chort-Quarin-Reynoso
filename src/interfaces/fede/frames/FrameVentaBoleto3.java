@@ -5,10 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import clases.Estacion;
 import clases.Recorrido;
-import interfaces.fede.ventaBoleto.PanelVentaBoleto2;
-import interfaces.fede.ventaBoleto.PanelVentaBoleto3;
+import interfaces.fede.paneles.PanelVentaBoleto3;
 
 public class FrameVentaBoleto3 extends JFrame {
 	private FrameVentaBoleto2 padre;

@@ -33,6 +33,10 @@ public class Ruta {
 		this.costo = costo;
 	}
 	
+	public Integer getID() {
+		return this.id;
+	}
+	
 	public Boolean activa() {
 		return estado == EstadoRuta.ACTIVA;
 	}

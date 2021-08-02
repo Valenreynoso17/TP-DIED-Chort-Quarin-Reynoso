@@ -11,6 +11,7 @@ import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
+import interfaces.fede.otros.GamaColor;
 
 public class PanelPintaSoloVisibles extends PanelGrafico {
 	protected Estacion origen, destino;
@@ -60,6 +61,7 @@ public class PanelPintaSoloVisibles extends PanelGrafico {
 				if (d.equals(origen)) origen.dibujarse(g2d, GamaColor.VERDE);
 				else if (d.equals(destino)) destino.dibujarse(g2d, GamaColor.VERDE);
 				else d.dibujarse(g2d);
+				if (d instanceof Estacion) chequearPreferredSize((Estacion) d);
 			}
 		}
 	}

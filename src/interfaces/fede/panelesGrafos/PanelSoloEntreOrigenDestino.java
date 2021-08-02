@@ -9,6 +9,7 @@ import clases.Estacion;
 import clases.Flecha;
 import clases.Recorrido;
 import gestores.GestorRecorrido;
+import interfaces.fede.otros.GamaColor;
 
 public class PanelSoloEntreOrigenDestino extends PanelPintaSoloVisibles {
 	protected Set<Estacion> estRecorridas;
@@ -21,13 +22,6 @@ public class PanelSoloEntreOrigenDestino extends PanelPintaSoloVisibles {
 		estRecorridas = gestorRecorridos.getEstacionesRecorridas(recorridos);
 	}
 	
-	/*public PanelSoloEntreOrigenDestino(Estacion origen, Estacion destino) {
-		super(origen, destino);
-		
-		gestorRecorridos = GestorRecorrido.getInstance();
-		estRecorridas = gestorRecorridos.getEstacionesRecorridas(recorridos);
-	}*/
-	
 	@Override
 	protected void dibujarGrafo(Graphics2D g2d){
 		for (Dibujable d : dibujables) {
@@ -36,6 +30,7 @@ public class PanelSoloEntreOrigenDestino extends PanelPintaSoloVisibles {
 							&& estRecorridas.contains(((Flecha) d).getEstacionDestino()))) {
 				if (d.equals(origen) || d.equals(destino)) ((Estacion) d).dibujarse(g2d, GamaColor.VERDE);
 				else d.dibujarse(g2d);
+				if (d instanceof Estacion) chequearPreferredSize((Estacion) d);
 			}
 		}
 	}

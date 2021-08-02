@@ -1,4 +1,4 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,6 +32,8 @@ import gestores.GestorRecorrido;
 import gestores.GestorRuta;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
+import interfaces.fede.otros.ModeloTablaRecorridoExtendida;
+import interfaces.fede.otros.ModeloTablaRecorridos;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.fede.panelesGrafos.PanelPintaSoloVisibles;

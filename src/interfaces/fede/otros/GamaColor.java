@@ -1,4 +1,4 @@
-package interfaces.fede.panelesGrafos;
+package interfaces.fede.otros;
 
 import java.awt.Color;
 

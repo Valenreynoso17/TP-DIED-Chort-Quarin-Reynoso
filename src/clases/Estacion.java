@@ -1,10 +1,8 @@
 package clases;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.time.LocalTime;
@@ -12,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.EstadoEstacion;
-import interfaces.fede.panelesGrafos.GamaColor;
+import interfaces.fede.otros.GamaColor;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 
 public class Estacion implements Dibujable{
@@ -28,17 +26,24 @@ public class Estacion implements Dibujable{
 	
 	private Point posicion; //VER 
 	
-<<<<<<< HEAD
 	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
-=======
-	
-	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
->>>>>>> master
 		this.id = i;
 		this.nombre = n;
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
 		this.estado = ee;
+		this.posicion = new Point();
+		this.posicion.x = 100; this.posicion.y = 100;
+		this.mantenimientos = new ArrayList<Mantenimiento>();
+		this.escala = 1.0f;
+	}
+	
+	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC) {
+		this.id = i;
+		this.nombre = n;
+		this.horarioApertura = hA;
+		this.horarioCierre = hC;
+		this.estado = EstadoEstacion.OPERATIVA;
 		this.posicion = new Point();
 		this.posicion.x = 100; this.posicion.y = 100;
 		this.mantenimientos = new ArrayList<Mantenimiento>();

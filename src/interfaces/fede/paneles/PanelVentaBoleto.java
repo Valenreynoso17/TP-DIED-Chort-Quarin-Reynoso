@@ -1,4 +1,4 @@
-package interfaces.fede.ventaBoleto;
+package interfaces.fede.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,7 +49,7 @@ public class PanelVentaBoleto extends JPanel {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		//gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		//gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.1, 0.0, 0.1, 0.4, 0.1, 0.4, 0.1, 0.1};
+		gridBagLayout.columnWeights = new double[]{0.1, 0.1, 0.4, 0.1, 0.4, 0.1, 0.1, 0.1};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.5, 0.5, 0.0};
 		setLayout(gridBagLayout);
 		
@@ -57,8 +57,8 @@ public class PanelVentaBoleto extends JPanel {
 		JLabel llbOrigen = new JLabel("Origen:");
 		GridBagConstraints gbc_llbOrigen = new GridBagConstraints();
 		gbc_llbOrigen.anchor = GridBagConstraints.EAST;
-		gbc_llbOrigen.insets = new Insets(5, 5, 5, 5);
-		gbc_llbOrigen.gridx = 2;
+		gbc_llbOrigen.insets = new Insets(10, 10, 10, 10);
+		gbc_llbOrigen.gridx = 1;
 		gbc_llbOrigen.gridy = 0;
 		add(llbOrigen, gbc_llbOrigen);
 		
@@ -66,9 +66,9 @@ public class PanelVentaBoleto extends JPanel {
 		
 		JLabel lblDestino = new JLabel("Destino:");
 		GridBagConstraints gbc_lblDestino = new GridBagConstraints();
-		gbc_lblDestino.insets = new Insets(5, 5, 5, 5);
+		gbc_lblDestino.insets = new Insets(10, 10, 10, 10);
 		gbc_lblDestino.anchor = GridBagConstraints.EAST;
-		gbc_lblDestino.gridx = 4;
+		gbc_lblDestino.gridx = 3;
 		gbc_lblDestino.gridy = 0;
 		add(lblDestino, gbc_lblDestino);
 		
@@ -83,9 +83,9 @@ public class PanelVentaBoleto extends JPanel {
 		});
 		GridBagConstraints gbc_comboBoxDestino = new GridBagConstraints();
 		gbc_comboBoxDestino.anchor = GridBagConstraints.WEST;
-		gbc_comboBoxDestino.insets = new Insets(5, 5, 5, 5);
+		gbc_comboBoxDestino.insets = new Insets(10, 10, 10, 10);
 		gbc_comboBoxDestino.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxDestino.gridx = 5;
+		gbc_comboBoxDestino.gridx = 4;
 		gbc_comboBoxDestino.gridy = 0;
 		gbc_comboBoxDestino.ipadx = 5;
 		add(comboBoxDestino, gbc_comboBoxDestino);
@@ -111,9 +111,9 @@ public class PanelVentaBoleto extends JPanel {
 		});
 		GridBagConstraints gbc_comboBoxOrigen = new GridBagConstraints();
 		gbc_comboBoxOrigen.anchor = GridBagConstraints.WEST;
-		gbc_comboBoxOrigen.insets = new Insets(5, 5, 5, 5);
+		gbc_comboBoxOrigen.insets = new Insets(10, 10, 10, 10);
 		gbc_comboBoxOrigen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxOrigen.gridx = 3;
+		gbc_comboBoxOrigen.gridx = 2;
 		gbc_comboBoxOrigen.gridy = 0;
 		add(comboBoxOrigen, gbc_comboBoxOrigen);
 		
@@ -124,10 +124,10 @@ public class PanelVentaBoleto extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(panelGrafico);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.insets = new Insets(5, 5, 5, 5);
-		gbc_scrollPane.gridx = 2;
+		gbc_scrollPane.insets = new Insets(15, 20, 15, 20);
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.gridwidth = 6;
 		gbc_scrollPane.gridheight = 2;
 		add(scrollPane, gbc_scrollPane);
 		
@@ -135,11 +135,10 @@ public class PanelVentaBoleto extends JPanel {
 		botonAtras.addActionListener(e -> getPadre().dispose());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.fill = GridBagConstraints.HORIZONTAL;
-		gbc_botonAtras.anchor = GridBagConstraints.WEST;
+		//gbc_botonAtras.anchor = GridBagConstraints.WEST;
 		gbc_botonAtras.insets = new Insets(5, 5, 5, 5);
 		gbc_botonAtras.gridx = 0;
 		gbc_botonAtras.gridy = 3;
-		gbc_botonAtras.gridwidth = 2;
 		add(botonAtras, gbc_botonAtras);
 		
 		botonSiguiente = new JButton("Siguiente");
@@ -150,13 +149,13 @@ public class PanelVentaBoleto extends JPanel {
 		});
 		GridBagConstraints gbc_botonSiguiente = new GridBagConstraints();
 		gbc_botonSiguiente.fill = GridBagConstraints.HORIZONTAL;
-		gbc_botonSiguiente.anchor = GridBagConstraints.EAST;
+		//gbc_botonSiguiente.anchor = GridBagConstraints.EAST;
 		gbc_botonSiguiente.insets = new Insets(5, 5, 5, 5);
-		gbc_botonSiguiente.gridx = 6;
+		gbc_botonSiguiente.gridx = 5;
 		gbc_botonSiguiente.gridy = 3;
 		add(botonSiguiente, gbc_botonSiguiente);
 		
-		JButton botonZoomAdelante = new JButton("+");
+		/*JButton botonZoomAdelante = new JButton("+");
 		botonZoomAdelante.addActionListener(e -> panelGrafico.aumentarEscala());
 		GridBagConstraints gbc_botonZoomAdelante = new GridBagConstraints();
 		gbc_botonZoomAdelante.fill = GridBagConstraints.HORIZONTAL;
@@ -164,9 +163,9 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_botonZoomAdelante.insets = new Insets(5, 5, 5, 5);
 		gbc_botonZoomAdelante.gridx = 1;
 		gbc_botonZoomAdelante.gridy = 1;
-		add(botonZoomAdelante, gbc_botonZoomAdelante);
+		add(botonZoomAdelante, gbc_botonZoomAdelante);*/
 		
-		JButton botonZoomAtras = new JButton("-");
+		/*JButton botonZoomAtras = new JButton("-");
 		botonZoomAtras.setSize(new Dimension(20, 10));
 		botonZoomAtras.addActionListener(e -> panelGrafico.disminuirEscala());
 		GridBagConstraints gbc_botonZoomAtras = new GridBagConstraints();
@@ -175,7 +174,7 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_botonZoomAtras.insets = new Insets(5, 5, 5, 5);
 		gbc_botonZoomAtras.gridx = 1;
 		gbc_botonZoomAtras.gridy = 2;
-		add(botonZoomAtras, gbc_botonZoomAtras);
+		add(botonZoomAtras, gbc_botonZoomAtras);*/
 	}
 	
 	public JFrame getPadre() {
