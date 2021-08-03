@@ -47,20 +47,10 @@ public class PanelVentaBoleto extends JPanel {
 		List<Estacion> estaciones = gestorEstaciones.getEstacionesOperativas();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		//gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-		//gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.1, 0.8, 0.8, 0.1, 0.4, 0.1, 0.1, 0.1};
 		gridBagLayout.rowWeights = new double[]{0.1, 2.0, 2.0, 0.1, 0.1};
 		setLayout(gridBagLayout);
 		
-		/*JLabel lblTitulo = new JLabel("Seleccione origen y destino");
-		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
-		gbc_lblTitulo.anchor = GridBagConstraints.WEST;
-		gbc_lblTitulo.insets = new Insets(5, 2, 5, 5);
-		gbc_lblTitulo.gridx = 0;
-		gbc_lblTitulo.gridy = 0;
-		gbc_lblTitulo.gridwidth = 3;
-		add(lblTitulo, gbc_lblTitulo);*/
 		
 		JPanel panelOrigenDestino = new JPanel();
 		panelOrigenDestino.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Seleccione estación origen y destino"));
@@ -68,6 +58,7 @@ public class PanelVentaBoleto extends JPanel {
 		gbl_panelOrigenDestino.columnWeights = new double[]{0.1, 1.0, 0.1, 1.0};
 		gbl_panelOrigenDestino.rowWeights = new double[]{0.1};
 		panelOrigenDestino.setLayout(gbl_panelOrigenDestino);
+		
 		
 		GridBagConstraints gbc_panelOrigenDestino = new GridBagConstraints();
 		gbc_panelOrigenDestino.fill = GridBagConstraints.BOTH;
@@ -144,7 +135,7 @@ public class PanelVentaBoleto extends JPanel {
 		
 		panelGrafico = new PanelSeleccionOrigenDestino();
 		
-		JScrollPane scrollPane = new JScrollPane(panelGrafico);
+		JScrollPane scrollPane = new JScrollPane(panelGrafico, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.insets = new Insets(15, 20, 15, 20);

@@ -135,17 +135,22 @@ public class GestorEstacion {
 		return (estaciones.stream().filter(e -> e.getNombre() == nombreEstacion).findFirst()).get();
 	}
 
-	public void cancelarCambios(Map<Estacion, Estacion> anterioresPosiciones) {
-		for (Estacion e : estaciones) {
-			if (anterioresPosiciones.containsKey(e)) {
-				e = anterioresPosiciones.get(e);
-			}
+	public void cancelarCambios(Map<Integer, Point> anterioresPosiciones) {
+		Set<Integer> ids = anterioresPosiciones.keySet();
+		for (Integer id : ids) {
+			Estacion est = getEstacionPorId(id);
+			est.setPosicion(anterioresPosiciones.get(id));
 		}
 	}
 	
-	public void guardarCambios(Set<Estacion> modificadas) {
-		List<Estacion> listModificadas = modificadas.stream().collect(Collectors.toList());
-		dao.actualizarPosicion(listModificadas);
+	public void guardarCambios(Set<Integer> modificadas) {
+		List<Estacion> estacionesModificadas = modificadas.stream().map(id -> getEstacionPorId(id)).collect(Collectors.toList());
+		dao.actualizarPosicion(estacionesModificadas);
+	}
+	
+	public Estacion clonarEstacion(Estacion e) {
+		Estacion nueva = new Estacion(e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), (Point) e.getPosicion().clone(), e.getEstado(), e.getMantenimientos());
+		return nueva;
 	}
 
 }

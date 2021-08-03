@@ -54,20 +54,22 @@ public class Flecha implements Dibujable{
 	}
 	
 	
-	public Boolean tieneUnaUnicaRutaActiva() {
+	public Integer rutasActivas() {
 		Integer rutasActivas = 0;
 		
 		for (Ruta r : rutas) {
 			if (r.activa()) rutasActivas++;
 		}
 		
-		return rutasActivas == 1;
+		return rutasActivas;
 		
 	}
 	
 	public void agregarRuta(Ruta r) {
 		rutas.add(r);
-		if (this.tieneUnaUnicaRutaActiva()) {
+		Integer rutasActivas = this.rutasActivas();
+		
+		if (rutasActivas == 1) {
 			try {
 				color = r.getColorLinea();
 			}
@@ -83,6 +85,7 @@ public class Flecha implements Dibujable{
 				}
 			}
 		}
+		else if (rutasActivas == 0) color = Color.LIGHT_GRAY;
 		else color = Color.BLACK;
 	}
 	
@@ -134,13 +137,11 @@ public class Flecha implements Dibujable{
 		g2d.drawLine(posOrigen.x, posOrigen.y, posDestino.x, posDestino.y);
 		
 		g2d.fillPolygon(x, y, 3);
-		//g2d.drawPolygon((Polygon) getHitbox());
 	}
 	
 	@Override
 	public void reescalar(Float escala) {
 		this.escala = escala;
-		//hitbox = calcularHitbox();
 	}
 
 	
