@@ -50,6 +50,13 @@ public class Estacion implements Dibujable{
 		this.escala = 1.0f;
 	}
 	
+	public void editarse(String n, LocalTime hA, LocalTime hC, EstadoEstacion e) {
+		this.nombre = n;
+		this.horarioApertura = hA;
+		this.horarioCierre = hC;
+		this.estado = e;
+	}
+	
 	
 	
 	public Integer getId() {

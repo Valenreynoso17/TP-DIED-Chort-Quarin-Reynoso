@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,11 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import clases.Estacion;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
+import excepciones.NombreEstacionRepetidoException;
+import gestores.GestorEstacion;
 import interfaces.julio.frames.EstacionAlta;
 import interfaces.julio.frames.EstacionAltaGrafo;
 import interfaces.julio.frames.EstacionGestionar;
@@ -38,6 +42,8 @@ public class PanelEstacionAlta extends JPanel{
 	private JTextField horaCierre;
 	private JTextField minutoCierre;
 	private JTextField estado;
+	
+	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 	
 	private EstacionGestionar frameAnterior;
 	private EstacionAltaGrafo frameSiguiente;
@@ -147,10 +153,16 @@ public class PanelEstacionAlta extends JPanel{
 				try {
 					
 						inputEstaVacia();
-						inputEsValida();
+						inputEsValida(); 
+						nombreEstaRepetido();
+						
+						Object[] futuraEstacion = new Object[] {nombre.getText(), 
+																LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())), 
+																LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText()))};
+						
 						
 						frame.dispose();
-						frameSiguiente = new EstacionAltaGrafo(frame);
+						frameSiguiente = new EstacionAltaGrafo(frame, futuraEstacion);
 					
 				}catch (InputVacioException IVE) {
 					
@@ -167,7 +179,14 @@ public class PanelEstacionAlta extends JPanel{
 									  "- La hora de cierre debe ser mayor a la hora de inicio.\n",	
 						    "Error",
 						    JOptionPane.ERROR_MESSAGE);
+				}catch (NombreEstacionRepetidoException NERE) {
+					
+					JOptionPane.showMessageDialog(frame,
+							NERE.getMessage(),
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
 				}
+				
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -212,6 +231,15 @@ public class PanelEstacionAlta extends JPanel{
 		   || !horasValidas(horaApertura, minutoApertura, horaCierre, minutoCierre))
 
 				throw new InputInvalidaException();
+	}
+	
+	public void nombreEstaRepetido() throws NombreEstacionRepetidoException{ 
+		
+		for(Estacion e : gestorEstacion.getEstaciones()) {
+			
+			if(e.getNombre().equals(nombre.getText()))
+				throw new NombreEstacionRepetidoException();
+		}
 	}
 	
 	public boolean validarHora(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 23]

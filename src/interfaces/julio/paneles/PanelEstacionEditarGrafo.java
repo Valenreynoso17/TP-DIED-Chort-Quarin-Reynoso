@@ -12,12 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.julio.frames.EstacionEditarGrafo;
 import interfaces.julio.frames.EstacionGestionar;
 
 public class PanelEstacionEditarGrafo extends JPanel{
 	
 	private EstacionGestionar frameAnterior;
+	private PanelPermiteCambiarPosicion panelGrafo;
 	
 	private JButton button;
 	
@@ -28,8 +30,8 @@ public class PanelEstacionEditarGrafo extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		button = new JButton("Fede cambiame");
-		JScrollPane scrollPane = new JScrollPane(button);
+		panelGrafo = new PanelPermiteCambiarPosicion();
+		JScrollPane scrollPane = new JScrollPane(panelGrafo);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
@@ -48,6 +50,7 @@ public class PanelEstacionEditarGrafo extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				panelGrafo.cancelarCambios();
 				frame.dispose();
 				frameAnterior = new EstacionGestionar();
 			}
@@ -61,6 +64,7 @@ public class PanelEstacionEditarGrafo extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				panelGrafo.guardarCambios();
 				frame.dispose();
 				frameAnterior = new EstacionGestionar();
 			}

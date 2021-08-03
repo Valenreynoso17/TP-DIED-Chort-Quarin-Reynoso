@@ -25,11 +25,16 @@ public class GestorEstacion {
 	private List<Estacion> estaciones;
 	private static GestorEstacion gestor;
 	private GestorRuta gestorRutas;
+	private static Integer siguienteIdEstacion;
 	private EstacionDAO dao;
 	
 	private GestorEstacion() {
 		dao = new EstacionPostgreSQLImpl();
 		estaciones = new ArrayList<>(dao.buscar());
+		Thread t1 = new Thread(() -> {
+			siguienteIdEstacion = dao.getUltimoIdEstacion() + 1;
+		});
+		t1.run();
 	}
 	
 	public static GestorEstacion getInstance() {
@@ -48,8 +53,8 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
-		estaciones.add(new Estacion(i, n, hA, hC, ee));
+	public void agregarEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
+		estaciones.add(new Estacion(siguienteIdEstacion, n, hA, hC, ee));
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
@@ -136,12 +141,12 @@ public class GestorEstacion {
 	}
 
 	public void cancelarCambios(Map<Estacion, Estacion> anterioresPosiciones) {
-		for (Estacion e : estaciones) {
-			if (anterioresPosiciones.containsKey(e)) {
-				e = anterioresPosiciones.get(e);
-			}
-		}
-	}
+        Set<Estacion> ests = anterioresPosiciones.keySet();
+        for (Estacion e : ests) {
+            estaciones.remove(e);
+            estaciones.add(anterioresPosiciones.getOrDefault(e, e));
+        }
+    }
 	
 	public void guardarCambios(Set<Estacion> modificadas) {
 		List<Estacion> listModificadas = modificadas.stream().collect(Collectors.toList());

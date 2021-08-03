@@ -19,8 +19,12 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import clases.Estacion;
+import enums.EstadoEstacion;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
+import excepciones.NombreEstacionRepetidoException;
+import gestores.GestorEstacion;
 import interfaces.julio.frames.EstacionEditar;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.otros.PopUpMantenimiento;
@@ -40,11 +44,14 @@ public class PanelEstacionEditar extends JPanel{
 	private JTextField field;
 	private JLabel label;
 	
+	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
+	
 	private EstacionGestionar frameAnterior;
 	private PopUpMantenimiento popUpMantenimiento;
 	
 	private LocalTime horarioAux;
 	private LocalDate fechaHoy = LocalDate.now();
+	private EstadoEstacion estadoActual;
 	
 	public PanelEstacionEditar(EstacionEditar frame, Vector filaSeleccionada) {
 		
@@ -140,6 +147,10 @@ public class PanelEstacionEditar extends JPanel{
 		this.add(label, c);
 		
 		field = new JTextField(filaSeleccionada.elementAt(4).toString());
+		if(filaSeleccionada.elementAt(4).toString().equals("OPERATIVA"))
+			estadoActual = EstadoEstacion.OPERATIVA;
+		else
+			estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
 		//field.setHighlighter(null);
 		//field.setEnabled(false);
 		field.setEditable(false);
@@ -187,11 +198,10 @@ public class PanelEstacionEditar extends JPanel{
 				options,  //the titles of buttons
 				options[0]); //default button title
 				
-				//System.out.println(n);
-				
 				if(n == 1) {
 					System.out.println("Apretó finalizar");
 					finMantenimiento.setEnabled(false);
+					estadoActual = EstadoEstacion.OPERATIVA;
 				}
 				else {
 					System.out.println("Apretó cancelar o cerró la ventana");
@@ -226,6 +236,23 @@ public class PanelEstacionEditar extends JPanel{
 						
 						inputEstaVacia();
 						inputEsValida();
+						nombreEstaRepetido();
+						
+						//
+						
+//						public void editarEstacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoEstacion estado) {
+//							
+//							Estacion e = gestorEstacion.getEstacionPorId(Integer.parseInt(id));
+//							
+//							e.editarse(nombre, horarioApertura, horarioCierre, estado);
+//							
+//						}
+						
+//						gestorEstacion.editarEstacion(filaSeleccionada.elementAt(0).toString(), 
+//													  nombre.getText(), 
+//													  LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())), 
+//													  LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText())), 
+//												      estadoActual);
 						
 						frame.dispose();
 						frameAnterior = new EstacionGestionar();
@@ -243,6 +270,12 @@ public class PanelEstacionEditar extends JPanel{
 									  "- La hora debe encontrarse en el intervalo [0, 23]. \n"+
 									  "- Los minutos deben encontrarse en el intervalo [0,59].\n"+
 									  "- La hora de cierre debe ser mayor a la hora de inicio.\n",
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}catch (NombreEstacionRepetidoException NERE) {
+					
+					JOptionPane.showMessageDialog(frame,
+							NERE.getMessage(),
 						    "Error",
 						    JOptionPane.ERROR_MESSAGE);
 				}
@@ -289,6 +322,15 @@ public class PanelEstacionEditar extends JPanel{
 		   || !horasValidas(horaApertura, minutoApertura, horaCierre, minutoCierre))
 
 				throw new InputInvalidaException();
+	}
+	
+	public void nombreEstaRepetido() throws NombreEstacionRepetidoException{ 
+		
+		for(Estacion e : gestorEstacion.getEstaciones()) {
+			
+			if(e.getNombre().equals(nombre.getText()))
+				throw new NombreEstacionRepetidoException();
+		}
 	}
 	
 	public boolean validarHora(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 23]
@@ -340,6 +382,7 @@ public class PanelEstacionEditar extends JPanel{
 		return true;
 	}
 	
+	
 	public boolean horasValidas(JTextField horaApertura, JTextField minutoApertura, JTextField horaCierre, JTextField minutoCierre) {
 		
 		Integer horaA = Integer.parseInt(horaApertura.getText());
@@ -366,6 +409,7 @@ public class PanelEstacionEditar extends JPanel{
 	
 	public void seCreoMantenimiento() {
 		inicioMantenimiento.setEnabled(false);
+		estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
 	}
 	
 	public PanelEstacionEditar getFrame() {

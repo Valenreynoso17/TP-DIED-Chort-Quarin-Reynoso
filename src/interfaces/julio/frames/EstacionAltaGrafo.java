@@ -13,11 +13,11 @@ public class EstacionAltaGrafo extends JFrame{
 
 	private JPanel contentPane;
 
-	public EstacionAltaGrafo(EstacionAlta frameAnterior) {
+	public EstacionAltaGrafo(EstacionAlta frameAnterior, Object[] futuraEstacion) {
 		super("Sistema de Gestión de Transporte Multimodal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
-		contentPane = new PanelEstacionAltaGrafo(this, frameAnterior);
+		contentPane = new PanelEstacionAltaGrafo(this, frameAnterior, futuraEstacion);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
