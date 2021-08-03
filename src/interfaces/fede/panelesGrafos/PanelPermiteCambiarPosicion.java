@@ -5,7 +5,9 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import clases.Estacion;
 import clases.Flecha;
@@ -15,9 +17,13 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected DialogInfoFlechaInactivosVisibles ventanaInfoFlecha;
 	protected Estacion seleccionada;
 	protected Point puntoRelativoAgarre;
+	protected Map<Estacion, Estacion> anterioresPosiciones;
 	
 	public PanelPermiteCambiarPosicion() {
 		super();
+		
+		anterioresPosiciones = new LinkedHashMap<>();
+		System.out.println(anterioresPosiciones.keySet().getClass());
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
@@ -39,6 +45,7 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 					if (est.getHitbox().contains(e.getPoint())) {
 						seleccionada = est;
 						puntoRelativoAgarre = new Point(e.getPoint().x - est.getPosicion().x, e.getPoint().y - est.getPosicion().y);
+						anterioresPosiciones.putIfAbsent(est, est.clone());
 					}
 				}
 			}
@@ -87,5 +94,11 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 		});
 	}
 	
+	public void cancelarCambios() {
+		gestorEstaciones.cancelarCambios(anterioresPosiciones);
+	}
 	
+	public void guardarCambios() {
+		gestorEstaciones.guardarCambios(anterioresPosiciones.keySet());
+	}
 }

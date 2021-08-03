@@ -10,5 +10,5 @@ public interface EstacionDAO {
 	public void eliminar(Estacion estacion);
 	public void insertar(Estacion estacion) ;
 	public void modificar(Estacion estacion);
-	public void actualizarPosicion(Estacion estacion);
+	public void actualizarPosicion(List<Estacion> estacion);
 }
