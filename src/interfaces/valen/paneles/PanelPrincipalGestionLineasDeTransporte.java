@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import interfaces.fede.panelesGrafos.PanelGrafico;
+import interfaces.fede.panelesGrafos.PanelPintaTodo;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 
@@ -17,7 +18,7 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 	GridBagLayout gbLayout;
 	GridBagConstraints gbc;
 	PanelListadoGestionLineas panelListado;
-	PanelGrafico panelGrafo;
+	PanelPintaTodo panelGrafo;
 	JButton botonCancelar;
 	JButton botonSiguiente;
 	
@@ -41,7 +42,7 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		gbc.gridy = 0;
 		gbc.weightx = 0.95;
 		gbc.weighty = 0.95;
-		panelGrafo = new PanelGrafico();
+		panelGrafo = new PanelPintaTodo();
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
 		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);

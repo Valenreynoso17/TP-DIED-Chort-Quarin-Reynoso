@@ -41,6 +41,10 @@ public class Trayecto {
 		this.linea = unaLinea;
 	}
 	
+	public void asociarRutas(List<Ruta> unaListaRutas) {
+		this.rutas = unaListaRutas;
+	}
+	
 	public Color getColorLinea() throws LineaNoAsociadaException {
 		if (linea == null) throw new LineaNoAsociadaException("El trayecto no tiene su entidad linea asociada");
 		return linea.getColor();
