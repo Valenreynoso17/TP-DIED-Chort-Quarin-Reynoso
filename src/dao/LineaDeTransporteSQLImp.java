@@ -115,11 +115,42 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 	public void modificar() {
 		
 	}
-	
-	public static void main(String[] args) {
+
+	@Override
+	public Integer getUltimoIdLinea() {
+		String obtenerID = "SELECT max(id)"
+						+  "FROM died.linea_de_transporte;";
+		Integer id = null;
 		
-		LineaDeTransporteSQLImp linea = new LineaDeTransporteSQLImp();
-		linea.insertar(null);
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			
+			// Se realiza una consulta para encontrar el id correspondiente a la siguiente lineaDeTransporte
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 1;
+			rs.close();
+			st.close();
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {try {rs.close();} catch (Exception e) {e.printStackTrace();}}
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}
+		}
+		
+		return id;
 	}
 
 }

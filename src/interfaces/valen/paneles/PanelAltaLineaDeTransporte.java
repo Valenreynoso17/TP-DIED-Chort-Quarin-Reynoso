@@ -104,8 +104,8 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		return this.nombreLinea.getText();
 	}
 	
-	public Integer getEstadoLinea() {
-		return this.estado.getSelectedIndex();
+	public String getEstadoLinea() {
+		return (String) this.estado.getSelectedItem();
 	}
 	
 	public CustomColor getColorLinea() {

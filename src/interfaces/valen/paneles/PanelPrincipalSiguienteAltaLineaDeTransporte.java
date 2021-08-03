@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import clases.CustomColor;
+import gestores.GestorLineaDeTransporte;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
 import interfaces.valen.otros.ColorPicker;
@@ -23,10 +24,17 @@ public class PanelPrincipalSiguienteAltaLineaDeTransporte extends JPanel{
 	PanelTablaAltaLinea panelTabla;
 	PanelBotonesResumenAltaLinea panelBotones;
 	List<ElementoListaTrayecto> listaTrayecto;
+	String nombreLinea;
+	String estadoLinea; 
+	CustomColor colorLinea;
 	GridBagConstraints gbc;
+	GestorLineaDeTransporte gestorLinea;
 	
-	public PanelPrincipalSiguienteAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frameAbuelo,VentanaSiguienteAltaLineaDeTransporte framePadre, String nombreLinea, Integer estadoLinea, CustomColor colorLinea, List<ElementoListaTrayecto> listaTrayecto) {
+	public PanelPrincipalSiguienteAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frameAbuelo,VentanaSiguienteAltaLineaDeTransporte framePadre, String nombreLinea, String estadoLinea, CustomColor colorLinea, List<ElementoListaTrayecto> listaTrayecto) {
 		
+		this.nombreLinea = nombreLinea;
+		this.estadoLinea = estadoLinea;
+		this.colorLinea = colorLinea;
 		this.listaTrayecto = listaTrayecto;
 		
 		this.setLayout(new GridBagLayout());
@@ -54,8 +62,13 @@ public class PanelPrincipalSiguienteAltaLineaDeTransporte extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.weighty = 0.0;
-		panelBotones = new PanelBotonesResumenAltaLinea(frameAbuelo, framePadre);
+		panelBotones = new PanelBotonesResumenAltaLinea(frameAbuelo, framePadre, this);
 		this.add(panelBotones, gbc);
 		
+	}
+	
+	public void guardarNuevaLinea() {
+		gestorLinea = GestorLineaDeTransporte.getInstance();
+		gestorLinea.agregarLineaDeTransporte(nombreLinea, estadoLinea, colorLinea, listaTrayecto);
 	}
 }

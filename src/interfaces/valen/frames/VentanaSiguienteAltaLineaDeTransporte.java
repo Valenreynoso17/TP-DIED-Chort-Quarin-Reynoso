@@ -13,7 +13,7 @@ public class VentanaSiguienteAltaLineaDeTransporte extends JFrame{
 
 	PanelPrincipalSiguienteAltaLineaDeTransporte panelPrincipal;
 	
-	public VentanaSiguienteAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame, String nombreLinea, Integer estadoLinea, CustomColor colorLinea, List<ElementoListaTrayecto> listaTrayecto) {
+	public VentanaSiguienteAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame, String nombreLinea, String estadoLinea, CustomColor colorLinea, List<ElementoListaTrayecto> listaTrayecto) {
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1024, 600);

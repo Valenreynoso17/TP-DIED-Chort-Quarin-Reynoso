@@ -110,4 +110,10 @@ public class RutaSQLImp implements RutaDAO{
 		
 	}
 
+	@Override
+	public Integer getSiguienteIdRuta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

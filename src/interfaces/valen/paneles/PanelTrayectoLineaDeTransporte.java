@@ -12,21 +12,25 @@ import interfaces.valen.otros.ElementoListaTrayecto;
 public class PanelTrayectoLineaDeTransporte extends JPanel{
 
 	List<ElementoListaTrayecto> listaTrayecto;
+	PanelPrincipalAltaLineaDeTransporte panelPadre;
 	
-	public PanelTrayectoLineaDeTransporte(List<ElementoListaTrayecto> listaTrayecto) {
+	public PanelTrayectoLineaDeTransporte(PanelPrincipalAltaLineaDeTransporte panelPadre, List<ElementoListaTrayecto> listaTrayecto) {
 		
+		this.panelPadre = panelPadre;
 		this.listaTrayecto = listaTrayecto;
 		
 		this.setBorder(BorderFactory.createTitledBorder("Trayecto"));
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
 		
-//		JButton botonEstacion = new JButton("A");
-//		botonEstacion.setFocusable(false);
-		
 		for(ElementoListaTrayecto unElemento : listaTrayecto) {
 			JButton botonAux = new JButton(unElemento.getEstaciones());
+			botonAux.addActionListener(e -> cambiarAModoEdicion(unElemento));
 			this.add(botonAux);
 		}
 		
+	}
+	
+	public void cambiarAModoEdicion(ElementoListaTrayecto unElemento) {
+		panelPadre.actualizarAModoEdicion(unElemento);
 	}
 }
