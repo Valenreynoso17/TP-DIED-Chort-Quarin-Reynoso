@@ -78,7 +78,40 @@ public class TrayectoSQLImp implements TrayectoDAO{
 
 	@Override
 	public void insertar(Trayecto trayecto) {
-		// TODO Auto-generated method stub
+		String consulta = "INSERT INTO died.trayecto "
+						+ "VALUES (?, ?);";
+
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn.setAutoCommit(false);
+			
+			st = conn.prepareStatement(consulta);
+			st.setInt(1, trayecto.getId());
+			st.setInt(2, trayecto.getIdLineaAsociada());
+
+			Integer val = st.executeUpdate();
+			conn.commit();
+		
+			} 
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+			catch (SQLException e) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			} 
+			finally {
+				if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+				if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}	
+			}
 		
 	}
 
@@ -90,7 +123,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 
 	@Override
 	public Integer getUltimoIdTrayecto() {
-		String obtenerID = "SELECT max(id_trayecto)"
+		String obtenerID = "SELECT max(id_trayecto) "
 						+  "FROM died.trayecto;";
 		Integer id = null;
 		

@@ -108,7 +108,40 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
 	@Override
 	public void insertar(LineaDeTransporte lineaDeTransporte) {
+		String consulta = "INSERT INTO died.linea_de_transporte "
+						+ "VALUES (?, ?, ?, ?);";
+
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn.setAutoCommit(false);
+			
+			st = conn.prepareStatement(consulta);
+			st.setInt(1, lineaDeTransporte.getId());
+			st.setString(2, lineaDeTransporte.getNombre());
+			st.setInt(3, lineaDeTransporte.getIdColor());
+			st.setString(4, lineaDeTransporte.getEstado().toString());
 		
+			Integer val = st.executeUpdate();
+			conn.commit();
+		
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			} 
+		finally {
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}	
+		}
 	}	
 
 	@Override
@@ -118,7 +151,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
 	@Override
 	public Integer getUltimoIdLinea() {
-		String obtenerID = "SELECT max(id)"
+		String obtenerID = "SELECT max(id) "
 						+  "FROM died.linea_de_transporte;";
 		Integer id = null;
 		

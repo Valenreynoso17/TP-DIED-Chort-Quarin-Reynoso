@@ -128,6 +128,9 @@ public class GestorEstacion {
 		return (estaciones.stream().filter(e -> e.getId() == idEstacion).findFirst()).get();
 	}
 	
+	public Estacion getEstacionPorNombre(String nombreEstacion) {
+		return (estaciones.stream().filter(e -> e.getNombre() == nombreEstacion).findFirst()).get();
+	}
 
 
 }

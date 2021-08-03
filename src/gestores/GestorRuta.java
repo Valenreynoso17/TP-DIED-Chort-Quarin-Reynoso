@@ -18,11 +18,16 @@ public class GestorRuta {
 	private static GestorRuta gestor;
 	private RutaDAO rutaDAO;
 	private GestorTrayecto gestorTrayecto;
+	private static Integer siguienteIdRuta; 
 	
 	
 	private GestorRuta() {
 		rutaDAO = new RutaSQLImp();
 		rutas = new ArrayList<>(rutaDAO.buscar());
+		Thread t1 = new Thread(() -> {
+			siguienteIdRuta = rutaDAO.getSiguienteIdRuta() + 1;
+		});
+		t1.run();
 	}
 	
 	public static GestorRuta getInstance() {
@@ -68,8 +73,7 @@ public class GestorRuta {
 			}
 		}
 	}
-	
-	
+		
 	public List<Ruta> getRutasSaliente(Estacion e) {
 		List<Ruta> retorno = new ArrayList<>();
 		
@@ -92,13 +96,39 @@ public class GestorRuta {
 		}
 	}
 	
-	public List<Ruta> agregarRutas(List<ElementoListaTrayecto> listaTrayecto) {
+	public List<Ruta> agregarRutas(Integer idTrayecto, List<ElementoListaTrayecto> listaTrayecto, Trayecto tray) {
+		
+		List<Ruta> listaResultado = new ArrayList<Ruta>();
+		
+		GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 		
 		for(ElementoListaTrayecto unElemento : listaTrayecto) {
-//			Ruta rutaAux = new Ruta()
+			
+			Ruta rutaAux;
+			
+			if(unElemento.getEstado() == "Activa") {
+				rutaAux = new Ruta(siguienteIdRuta, idTrayecto,
+									gestorEstacion.getEstacionPorNombre(unElemento.getEstacionOrigen()),
+									gestorEstacion.getEstacionPorNombre(unElemento.getEstacionDestino()),
+									unElemento.getDistancia(), unElemento.getDuracion(), unElemento.getCantMaxPasajeros(),
+									EstadoRuta.ACTIVA, unElemento.getCosto());
+			} else {
+				rutaAux = new Ruta(siguienteIdRuta, idTrayecto,
+						gestorEstacion.getEstacionPorNombre(unElemento.getEstacionOrigen()),
+						gestorEstacion.getEstacionPorNombre(unElemento.getEstacionDestino()),
+						unElemento.getDistancia(), unElemento.getDuracion(), unElemento.getCantMaxPasajeros(),
+						EstadoRuta.NO_ACTIVA, unElemento.getCosto());
+			}
+			
+			this.rutas.add(rutaAux);
+			listaResultado.add(rutaAux);
+			siguienteIdRuta++;
+			
+			rutaAux.asociarTrayecto(tray);
 		}
 		
-		return null;
+		rutaDAO.insertar(listaResultado);
+		return listaResultado;
 	}
 
 }

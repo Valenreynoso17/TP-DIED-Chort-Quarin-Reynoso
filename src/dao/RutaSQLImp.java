@@ -17,12 +17,12 @@ import enums.EstadoRuta;
 import gestores.GestorEstacion;
 
 public class RutaSQLImp implements RutaDAO{
-	private String ip, port, usr, psw;
+	private String host, port, usr, psw;
 	private GestorEstacion gestorEstacion;
 	
 	public RutaSQLImp() {
 		// TODO Cambiar datos si hace falta
-		this.ip = "localhost";
+		this.host = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
 		this.psw = "ChortQuarinReynoso";
@@ -44,7 +44,7 @@ public class RutaSQLImp implements RutaDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(consulta);
@@ -63,30 +63,9 @@ public class RutaSQLImp implements RutaDAO{
 			e.printStackTrace();
 		} 
 		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (st != null) {
-				try {
-					st.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}	
+			if (rs != null) {try {rs.close();} catch (Exception e) {e.printStackTrace();}}
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}	
 		}
 		
 		return lista;
@@ -99,8 +78,55 @@ public class RutaSQLImp implements RutaDAO{
 	}
 
 	@Override
-	public void insertar(Ruta ruta) {
-		// TODO Auto-generated method stub
+	public void insertar(List<Ruta> rutas) {
+		
+		String consulta = "INSERT INTO died.ruta "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+//			conn.setAutoCommit(false);
+			
+			for (int i = 1; i<rutas.size(); i++) consulta += ", (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			consulta += ";";
+			
+			st = conn.prepareStatement(consulta);
+			
+			for(int i = 0; i<rutas.size(); i++) {
+				st.setInt(1 + (i*9), rutas.get(i).getID());
+				st.setInt(2 + (i*9), rutas.get(i).getDistancia());
+				st.setInt(3 + (i*9), rutas.get(i).getDuracion());
+				st.setInt(4 + (i*9), rutas.get(i).getCantMaxPasajeros());
+				st.setString(5 + (i*9), rutas.get(i).getStringEstado());
+				st.setDouble(6 + (i*9), rutas.get(i).getCosto());
+				st.setInt(7 + (i*9), rutas.get(i).getIdTrayecto());
+				st.setInt(8 + (i*9), rutas.get(i).getIdEstacionOrigen());
+				st.setInt(9 + (i*9), rutas.get(i).getIdEstacionDestino());
+			}
+			
+			Integer val = st.executeUpdate();
+//			conn.commit();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+//			try {
+//				conn.rollback();
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+			e.printStackTrace();
+		} 
+		finally {
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}	
+		}
 		
 	}
 
@@ -112,8 +138,39 @@ public class RutaSQLImp implements RutaDAO{
 
 	@Override
 	public Integer getSiguienteIdRuta() {
-		// TODO Auto-generated method stub
-		return null;
+		String obtenerID = "SELECT max(id) "
+						+  "FROM died.ruta;";
+		Integer id = null;
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			
+			// Se realiza una consulta para encontrar el id correspondiente al siguiente trayecto
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 1;
+			rs.close();
+			st.close();
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {try {rs.close();} catch (Exception e) {e.printStackTrace();}}
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}
+		}
+		
+		return id;
 	}
 
 }

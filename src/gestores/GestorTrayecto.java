@@ -22,7 +22,10 @@ public class GestorTrayecto {
 	private GestorTrayecto() {
 		trayectoDAO = new TrayectoSQLImp();
 		listaTrayectos = new ArrayList<Trayecto>(trayectoDAO.buscar());
-		siguienteIdTrayecto = trayectoDAO.getUltimoIdTrayecto();
+		Thread t1 = new Thread(() -> {
+			siguienteIdTrayecto = trayectoDAO.getUltimoIdTrayecto() + 1;
+		});
+		t1.run();
 	}
 	
 	public static GestorTrayecto getInstance() {
@@ -49,10 +52,17 @@ public class GestorTrayecto {
 	}
 	
 	public Trayecto agregarNuevoTrayecto(Integer idLinea, List<ElementoListaTrayecto> listaTrayecto) {
-		GestorRuta gestorRuta = GestorRuta.getInstance();
-		List<Ruta> listaAux = gestorRuta.agregarRutas(listaTrayecto);
 		
-		Trayecto trayectoAux = new Trayecto(siguienteIdTrayecto, idLinea, listaAux);
+		Trayecto trayectoAux = new Trayecto(siguienteIdTrayecto, idLinea, null);
+		
+		trayectoDAO.insertar(trayectoAux);
+		this.listaTrayectos.add(trayectoAux);
+		
+		GestorRuta gestorRuta = GestorRuta.getInstance();
+		List<Ruta> listaAux = gestorRuta.agregarRutas(siguienteIdTrayecto, listaTrayecto, trayectoAux);	
+		trayectoAux.asociarRutas(listaAux);
+		
+		siguienteIdTrayecto++;
 		
 		return trayectoAux;
 	}

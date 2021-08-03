@@ -12,7 +12,9 @@ public class CustomColor extends Color{
 		this.id = id;
 		this.nombreColor = nombreColor;
 	}
-	
+	public Integer getId() {
+		return id;
+	}
 	public String getNombre() {
 		return nombreColor;
 	}

@@ -39,4 +39,8 @@ public class LineaDeTransporte {
 		return estado == EstadoLineaDeTransporte.ACTIVA;
 	}
 	
+	public Integer getIdColor() {
+		return this.getColor().getId();
+	}
+	
 }

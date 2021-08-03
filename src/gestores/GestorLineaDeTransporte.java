@@ -5,6 +5,7 @@ import java.util.List;
 
 import clases.CustomColor;
 import clases.LineaDeTransporte;
+import clases.Ruta;
 import clases.Trayecto;
 import dao.LineaDeTransporteDAO;
 import dao.LineaDeTransporteSQLImp;
@@ -22,7 +23,10 @@ public class GestorLineaDeTransporte {
 	private GestorLineaDeTransporte() {
 		lineaDAO = new LineaDeTransporteSQLImp();
 		lineasDeTransporte = new ArrayList<LineaDeTransporte>(lineaDAO.buscar());
-		siguienteIdLinea = lineaDAO.getUltimoIdLinea() + 1;
+		Thread t1 = new Thread(() -> {
+			siguienteIdLinea = lineaDAO.getUltimoIdLinea() + 1;
+		});
+		t1.run();
 	}
 	
 	public static GestorLineaDeTransporte getInstance() {
@@ -38,20 +42,22 @@ public class GestorLineaDeTransporte {
 	
 	public void agregarLineaDeTransporte(String nombreLinea, String estadoLinea, CustomColor colorLinea, List<ElementoListaTrayecto> listaTrayecto) {
 		
-		gestorTrayecto = GestorTrayecto.getInstance();
-		Trayecto trayectoAux = gestorTrayecto.agregarNuevoTrayecto(siguienteIdLinea, listaTrayecto);
-		
 		LineaDeTransporte lineaAux;
 		if (estadoLinea == "Activa") {
-			lineaAux = new LineaDeTransporte(siguienteIdLinea, nombreLinea, colorLinea, EstadoLineaDeTransporte.ACTIVA, trayectoAux);
+			lineaAux = new LineaDeTransporte(siguienteIdLinea, nombreLinea, colorLinea, EstadoLineaDeTransporte.ACTIVA, null);
 		} else {
-			lineaAux = new LineaDeTransporte(siguienteIdLinea, nombreLinea, colorLinea, EstadoLineaDeTransporte.NO_ACTIVA, trayectoAux);
+			lineaAux = new LineaDeTransporte(siguienteIdLinea, nombreLinea, colorLinea, EstadoLineaDeTransporte.NO_ACTIVA, null);
 		}
 		
 		lineaDAO.insertar(lineaAux);
 		this.lineasDeTransporte.add(lineaAux);
 		
+		gestorTrayecto = GestorTrayecto.getInstance();
+		Trayecto trayectoAux = gestorTrayecto.agregarNuevoTrayecto(siguienteIdLinea, listaTrayecto);
+		trayectoAux.asociarLinea(lineaAux);
+		
 		siguienteIdLinea++;
+		
 	}
 	
 	public void borrarLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {

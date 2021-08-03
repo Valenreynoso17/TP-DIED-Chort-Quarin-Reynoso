@@ -65,6 +65,18 @@ public class Ruta {
 		return this.idTrayecto;
 	}
 	
+	public String getStringEstado() {
+		return this.estado.toString();
+	}
+	
+	public Integer getIdEstacionOrigen() {
+		return this.getOrigen().getId();
+	}
+	
+	public Integer getIdEstacionDestino() {
+		return this.getDestino().getId();
+	}
+	
 	public void asociarTrayecto(Trayecto unTrayecto) {
 		this.trayecto = unTrayecto;
 	}
