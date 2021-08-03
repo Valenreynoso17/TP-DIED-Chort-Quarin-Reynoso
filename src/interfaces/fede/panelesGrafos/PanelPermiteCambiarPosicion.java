@@ -4,7 +4,9 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,6 @@ import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
 
 public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
-	protected DialogInfoFlechaInactivosVisibles ventanaInfoFlecha;
 	protected Estacion seleccionada;
 	protected Point puntoRelativoAgarre;
 	protected Map<Estacion, Estacion> anterioresPosiciones;
@@ -24,6 +25,11 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 		
 		anterioresPosiciones = new LinkedHashMap<>();
 		System.out.println(anterioresPosiciones.keySet().getClass());
+		
+		MouseListener[] listeners = this.getMouseListeners();
+		for (int i=0; i<listeners.length; i++) {
+			this.removeMouseListener(listeners[i]);
+		}
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
@@ -59,6 +65,11 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 			}
 		});
 		
+		
+		MouseMotionListener[] listeners2 = this.getMouseMotionListeners();
+		for (int i = 0; i<listeners2.length; i++) {
+			this.removeMouseMotionListener(listeners2[i]);
+		}
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
