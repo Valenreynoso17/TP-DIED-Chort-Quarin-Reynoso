@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,21 +13,29 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import gestores.GestorEstacion;
+import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.julio.frames.EstacionAlta;
 import interfaces.julio.frames.EstacionAltaGrafo;
+import interfaces.julio.frames.EstacionGestionar;
 
 public class PanelEstacionAltaGrafo extends JPanel{
 	
 	private JButton button;
 	
-	public PanelEstacionAltaGrafo(EstacionAltaGrafo frame, EstacionAlta frameAnterior) {
+	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
+	
+	private EstacionGestionar frameGestionar;
+	private PanelPermiteCambiarPosicion panelGrafo;
+	
+	public PanelEstacionAltaGrafo(EstacionAltaGrafo frame, EstacionAlta frameAnterior, Object[] futuraEstacion) {
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Colocar la nueva estación en el grafo"));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		button = new JButton("Fede cambiame");
+		panelGrafo = new PanelPermiteCambiarPosicion();
 		JScrollPane scrollPane = new JScrollPane(button);
 		
 		c.fill = GridBagConstraints.BOTH;
@@ -46,6 +55,7 @@ public class PanelEstacionAltaGrafo extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				panelGrafo.cancelarCambios();
 				frame.dispose();
 				frameAnterior.setVisible(true);
 			}
@@ -59,8 +69,13 @@ public class PanelEstacionAltaGrafo extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				//TODO: Posicion
+				
+				gestorEstacion.agregarEstacion((String) futuraEstacion[0], (LocalTime) futuraEstacion[1], (LocalTime) futuraEstacion[2], null, getMousePosition());
+				
+				panelGrafo.guardarCambios();
 				frame.dispose();
-				frameAnterior.setVisible(true);;
+				frameGestionar = new EstacionGestionar();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

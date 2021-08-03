@@ -11,4 +11,5 @@ public interface EstacionDAO {
 	public void insertar(Estacion estacion) ;
 	public void modificar(Estacion estacion);
 	public void actualizarPosicion(List<Estacion> estacion);
+	public Integer getUltimoIdEstacion();
 }

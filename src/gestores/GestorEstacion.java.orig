@@ -25,11 +25,16 @@ public class GestorEstacion {
 	private List<Estacion> estaciones;
 	private static GestorEstacion gestor;
 	private GestorRuta gestorRutas;
+	private static Integer siguienteIdEstacion;
 	private EstacionDAO dao;
 	
 	private GestorEstacion() {
 		dao = new EstacionPostgreSQLImpl();
 		estaciones = new ArrayList<>(dao.buscar());
+		Thread t1 = new Thread(() -> {
+			siguienteIdEstacion = dao.getUltimoIdEstacion() + 1;
+		});
+		t1.run();
 	}
 	
 	public static GestorEstacion getInstance() {
@@ -48,8 +53,8 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
-		estaciones.add(new Estacion(i, n, hA, hC, ee));
+	public void agregarEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
+		estaciones.add(new Estacion(siguienteIdEstacion, n, hA, hC, ee));
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
@@ -135,6 +140,15 @@ public class GestorEstacion {
 		return (estaciones.stream().filter(e -> e.getNombre() == nombreEstacion).findFirst()).get();
 	}
 
+<<<<<<< HEAD
+	public void cancelarCambios(Map<Estacion, Estacion> anterioresPosiciones) {
+        Set<Estacion> ests = anterioresPosiciones.keySet();
+        for (Estacion e : ests) {
+            estaciones.remove(e);
+            estaciones.add(anterioresPosiciones.getOrDefault(e, e));
+        }
+    }
+=======
 	public void cancelarCambios(Map<Integer, Point> anterioresPosiciones) {
 		Set<Integer> ids = anterioresPosiciones.keySet();
 		for (Integer id : ids) {
@@ -142,6 +156,7 @@ public class GestorEstacion {
 			est.setPosicion(anterioresPosiciones.get(id));
 		}
 	}
+>>>>>>> af4443efaa488c726c6b3e1f7f4af4921f1ce419
 	
 	public void guardarCambios(Set<Integer> modificadas) {
 		List<Estacion> estacionesModificadas = modificadas.stream().map(id -> getEstacionPorId(id)).collect(Collectors.toList());

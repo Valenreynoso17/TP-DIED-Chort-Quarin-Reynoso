@@ -30,7 +30,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	public List<Estacion> buscar() {
 		List<Estacion> estaciones = new ArrayList<>();
 		String consulta = "SELECT * "
-						+ "FROM died.estacion;"	;
+						+ "FROM died.estacion "
+						+ "ORDER BY 1"	;
 		
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -242,7 +243,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			st.setString(2, estacion.getEstado().toString());
 			st.setTime(3, Time.valueOf(estacion.getHorarioApertura()));
 			st.setTime(4, Time.valueOf(estacion.getHorarioCierre()));	
-			st.setInt(5, estacion.getId());
+			st.setInt(5, estacion.getId());	//?
 			st.executeUpdate();
 			
 		} 
@@ -322,6 +323,43 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			}	
 		}
 		
+	}
+	
+	@Override
+	public Integer getUltimoIdEstacion() {
+		String obtenerID = "SELECT max(id) "
+						+  "FROM died.estacion;";
+		Integer id = null;
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			
+			// Se realiza una consulta para encontrar el id correspondiente a la siguiente lineaDeTransporte
+			st = conn.prepareStatement(obtenerID);
+			rs = st.executeQuery();
+			rs.next();
+			id = rs.getInt("max");
+			if (rs.wasNull()) id = 1;
+			rs.close();
+			st.close();
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) {try {rs.close();} catch (Exception e) {e.printStackTrace();}}
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}
+		}
+		
+		return id;
 	}
 	
 }
