@@ -22,11 +22,14 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected Point puntoRelativoAgarre;
 	protected Map<Integer, Point> anterioresPosiciones;
 	
-	public PanelPermiteCambiarPosicion() {
+	public PanelPermiteCambiarPosicion(Estacion nuevaEstacion) {
 		super();
+		if (nuevaEstacion != null) {
+			estaciones.add(nuevaEstacion);
+			dibujables.add(nuevaEstacion);
+		}
 		
 		anterioresPosiciones = new LinkedHashMap<>();
-		System.out.println(anterioresPosiciones.keySet().getClass());
 		
 		MouseListener[] listeners = this.getMouseListeners();
 		for (int i=0; i<listeners.length; i++) {
