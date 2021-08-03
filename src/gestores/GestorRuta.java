@@ -11,12 +11,14 @@ import clases.Trayecto;
 import dao.RutaDAO;
 import dao.RutaSQLImp;
 import enums.EstadoRuta;
+import interfaces.valen.otros.ElementoListaTrayecto;
 
 public class GestorRuta {
 	private List<Ruta> rutas;
 	private static GestorRuta gestor;
 	private RutaDAO rutaDAO;
 	private GestorTrayecto gestorTrayecto;
+	
 	
 	private GestorRuta() {
 		rutaDAO = new RutaSQLImp();
@@ -87,6 +89,15 @@ public class GestorRuta {
 			Trayecto trayectoAux = (gestorTrayecto.getListaTrayectos().stream().filter(t -> t.getId() == unaRuta.getIdTrayecto()).findFirst()).get();
 			unaRuta.asociarTrayecto(trayectoAux);
 		}
+	}
+	
+	public List<Ruta> agregarRutas(List<ElementoListaTrayecto> listaTrayecto) {
+		
+		for(ElementoListaTrayecto unElemento : listaTrayecto) {
+//			Ruta rutaAux = new Ruta()
+		}
+		
+		return null;
 	}
 
 }

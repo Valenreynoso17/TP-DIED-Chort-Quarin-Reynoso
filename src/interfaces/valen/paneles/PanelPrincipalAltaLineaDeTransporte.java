@@ -87,7 +87,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weighty = 0.0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		panelTrayecto = new PanelTrayectoLineaDeTransporte(listaTrayecto);
+		panelTrayecto = new PanelTrayectoLineaDeTransporte(this, listaTrayecto);
 		this.add(panelTrayecto, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
@@ -136,10 +136,27 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weighty = 0.0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		panelTrayecto = new PanelTrayectoLineaDeTransporte(listaTrayecto);
+		panelTrayecto = new PanelTrayectoLineaDeTransporte(this, listaTrayecto);
 		this.add(panelTrayecto, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
+	}
+	
+	public void actualizarAModoEdicion(ElementoListaTrayecto unElemento) {
+		this.remove(panelRuta);
+    	
+    	this.revalidate();
+    	this.repaint();
+    	
+    	gbc.fill = GridBagConstraints.BOTH;
+    	gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.gridheight = 2;
+		panelRuta = new PanelRutaLineaDeTransporte(frame, this, listaTrayecto, unElemento);
+		this.add(panelRuta, gbc);
+		gbc.gridheight = 1;
 	}
 	
 	public void siguientePantalla() {

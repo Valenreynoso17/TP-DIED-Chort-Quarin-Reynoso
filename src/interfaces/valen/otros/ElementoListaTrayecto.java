@@ -80,5 +80,35 @@ public class ElementoListaTrayecto {
 	public String getEstado() {
 		return estado;
 	}
+
+	public void setEstacionOrigen(String estacionOrigen) {
+		this.estacionOrigen = estacionOrigen;
+	}
+
+	public void setEstacionDestino(String estacionDestino) {
+		this.estacionDestino = estacionDestino;
+	}
+
+	public void setDistancia(Integer distancia) {
+		this.distancia = distancia;
+	}
+
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
+
+	public void setCantMaxPasajeros(Integer cantMaxPasajeros) {
+		this.cantMaxPasajeros = cantMaxPasajeros;
+	}
+
+	public void setCosto(Integer costo) {
+		this.costo = costo;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	
 	
 }

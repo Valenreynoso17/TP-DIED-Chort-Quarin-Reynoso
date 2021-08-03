@@ -9,4 +9,5 @@ public interface LineaDeTransporteDAO {
 	public void eliminar(LineaDeTransporte lineaDetransporte);
 	public void insertar(LineaDeTransporte lineaDeTransporte);
 	public void modificar();
+	public Integer getUltimoIdLinea();
 }

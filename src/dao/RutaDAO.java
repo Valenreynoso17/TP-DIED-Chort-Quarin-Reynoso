@@ -9,4 +9,5 @@ public interface RutaDAO {
 	public void eliminar();
 	public void insertar(Ruta ruta);
 	public void modificar();
+	public Integer getSiguienteIdRuta();
 }
