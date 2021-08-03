@@ -15,10 +15,12 @@ import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
 
+
+
 public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected Estacion seleccionada;
 	protected Point puntoRelativoAgarre;
-	protected Map<Estacion, Estacion> anterioresPosiciones;
+	protected Map<Integer, Point> anterioresPosiciones;
 	
 	public PanelPermiteCambiarPosicion() {
 		super();
@@ -51,7 +53,9 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 					if (est.getHitbox().contains(e.getPoint())) {
 						seleccionada = est;
 						puntoRelativoAgarre = new Point(e.getPoint().x - est.getPosicion().x, e.getPoint().y - est.getPosicion().y);
-						anterioresPosiciones.putIfAbsent(est, est.clone());
+						
+						
+						anterioresPosiciones.putIfAbsent(est.getId(), (Point) est.getPosicion().clone());
 					}
 				}
 			}
