@@ -13,7 +13,7 @@ import enums.EstadoEstacion;
 import interfaces.fede.otros.GamaColor;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 
-public class Estacion implements Dibujable{
+public class Estacion implements Dibujable, Cloneable {
 	
 	private Integer id;
 	private String nombre;
@@ -197,10 +197,10 @@ public class Estacion implements Dibujable{
 		return true;
 	}
 	
-	@Override
-	public Estacion clone(){
-		return new Estacion(id, nombre, horarioApertura, horarioCierre, posicion, estado, mantenimientos);
+	public Estacion clonar() throws CloneNotSupportedException {
+		return new Estacion(Integer.valueOf(id), String.valueOf(nombre), LocalTime.of(horarioApertura.getHour(), horarioApertura.getMinute()), LocalTime.of(horarioCierre.getHour(), horarioCierre.getMinute()), estado);
 	}
+	
 
 	@Override
 	public void dibujarse(Graphics2D g2d) {
@@ -215,6 +215,13 @@ public class Estacion implements Dibujable{
 		
 	}
 	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		
+		return super.clone();
+	}
+
 	public void dibujarse(Graphics2D g2d, GamaColor gama) {
 		g2d.setColor(gama.getRelleno());
 		g2d.fillOval(posicion.x-PanelGrafico.getRadioEstaciones(), posicion.y-PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones(), 2*PanelGrafico.getRadioEstaciones());	
