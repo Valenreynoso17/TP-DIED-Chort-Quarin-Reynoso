@@ -140,15 +140,7 @@ public class GestorEstacion {
 		return (estaciones.stream().filter(e -> e.getNombre() == nombreEstacion).findFirst()).get();
 	}
 
-<<<<<<< HEAD
-	public void cancelarCambios(Map<Estacion, Estacion> anterioresPosiciones) {
-        Set<Estacion> ests = anterioresPosiciones.keySet();
-        for (Estacion e : ests) {
-            estaciones.remove(e);
-            estaciones.add(anterioresPosiciones.getOrDefault(e, e));
-        }
-    }
-=======
+
 	public void cancelarCambios(Map<Integer, Point> anterioresPosiciones) {
 		Set<Integer> ids = anterioresPosiciones.keySet();
 		for (Integer id : ids) {
@@ -156,7 +148,7 @@ public class GestorEstacion {
 			est.setPosicion(anterioresPosiciones.get(id));
 		}
 	}
->>>>>>> af4443efaa488c726c6b3e1f7f4af4921f1ce419
+
 	
 	public void guardarCambios(Set<Integer> modificadas) {
 		List<Estacion> estacionesModificadas = modificadas.stream().map(id -> getEstacionPorId(id)).collect(Collectors.toList());
