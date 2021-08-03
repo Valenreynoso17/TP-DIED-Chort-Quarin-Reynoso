@@ -20,7 +20,6 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	private String host, port, usr, psw;
 	
 	public EstacionPostgreSQLImpl() {
-		// TODO Cambiar datos si hace falta
 		this.host = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
@@ -224,35 +223,26 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	public void modificar(Estacion estacion) {
 		//Tener en cuenta que copie y pegue de boleto
 
-		String modificacionEstacion = 	"INSERT INTO died.estacion "
-									+ 	"VALUES (?, ?, ?, ?, ?);";
-		Integer id = null;
+		String modificacionEstacion = 	"UPDATE died.estacion "
+									+ 	"SET 	nombre = ?, "
+									+ 	"		estado = ?, "
+									+ 	" 		horarioapertura = ?, "
+									+ 	"		horariocierre = ? "
+									+ 	"WHERE id = ?; ";
 		
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		try {
-			// TODO Falta cargar la relacion con ruta
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
-			// Se realiza una consulta para encontrar el id correspondiente a la siguiente estación
-			st = conn.prepareStatement(obtenerID);
-			rs = st.executeQuery();
-			rs.next();
-			id = rs.getInt("max");
-			if (rs.wasNull()) id = 1;
-			else id += 1;
-			rs.close();
-			st.close();
 			
-			
-			st = conn.prepareStatement(insercionEstacion);
-			st.setInt(1, id);
-			st.setString(2, estacion.getNombre());
-			st.setString(3, estacion.getEstado().toString());
-			st.setTime(4, Time.valueOf(estacion.getHorarioApertura()));
-			st.setTime(5, Time.valueOf(estacion.getHorarioCierre()));	
+			st = conn.prepareStatement(modificacionEstacion);
+			st.setString(1, estacion.getNombre());
+			st.setString(2, estacion.getEstado().toString());
+			st.setTime(3, Time.valueOf(estacion.getHorarioApertura()));
+			st.setTime(4, Time.valueOf(estacion.getHorarioCierre()));	
+			st.setInt(5, estacion.getId());
 			st.executeUpdate();
 			
 		} 
@@ -263,14 +253,6 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			e.printStackTrace();
 		} 
 		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
 			if (st != null) {
 				try {
 					st.close();
@@ -290,10 +272,55 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		}
 		
 	}
-
-	@Override
-	public void actualizarPosicion(Estacion estacion) {
-		// TODO Auto-generated method stub
+	
+	public void actualizarPosicion(List<Estacion> estacion) {
+		String modificacionEstacion = 	"UPDATE died.estacion "
+									+ 	"SET 	posicion_x = ?, "
+									+ 	"		posicion_y = ? "
+									+ 	"WHERE id = ?; ";
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			
+			for (Estacion e : estacion) {
+				st = conn.prepareStatement(modificacionEstacion);
+				st.setInt(1, e.getPosicion().x);
+				st.setInt(2, e.getPosicion().y);	
+				st.setInt(3, e.getId());
+				st.executeUpdate();
+				st.close();
+				
+			}
+			
+			
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			if (st != null) {
+				try {
+					st.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}
 		
 	}
 	

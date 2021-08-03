@@ -189,6 +189,11 @@ public class Estacion implements Dibujable{
 			return false;
 		return true;
 	}
+	
+	@Override
+	public Estacion clone(){
+		return new Estacion(id, nombre, horarioApertura, horarioCierre, posicion, estado, mantenimientos);
+	}
 
 	@Override
 	public void dibujarse(Graphics2D g2d) {

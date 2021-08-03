@@ -4,9 +4,12 @@ import java.awt.Point;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -129,5 +132,17 @@ public class GestorEstacion {
 	}
 	
 
+	public void cancelarCambios(Map<Estacion, Estacion> anterioresPosiciones) {
+		for (Estacion e : estaciones) {
+			if (anterioresPosiciones.containsKey(e)) {
+				e = anterioresPosiciones.get(e);
+			}
+		}
+	}
+	
+	public void guardarCambios(Set<Estacion> modificadas) {
+		List<Estacion> listModificadas = modificadas.stream().collect(Collectors.toList());
+		dao.actualizarPosicion(listModificadas);
+	}
 
 }
