@@ -42,7 +42,7 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 			Object[] options = {"Si",
 			                    "No"};
 			int n = JOptionPane.showOptionDialog(framePadre,
-			    "Está seguro que desea cancelar el alta de la línea? \n" +
+			    "¿Está seguro que desea cancelar el alta de la línea? \n" +
 			    "Si sale ahora perderá los datos guardados hasta ahora.",
 			    "Cancelar alta de línea",
 			    JOptionPane.OK_CANCEL_OPTION,
@@ -84,7 +84,7 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 		Object[] options = {"Confirmar",
 		                    "Cancelar"};
 		int n = JOptionPane.showOptionDialog(framePadre,
-		    "Está seguro que desea agregar esta línea al sistema?",
+		    "¿Está seguro que desea agregar esta línea al sistema?",
 		    "Confirmar alta de línea",
 		    JOptionPane.OK_CANCEL_OPTION,
 		    JOptionPane.QUESTION_MESSAGE,
