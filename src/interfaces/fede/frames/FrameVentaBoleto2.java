@@ -32,6 +32,8 @@ public class FrameVentaBoleto2 extends JFrame {
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 1280, 720);
+		
+		this.setLocationRelativeTo(null);
 	}
 	
 

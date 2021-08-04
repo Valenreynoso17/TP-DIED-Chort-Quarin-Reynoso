@@ -9,12 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import interfaces.fede.frames.FrameFlujoMaximo;
+import interfaces.fede.frames.FrameVentaBoleto;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.frames.MenuPrincipal;
 import interfaces.julio.frames.PageRank;
@@ -29,9 +30,11 @@ public class PanelMenuPrincipal extends JPanel{
 	private Dimension dimEstandar = new Dimension(350,40);
 	
 	private EstacionGestionar frameEstacionGestionar;
+	private VentanaGestionLineasDeTransporte frameLineaGestionar;
+	private FrameVentaBoleto frameVentaBoleto;
+	private FrameFlujoMaximo frameFlujoMaximo;
 	private PageRank framePageRank;
 	private ProximoMantenimiento frameProximoMantenimiento;	
-	private VentanaGestionLineasDeTransporte frameLineaGestionar;
 	
 	public PanelMenuPrincipal(MenuPrincipal frame) {
 		
@@ -83,6 +86,8 @@ public class PanelMenuPrincipal extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			
 			frame.dispose();
+			frameVentaBoleto = new FrameVentaBoleto();
+			frameVentaBoleto.setVisible(true);
 		}
 	});
 	c.gridy = 3;
@@ -93,7 +98,8 @@ public class PanelMenuPrincipal extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			
 			frame.dispose();
-			//frameEstacionGestionar = new EstacionGestionar();
+			frameFlujoMaximo = new FrameFlujoMaximo();
+			frameFlujoMaximo.setVisible(true);
 		}
 	});
 	button.setBorder(new LineBorder (Color.black, 1));

@@ -3,6 +3,8 @@ package interfaces.valen.paneles;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -12,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPintaTodo;
+import interfaces.julio.frames.MenuPrincipal;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 
@@ -58,7 +61,14 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		// Boton Cancelar
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		botonCancelar = new JButton("Cancelar");
+		botonCancelar = new JButton("Volver");
+		botonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.dispose();
+				new MenuPrincipal();
+			}
+		});
 		botonCancelar.setFocusable(false);
 		this.add(botonCancelar, gbc);
 

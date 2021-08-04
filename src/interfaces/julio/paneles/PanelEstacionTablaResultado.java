@@ -78,10 +78,10 @@ public class PanelEstacionTablaResultado extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
+		
 		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				System.out.println(miModelo.getDataVector().elementAt(tabla.getSelectedRow()));
-				
+			public void mouseReleased(MouseEvent e) {				
 				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
 				nroFilaSeleccionada = tabla.getSelectedRow();
 				botonEditar.setEnabled(true);
@@ -95,6 +95,7 @@ public class PanelEstacionTablaResultado extends JPanel{
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
+		tabla.setDefaultRenderer(Integer.class, centerRenderer); //Por alguna razon no lo toma sin esto
 		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;

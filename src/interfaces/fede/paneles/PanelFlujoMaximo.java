@@ -25,6 +25,7 @@ import gestores.GestorEstacion;
 import gestores.GestorRecorrido;
 import interfaces.fede.panelesGrafos.PanelGraficoFlujoMaximo;
 import interfaces.fede.panelesGrafos.PanelSeleccionOrigenDestino;
+import interfaces.julio.frames.MenuPrincipal;
 
 public class PanelFlujoMaximo extends JPanel {	
 	private GestorEstacion gestorEstaciones;
@@ -203,8 +204,12 @@ public class PanelFlujoMaximo extends JPanel {
 		gbc_txtFieldFlujoMaximo.gridy = 3;
 		add(txtFieldFlujoMaximo, gbc_txtFieldFlujoMaximo);
 		
-		JButton botonAtras = new JButton("  Atrás  ");
-		botonAtras.addActionListener(e -> getPadre().dispose());
+		JButton botonAtras = new JButton("  Volver  ");
+		botonAtras.addActionListener(e -> {
+			getPadre().dispose();
+			new MenuPrincipal();
+		});
+		//botonAtras.addActionListener(e -> getPadre().dispose());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.insets = new Insets(5, 20, 10, 5);
 		gbc_botonAtras.gridx = 0;

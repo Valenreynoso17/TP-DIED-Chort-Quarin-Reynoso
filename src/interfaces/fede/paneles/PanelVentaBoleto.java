@@ -17,6 +17,7 @@ import interfaces.fede.frames.FrameVentaBoleto;
 import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelSeleccionOrigenDestino;
+import interfaces.julio.frames.MenuPrincipal;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -145,8 +146,12 @@ public class PanelVentaBoleto extends JPanel {
 		gbc_scrollPane.gridheight = 2;
 		add(scrollPane, gbc_scrollPane);
 		
-		JButton botonAtras = new JButton("  Atrás  ");
-		botonAtras.addActionListener(e -> getPadre().dispose());
+		JButton botonAtras = new JButton("  Volver  ");
+		botonAtras.addActionListener(e -> {
+			getPadre().dispose();
+			new MenuPrincipal();
+		});
+		//botonAtras.addActionListener(e -> getPadre().dispose());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		//gbc_botonAtras.fill = GridBagConstraints.HORIZONTAL;
 		//gbc_botonAtras.anchor = GridBagConstraints.WEST;

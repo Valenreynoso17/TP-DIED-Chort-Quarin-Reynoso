@@ -9,10 +9,11 @@ public class VentanaGestionLineasDeTransporte extends JFrame{
 	PanelPrincipalGestionLineasDeTransporte panelPrincipal;
 	
 	public VentanaGestionLineasDeTransporte() {
+		super("Sistema de Gestión de Transporte Multimodal");
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1024, 600);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Gestión de líneas de transporte"); //super("Sistema de Gestión de Transporte Multimodal");
 		
 		panelPrincipal = new PanelPrincipalGestionLineasDeTransporte(this);
 		this.setContentPane(panelPrincipal);	

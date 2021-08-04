@@ -163,7 +163,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbc_panelTablaRecorridoExtendido.insets = new Insets(5, 5, 5, 5);
 		this.add(panelTablaRecorridoExtendido, gbc_panelTablaRecorridoExtendido);*/
 		
-		JButton botonAtras = new JButton("  Atrás  ");
+		JButton botonAtras = new JButton("  Volver  ");
 		botonAtras.addActionListener(e -> volverAtras());
 		GridBagConstraints gbc_botonAtras = new GridBagConstraints();
 		gbc_botonAtras.gridx = 0;

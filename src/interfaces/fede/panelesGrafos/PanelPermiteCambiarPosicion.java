@@ -119,7 +119,7 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 				}
 				if (!existeAlguna 
 						&& (botonInfo.getHitbox().contains(e.getPoint())) 
-						|| ((nuevaEstacion != null) && nuevaEstacion.getHitbox().contains(e.getPoint()))) existeAlguna = true;
+						|| (nuevaEstacion != null && nuevaEstacion.getHitbox().contains(e.getPoint()))) existeAlguna = true;
 				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
 			}
