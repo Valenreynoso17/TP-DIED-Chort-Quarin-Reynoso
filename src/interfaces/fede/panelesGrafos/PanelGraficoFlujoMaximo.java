@@ -15,6 +15,12 @@ public class PanelGraficoFlujoMaximo extends PanelSoloEntreOrigenDestino {
 	public PanelGraficoFlujoMaximo(List<Recorrido> recorridos) {
 		super(recorridos);
 		
+		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones por las que se puede pasar para ir desde la estacion origen a la estacion destino. Estas dos ultimas se resaltan en otro color.\n"
+									+ 	"- Presione una flecha para ver las líneas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+ 	"- Colores de flechas:\n"
+									+ 	"		Negra: varias lineas\n"
+									+ 	"		Otro color: unica linea. Se muestra su color\n";
+		
 		MouseListener[] listeners = this.getMouseListeners();
 		for (int i=0; i<listeners.length; i++) {
 			this.removeMouseListener(listeners[i]);
@@ -40,7 +46,7 @@ public class PanelGraficoFlujoMaximo extends PanelSoloEntreOrigenDestino {
 			}
 		});
 		
-	
+
 		
 	}
 }

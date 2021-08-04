@@ -10,8 +10,14 @@ import java.awt.Insets;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.border.StrokeBorder;
 import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.text.EditorKit;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledEditorKit;
 
 public class DialogLeyenda extends JDialog {
 	public DialogLeyenda(String descripcionVentana) {
@@ -24,23 +30,33 @@ public class DialogLeyenda extends JDialog {
 		GridBagLayout gbl = new GridBagLayout();
 		panel.setLayout(gbl);
 		
-		JTextArea txtArea = new JTextArea(descripcionVentana);
-		txtArea.setPreferredSize(new Dimension(250, 250));
-		txtArea.setMargin(new Insets(10, 10, 10, 10));
-		txtArea.setLineWrap(true);
-		txtArea.setWrapStyleWord(true);
-		txtArea.setOpaque(false);
-		txtArea.setBorder(
+		JTextPane textPane = new JTextPane();
+		//txtArea.setContentType("text/html");
+		textPane.setText(descripcionVentana);
+		textPane.setPreferredSize(new Dimension(270, 250));
+		textPane.setMargin(new Insets(10, 10, 10, 10));
+		
+		SimpleAttributeSet sa = new SimpleAttributeSet();
+		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
+		StyleConstants.setSpaceBelow(sa, 3);
+		//StyleConstants.setLeftIndent(sa, 10);
+
+		textPane.getStyledDocument().setParagraphAttributes(0,descripcionVentana.length(),sa,false);
+		
+		//txtArea.setLineWrap(true);
+		//txtArea.setWrapStyleWord(true);
+		textPane.setOpaque(false);
+		textPane.setBorder(
 				   javax.swing.BorderFactory.createCompoundBorder(
 				      javax.swing.BorderFactory.createStrokeBorder(new BasicStroke(1)),
-				      javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2)
+				      javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)
 				   )
 				);
-		txtArea.setEditable(false);
-		GridBagConstraints gbc_txtArea = new GridBagConstraints();
-		gbc_txtArea.gridx = 0;
-		gbc_txtArea.gridy = 0;
-		panel.add(txtArea, gbc_txtArea);
+		textPane.setEditable(false);
+		GridBagConstraints gbc_textPane = new GridBagConstraints();
+		gbc_textPane.gridx = 0;
+		gbc_textPane.gridy = 0;
+		panel.add(textPane, gbc_textPane);
 		
 		this.setContentPane(panel);
 	}
