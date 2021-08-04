@@ -54,4 +54,8 @@ public class Trayecto {
 		if (linea == null) throw new LineaNoAsociadaException("El trayecto no tiene su entidad linea asociada");
 		return linea.getNombre();
 	}
+	
+	public List<Ruta> getListaRutas(){
+		return rutas;
+	}
 }

@@ -2,9 +2,12 @@ package interfaces.valen.paneles;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,14 +17,18 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import clases.CustomColor;
+import clases.Estacion;
 import clases.LineaDeTransporte;
+import clases.Ruta;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
 import excepciones.NombreColorEnUsoException;
 import excepciones.RutaYaAgregadaException;
+import excepciones.TrayectoInvalidoException;
 import excepciones.TrayectoVacioException;
 import gestores.GestorLineaDeTransporte;
 import interfaces.fede.panelesGrafos.PanelGrafico;
+import interfaces.fede.panelesGrafos.PanelPintaTodo;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
@@ -42,7 +49,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 	public PanelPrincipalAltaLineaDeTransporte(VentanaAltaLineaDeTransporte frame) {
 		
 		this.frame = frame;
-		listaTrayecto = new ArrayList<ElementoListaTrayecto>();
+		listaTrayecto = new LinkedList<ElementoListaTrayecto>();
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -63,7 +70,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.gridheight = 3;
-		PanelGrafico panelGrafo = new PanelGrafico();
+		PanelPintaTodo panelGrafo = new PanelPintaTodo();
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
 		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
@@ -80,6 +87,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		this.add(panelRuta, gbc);
 		gbc.gridheight = 1;
 		
+		
 		// PanelTrayecto
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -91,6 +99,8 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		this.add(panelTrayecto, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
+		
+		gbc.insets = new Insets(5, 5, 5, 5);
 		
 		// Boton Cancelar
 		gbc.gridx = 0;
@@ -110,6 +120,8 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		botonSiguiente = new JButton("Siguiente");
 		botonSiguiente.addActionListener(e -> this.siguientePantalla());
 		this.add(botonSiguiente, gbc);
+		
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 	
 	public void actualizar() {
@@ -167,6 +179,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 			inputEsValida(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
 			nombreColorEnUso(panelAlta.getNombreLinea(), panelAlta.getColorLinea());
 			trayectoVacio();
+			trayectoValido();
 		
 			frame.setVisible(false);
 			new VentanaSiguienteAltaLineaDeTransporte(frame, panelAlta.getNombreLinea(), panelAlta.getEstadoLinea(), panelAlta.getColorLinea(), listaTrayecto);
@@ -198,6 +211,14 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 					  					  NCEUE.getMessage(),	
 					  					  "Error",
 					  					  JOptionPane.ERROR_MESSAGE);
+			
+		} catch (TrayectoInvalidoException TIE) {
+			
+			JOptionPane.showMessageDialog(frame,
+					  TIE.getMessage(),	
+					  "Error",
+					  JOptionPane.ERROR_MESSAGE);
+			
 		}
 			
 	}
@@ -229,6 +250,44 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 	
 	public void trayectoVacio() throws TrayectoVacioException{
 		if (listaTrayecto.isEmpty()) throw new TrayectoVacioException();
+	}
+	
+	public void trayectoValido() throws TrayectoInvalidoException {
+		
+		// verifica que no haya ciclos, que de una estacion salgan dos rutas ni que a una estacion insidan dos rutas
+		List<String> estacionesOrigenEnUso = new ArrayList<String>();
+		List<String> estacionesDestinoEnUso = new ArrayList<String>();
+		
+		for(ElementoListaTrayecto elem : listaTrayecto) {
+			if(estacionesOrigenEnUso.contains(elem.getEstacionOrigen())) {
+				throw new TrayectoInvalidoException("De una estación no pueden salir dos rutas de la misma línea.");
+			} else {
+				estacionesOrigenEnUso.add(elem.getEstacionOrigen());
+			}
+			
+			if(estacionesDestinoEnUso.contains(elem.getEstacionDestino())) {
+				throw new TrayectoInvalidoException("A una estación no pueden llegar dos rutas de la misma línea.");
+			} else {
+				estacionesDestinoEnUso.add(elem.getEstacionDestino());
+			}
+			
+			if(estacionesOrigenEnUso.contains(elem.getEstacionDestino()) && estacionesDestinoEnUso.contains(elem.getEstacionOrigen())) {
+				throw new TrayectoInvalidoException("El trayecto de la línea no puede tener ciclos.");
+			} else {
+				estacionesOrigenEnUso.add(elem.getEstacionOrigen());
+				estacionesDestinoEnUso.add(elem.getEstacionDestino());
+			}
+		}
+		
+		
+		for(int i = 0; i < listaTrayecto.size() - 1; i++) {
+			if(!(listaTrayecto.get(i).getEstacionDestino() == listaTrayecto.get(i+1).getEstacionOrigen())) {
+				throw new TrayectoInvalidoException("El trayecto de la línea debe ser conexo.");
+			}
+		}
+		
+		
+		
 	}
 	
 	public void nombreColorEnUso(String nomb, CustomColor col) throws NombreColorEnUsoException{

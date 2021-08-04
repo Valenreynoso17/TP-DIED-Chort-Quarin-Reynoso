@@ -24,6 +24,7 @@ import javax.swing.event.DocumentListener;
 
 import clases.CustomColor;
 import gestores.GestorColor;
+import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.valen.frames.VentanaGestionLineasDeTransporte;
 import interfaces.valen.otros.ColorPicker;
 import interfaces.valen.otros.ElementoListaGestionTransporte;
@@ -41,12 +42,14 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 	PanelGridListaGestionLineas panelGridLista;
 	JScrollPane panelScrollLista;
 	VentanaGestionLineasDeTransporte framePadre;
+	PanelPrincipalGestionLineasDeTransporte panelPadre;
 	GridBagConstraints gbc;
 	GestorColor gestorColor;
 	
-	public PanelListadoGestionLineas(VentanaGestionLineasDeTransporte frame) {
+	public PanelListadoGestionLineas(VentanaGestionLineasDeTransporte frame, PanelPrincipalGestionLineasDeTransporte panel) {
 		
 		framePadre = frame;
+		panelPadre = panel;
 		gestorColor = GestorColor.getInstance();
 		
 		this.setBorder(BorderFactory.createTitledBorder("Listado"));
@@ -112,7 +115,8 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		panelGridLista = new PanelGridListaGestionLineas(framePadre,this, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
 		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(panelScrollLista, gbc);
-
+		
+		panelPadre.actualizarPanelGrafico();
 	}
 	
 	public void cambiarColorPicker(CustomColor color) {
