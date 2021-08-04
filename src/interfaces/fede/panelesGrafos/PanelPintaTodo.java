@@ -15,6 +15,12 @@ import interfaces.fede.dialogs.DialogLeyenda;
 
 public class PanelPintaTodo extends PanelGrafico {
 	public PanelPintaTodo() {
+		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones y rutas cargadas en el sistema.\n"
+									+ 	"- Presione una flecha para ver las líneas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+ 	"- Colores de flechas:\n"
+									+ 	"		Negra: varias lineas\n"
+									+ 	"		Gris: la/as ruta/as se encuentra/an inactiva/as\n"
+									+ 	"		Otro color: unica linea. Se muestra su color\n";
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override

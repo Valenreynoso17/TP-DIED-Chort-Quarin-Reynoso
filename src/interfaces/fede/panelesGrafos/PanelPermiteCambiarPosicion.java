@@ -33,6 +33,15 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 		
 		anterioresPosiciones = new LinkedHashMap<>();
 		
+		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones y rutas cargadas en el sistema.\n"
+									+ 	"- Presione una flecha para ver las líneas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+	"- Mantega presionado el boton izquierdo del ratón sobre una estacion y arrastre para cambiar su posicion.\n"
+									+ 	"- Colores de flechas:\n"
+									+ 	"		Negra: varias lineas\n"
+									+ 	"		Gris: la/as ruta/as se encuentra/an inactiva/as\n"
+									+ 	"		Otro color: unica linea. Se muestra su color\n";
+		
+		
 		MouseListener[] listeners = this.getMouseListeners();
 		for (int i=0; i<listeners.length; i++) {
 			this.removeMouseListener(listeners[i]);
