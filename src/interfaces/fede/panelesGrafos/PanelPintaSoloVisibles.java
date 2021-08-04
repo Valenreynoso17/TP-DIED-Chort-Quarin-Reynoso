@@ -24,10 +24,10 @@ public class PanelPintaSoloVisibles extends PanelGrafico {
 		this.destino = destino;
 		
 		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones operativas y las rutas activas.\n"
-									+ 	"- Presione una flecha para ver las lineas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+ 	"- Presione una flecha para ver las líneas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
 									+ 	"- Colores de flechas:\n"
-									+ 	"    Negra: varias lineas\n"
-									+ 	"    Otro color: unica linea";
+									+ 	"		Negra: varias lineas\n"
+									+ 	"		Otro color: unica linea. Se muestra su color\n";
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override

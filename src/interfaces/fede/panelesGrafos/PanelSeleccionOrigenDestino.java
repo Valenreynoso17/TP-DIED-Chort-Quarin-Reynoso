@@ -17,6 +17,12 @@ public class PanelSeleccionOrigenDestino extends PanelPintaSoloVisibles {
 	public PanelSeleccionOrigenDestino() {
 		super(null, null);
 		
+		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones operativas y rutas activas.\n"
+									+ 	"- Presione una flecha para ver las líneas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+ 	"- Colores de flechas:\n"
+									+ 	"		Negra: varias lineas\n"
+									+ 	"		Otro color: unica linea. Se muestra su color\n";
+		
 	}
 	
 	
