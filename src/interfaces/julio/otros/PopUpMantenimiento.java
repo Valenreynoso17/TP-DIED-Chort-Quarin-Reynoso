@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,7 +46,7 @@ public class PopUpMantenimiento extends JFrame {
 	private LocalDate fechaHoy = LocalDate.now();
 
 	
-	public PopUpMantenimiento(PanelEstacionEditar frame){
+	public PopUpMantenimiento(PanelEstacionEditar frame, Vector filaSeleccionada){
 		super("Registrar tarea de mantenimiento");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 420);
@@ -161,7 +162,7 @@ public class PopUpMantenimiento extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 			
-				frame.seCreoMantenimiento();
+				frame.seCreoMantenimiento(filaSeleccionada, texto.getText());
 				dispose(); //TODO: Crear tupla de mantenimiento
 			}
 		});

@@ -20,11 +20,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
+import clases.Mantenimiento;
 import enums.EstadoEstacion;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
 import excepciones.NombreEstacionRepetidoException;
 import gestores.GestorEstacion;
+import gestores.GestorMantenimiento;
 import interfaces.julio.frames.EstacionEditar;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.otros.PopUpMantenimiento;
@@ -45,6 +47,7 @@ public class PanelEstacionEditar extends JPanel{
 	private JLabel label;
 	
 	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
+	private GestorMantenimiento gestorMantenimiento = GestorMantenimiento.getInstance();
 	
 	private EstacionGestionar frameAnterior;
 	private PopUpMantenimiento popUpMantenimiento;
@@ -82,7 +85,7 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridx = 0; c.gridy = 1;
 		this.add(label, c);
 		
-		nombre = new JTextField((String) filaSeleccionada.elementAt(1));
+		nombre = new JTextField(filaSeleccionada.elementAt(1).toString());
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1; c.gridy = 1;
 		c.gridwidth = 3;
@@ -147,20 +150,13 @@ public class PanelEstacionEditar extends JPanel{
 		this.add(label, c);
 		
 		field = new JTextField(filaSeleccionada.elementAt(4).toString());
-		if(filaSeleccionada.elementAt(4).toString().equals("OPERATIVA"))
-			estadoActual = EstadoEstacion.OPERATIVA;
-		else
-			estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
-		//field.setHighlighter(null);
-		//field.setEnabled(false);
+		estadoActual = EstadoEstacion.valueOf(filaSeleccionada.elementAt(4).toString());
 		field.setEditable(false);
-		//c.anchor = GridBagConstraints.CENTER;
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 1; c.gridy = 4;
 		c.weightx = 0.2;
 		c.gridwidth = 3;
 		this.add(field, c);
-		//c.weightx = 0.0;
 		c.gridwidth = 1;
 		
 		inicioMantenimiento = new JButton("Inicio de tarea de mantenimiento");
@@ -169,7 +165,7 @@ public class PanelEstacionEditar extends JPanel{
 		inicioMantenimiento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					
-					popUpMantenimiento = new PopUpMantenimiento(getFrame());						
+					popUpMantenimiento = new PopUpMantenimiento(getFrame(), filaSeleccionada);						
 				
 			}
 		});
@@ -198,13 +194,24 @@ public class PanelEstacionEditar extends JPanel{
 				options,  //the titles of buttons
 				options[0]); //default button title
 				
-				if(n == 1) {
-					System.out.println("Apretó finalizar");
+				if(n == 1) {				
 					finMantenimiento.setEnabled(false);
+						
 					estadoActual = EstadoEstacion.OPERATIVA;
-				}
-				else {
-					System.out.println("Apretó cancelar o cerró la ventana");
+					
+					for(Mantenimiento m : gestorMantenimiento.getMantenimientos()) {
+						if(m.getIdEstacion().equals((Integer) filaSeleccionada.elementAt(0)) && m.getFechaFin() == null) {
+							
+							gestorMantenimiento.modificarFechaFin(m, fechaHoy);
+						}
+					
+					}
+					
+					gestorEstacion.getEstacionPorId((Integer) filaSeleccionada.elementAt(0)).setEstado(estadoActual);;
+					
+					
+					
+					
 				}
 			}
 		});
@@ -236,23 +243,13 @@ public class PanelEstacionEditar extends JPanel{
 						
 						inputEstaVacia();
 						inputEsValida();
-						nombreEstaRepetido();
+						nombreEstaRepetido(filaSeleccionada);
 						
-						//
-						
-//						public void editarEstacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoEstacion estado) {
-//							
-//							Estacion e = gestorEstacion.getEstacionPorId(Integer.parseInt(id));
-//							
-//							e.editarse(nombre, horarioApertura, horarioCierre, estado);
-//							
-//						}
-						
-//						gestorEstacion.editarEstacion(filaSeleccionada.elementAt(0).toString(), 
-//													  nombre.getText(), 
-//													  LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())), 
-//													  LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText())), 
-//												      estadoActual);
+						gestorEstacion.editarEstacion(filaSeleccionada.elementAt(0).toString(), 
+													  nombre.getText(), 
+													  LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())), 
+													  LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText())), 
+												      estadoActual);
 						
 						frame.dispose();
 						frameAnterior = new EstacionGestionar();
@@ -324,11 +321,10 @@ public class PanelEstacionEditar extends JPanel{
 				throw new InputInvalidaException();
 	}
 	
-	public void nombreEstaRepetido() throws NombreEstacionRepetidoException{ 
+	public void nombreEstaRepetido(Vector filaSeleccionada) throws NombreEstacionRepetidoException{ 
 		
 		for(Estacion e : gestorEstacion.getEstaciones()) {
-			
-			if(e.getNombre().equals(nombre.getText()))
+			if(e.getNombre().equals(nombre.getText()) && !nombre.getText().equals(filaSeleccionada.elementAt(1)))
 				throw new NombreEstacionRepetidoException();
 		}
 	}
@@ -407,9 +403,14 @@ public class PanelEstacionEditar extends JPanel{
 		}
 	}
 	
-	public void seCreoMantenimiento() {
+	public void seCreoMantenimiento(Vector filaSeleccionada, String observaciones) {
 		inicioMantenimiento.setEnabled(false);
+		
 		estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
+		
+		gestorMantenimiento.agregarMantenimiento(fechaHoy, observaciones, (Integer) filaSeleccionada.elementAt(0));
+		
+		gestorEstacion.getEstacionPorId((Integer) filaSeleccionada.elementAt(0)).setEstado(estadoActual);;
 	}
 	
 	public PanelEstacionEditar getFrame() {

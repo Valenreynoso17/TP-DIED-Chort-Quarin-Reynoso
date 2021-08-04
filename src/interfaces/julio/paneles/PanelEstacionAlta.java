@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
+import enums.EstadoEstacion;
 import excepciones.InputInvalidaException;
 import excepciones.InputVacioException;
 import excepciones.NombreEstacionRepetidoException;
@@ -156,10 +157,10 @@ public class PanelEstacionAlta extends JPanel{
 						inputEsValida(); 
 						nombreEstaRepetido();
 						
-						Object[] futuraEstacion = new Object[] {nombre.getText(), 
-																LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())), 
-																LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText()))};
-						
+						Estacion futuraEstacion = gestorEstacion.crearEstacion(nombre.getText(),
+													LocalTime.of(Integer.parseInt(horaApertura.getText()), Integer.parseInt(minutoApertura.getText())),
+													LocalTime.of(Integer.parseInt(horaCierre.getText()), Integer.parseInt(minutoCierre.getText())),
+													EstadoEstacion.valueOf(comboBox.getSelectedItem().toString()));						
 						
 						frame.dispose();
 						frameSiguiente = new EstacionAltaGrafo(frame, futuraEstacion);

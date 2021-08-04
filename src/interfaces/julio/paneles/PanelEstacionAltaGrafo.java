@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import clases.Estacion;
+import enums.EstadoEstacion;
 import gestores.GestorEstacion;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.julio.frames.EstacionAlta;
@@ -28,15 +30,15 @@ public class PanelEstacionAltaGrafo extends JPanel{
 	private EstacionGestionar frameGestionar;
 	private PanelPermiteCambiarPosicion panelGrafo;
 	
-	public PanelEstacionAltaGrafo(EstacionAltaGrafo frame, EstacionAlta frameAnterior, Object[] futuraEstacion) {
+	public PanelEstacionAltaGrafo(EstacionAltaGrafo frame, EstacionAlta frameAnterior, Estacion futuraEstacion) {
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Colocar la nueva estación en el grafo"));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelGrafo = new PanelPermiteCambiarPosicion();
-		JScrollPane scrollPane = new JScrollPane(button);
+		panelGrafo = new PanelPermiteCambiarPosicion(futuraEstacion);
+		JScrollPane scrollPane = new JScrollPane(panelGrafo);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
@@ -56,6 +58,7 @@ public class PanelEstacionAltaGrafo extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				panelGrafo.cancelarCambios();
+				
 				frame.dispose();
 				frameAnterior.setVisible(true);
 			}
@@ -69,11 +72,10 @@ public class PanelEstacionAltaGrafo extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//TODO: Posicion
-				
-				gestorEstacion.agregarEstacion((String) futuraEstacion[0], (LocalTime) futuraEstacion[1], (LocalTime) futuraEstacion[2], null, getMousePosition());
+				gestorEstacion.agregarEstacion(futuraEstacion);
 				
 				panelGrafo.guardarCambios();
+				
 				frame.dispose();
 				frameGestionar = new EstacionGestionar();
 			}

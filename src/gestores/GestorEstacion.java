@@ -53,8 +53,25 @@ public class GestorEstacion {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
 	
-	public void agregarEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
-		estaciones.add(new Estacion(siguienteIdEstacion, n, hA, hC, ee));
+//	public void agregarEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
+//		Estacion e = new Estacion(siguienteIdEstacion, n, hA, hC, ee);
+//		estaciones.add(e);
+//		dao.insertar(e);
+//	}
+	
+	public void agregarEstacion(Estacion e) {
+		estaciones.add(e);
+		dao.insertar(e);
+	}
+	
+	public Estacion crearEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+		return new Estacion(siguienteIdEstacion, n, hA, hC, ee);
+	}
+	
+	public void eliminarEstacion(Integer id) {
+		Estacion e = this.getEstacionPorId(id);
+		estaciones.remove(e);
+		dao.eliminar(e);
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
@@ -158,6 +175,16 @@ public class GestorEstacion {
 	public Estacion clonarEstacion(Estacion e) {
 		Estacion nueva = new Estacion(e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), (Point) e.getPosicion().clone(), e.getEstado(), e.getMantenimientos());
 		return nueva;
+	}
+	
+	
+	public void editarEstacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoEstacion estado) {
+		
+		Estacion e = this.getEstacionPorId(Integer.parseInt(id));
+		
+		e.editarse(nombre, horarioApertura, horarioCierre, estado);
+		
+		dao.modificar(e);
 	}
 
 }

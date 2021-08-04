@@ -31,7 +31,19 @@ public class Estacion implements Dibujable, Cloneable {
 		this.nombre = n;
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
-		this.estado = EstadoEstacion.OPERATIVA;
+		this.estado = ee;
+		this.posicion = new Point();
+		this.posicion.x = 100; this.posicion.y = 100;
+		this.mantenimientos = new ArrayList<Mantenimiento>();
+		this.escala = 1.0f;
+	}
+	
+	public Estacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+		this.id = -1;
+		this.nombre = n;
+		this.horarioApertura = hA;
+		this.horarioCierre = hC;
+		this.estado = ee;
 		this.posicion = new Point();
 		this.posicion.x = 100; this.posicion.y = 100;
 		this.mantenimientos = new ArrayList<Mantenimiento>();

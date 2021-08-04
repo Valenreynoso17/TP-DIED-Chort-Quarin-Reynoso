@@ -30,7 +30,7 @@ public class PanelEstacionEditarGrafo extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelGrafo = new PanelPermiteCambiarPosicion();
+		panelGrafo = new PanelPermiteCambiarPosicion(null);
 		JScrollPane scrollPane = new JScrollPane(panelGrafo);
 		
 		c.fill = GridBagConstraints.BOTH;
