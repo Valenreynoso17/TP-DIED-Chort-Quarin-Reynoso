@@ -127,7 +127,7 @@ public class PanelEstacionAlta extends JPanel{
 		
 		comboBox = new JComboBox<String>();
 		comboBox.addItem("OPERATIVA");
-		comboBox.addItem("EN MANTENIMIENTO");
+		comboBox.addItem("EN_MANTENIMIENTO");
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 2; c.gridy = 3;
 		c.gridwidth = 3;

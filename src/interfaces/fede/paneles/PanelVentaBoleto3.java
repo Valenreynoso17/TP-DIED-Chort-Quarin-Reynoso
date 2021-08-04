@@ -29,7 +29,7 @@ public class PanelVentaBoleto3 extends JPanel {
 		gbc_panelDatos.insets = new Insets(5, 5, 5, 5);
 		this.add(panelDatos, gbc_panelDatos);
 		
-		JButton botonAtras = new JButton("  Atras  ");
+		JButton botonAtras = new JButton("  Volver  ");
 		botonAtras.addActionListener(e -> {
 			volverAtras();
 			}

@@ -14,13 +14,13 @@ public class DialogoColorPicker extends JDialog{
 	public DialogoColorPicker(JFrame parent, JPanel panel, boolean modal) {
 		super(parent, modal);
 		
-		this.setLocationRelativeTo(parent);
 		this.setBounds(200,200,700,500);
 		this.setTitle("Selector de color");
 		
 		panelPrincipal = new PanelPrincipalDialogoColorPicker(this, panel);
 		
 		this.setContentPane(panelPrincipal);
+		this.setLocationRelativeTo(parent);
 		this.setVisible(true);
 	}
 

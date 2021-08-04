@@ -47,6 +47,8 @@ public class PanelTablaAltaLinea extends JPanel{
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
+		tabla.setDefaultRenderer(Integer.class, centerRenderer);
+		tabla.setDefaultRenderer(Double.class, centerRenderer);
 		
 		panelScroll = new JScrollPane(tabla);
 		
