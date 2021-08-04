@@ -8,6 +8,6 @@ public interface LineaDeTransporteDAO {
 	public List<LineaDeTransporte> buscar();
 	public void eliminar(LineaDeTransporte lineaDetransporte);
 	public void insertar(LineaDeTransporte lineaDeTransporte);
-	public void modificar();
+	public void modificar(LineaDeTransporte lineaDeTransporte);
 	public Integer getUltimoIdLinea();
 }

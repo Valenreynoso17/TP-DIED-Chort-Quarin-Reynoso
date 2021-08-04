@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import clases.CustomColor;
 import clases.LineaDeTransporte;
 import dao.LineaDeTransporteDAO;
 import enums.EstadoLineaDeTransporte;
@@ -30,9 +33,11 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 	GridBagConstraints gbc;
 	LineaDeTransporte lineaDeTransporte;
 	String[] opcionesEstado = {"Activa", "No activa"};
+	VentanaEdicionLineaDeTransporte frame;
 	
 	public PanelDatosLineaDeTransporte(VentanaEdicionLineaDeTransporte frame, LineaDeTransporte lineaDeTransporte) {
 		
+		this.frame = frame;
 		this.lineaDeTransporte = lineaDeTransporte;
 		
 		this.setBorder(BorderFactory.createTitledBorder("Datos de la línea"));
@@ -50,7 +55,7 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		if (lineaDeTransporte.getEstado() == EstadoLineaDeTransporte.NO_ACTIVA) estado.setSelectedIndex(1);
 		
 		labelColor = new JLabel("Color:");
-		colorPicker = new ColorPicker(frame, new JPanel(), lineaDeTransporte.getColor());
+		colorPicker = new ColorPicker(frame, this, lineaDeTransporte.getColor());
 		
 		// Configuraciones gbc
 		gbc.anchor = GridBagConstraints.WEST;
@@ -78,5 +83,29 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		
 		gbc.gridx = 5;
 		this.add(colorPicker, gbc);
+	}
+	
+	public String getNuevoNombre() {
+		return this.nombreLinea.getText();
+	}
+	
+	public String getNuevoEstado() {
+		return (String) this.estado.getSelectedItem();
+	}
+	
+	public CustomColor getNuevoColor() {
+		return colorPicker.getColor();
+	}
+	
+	public void cambiarColorPicker(CustomColor color) {
+		this.remove(colorPicker);
+		
+		this.revalidate();
+    	this.repaint();
+    	
+    	gbc.gridx = 5;
+    	colorPicker = new ColorPicker(frame, this, color);
+    	
+    	this.add(colorPicker, gbc);
 	}
 }
