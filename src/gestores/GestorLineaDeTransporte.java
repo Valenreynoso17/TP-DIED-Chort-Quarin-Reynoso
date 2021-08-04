@@ -61,8 +61,14 @@ public class GestorLineaDeTransporte {
 	}
 	
 	public void borrarLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {
-		lineasDeTransporte.remove(lineaDeTransporte);
+		// Eliminar una linea de la bdd elimina tambien el trayecto asociado y las rutas asociadas
 		lineaDAO.eliminar(lineaDeTransporte);
+		
+		// Sin embargo la linea, el trayecto y las rutas siguen en el sistema
+		gestorTrayecto = GestorTrayecto.getInstance();
+		gestorTrayecto.eliminarTrayecto(lineaDeTransporte.getTrayecto());
+		lineasDeTransporte.remove(lineaDeTransporte);
+		
 	}
 	
 	public LineaDeTransporte buscarLineaPorId(Integer idLinea) {

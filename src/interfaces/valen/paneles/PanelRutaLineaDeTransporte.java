@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.SequenceInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -50,8 +53,8 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 	PanelPrincipalAltaLineaDeTransporte panelPadre;
 	VentanaAltaLineaDeTransporte frame;
 	GridBagConstraints gbc;
-	String[] opcionesEstaciones;
 	String[] opcionesEstado = {"Activa", "No activa"};
+	String[] opcionesEstaciones;
 	
 	public PanelRutaLineaDeTransporte(VentanaAltaLineaDeTransporte frame, PanelPrincipalAltaLineaDeTransporte panel, List<ElementoListaTrayecto> listaTrayecto) {
 		
@@ -310,7 +313,24 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 			
 			if(listaTrayecto.contains(unElemento)) throw new RutaYaAgregadaException();
 			
-			listaTrayecto.add(unElemento);
+			Boolean seInsertoEnLaLista = false;
+			Integer i = 0;
+			while(i < listaTrayecto.size() && !seInsertoEnLaLista) {
+				if(listaTrayecto.get(i).getEstacionOrigen() == unElemento.getEstacionDestino()) {
+					listaTrayecto.add(i, unElemento);
+					seInsertoEnLaLista = true;
+				}
+				if(listaTrayecto.get(i).getEstacionDestino() == unElemento.getEstacionOrigen()) {
+					listaTrayecto.add(i+1, unElemento);
+					seInsertoEnLaLista = true;
+				}
+				i++;
+			}
+			
+			if(!seInsertoEnLaLista) {
+				listaTrayecto.add(unElemento);
+			}
+			
 			panelPadre.actualizar();
 			
 		}catch (InputVacioException IVE) {
@@ -362,8 +382,27 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 			
 			if(listaTrayecto.contains(elementoAux)) throw new RutaYaAgregadaException();
 			
-			listaTrayecto.add(elementoAux);
+			Boolean seInsertoEnLaLista = false;
+			Integer i = 0;
+			while(i < listaTrayecto.size() && !seInsertoEnLaLista) {
+				if(listaTrayecto.get(i).getEstacionOrigen() == elementoAux.getEstacionDestino()) {
+					listaTrayecto.add(i, elementoAux);
+					seInsertoEnLaLista = true;
+				}
+				if(listaTrayecto.get(i).getEstacionDestino() == elementoAux.getEstacionOrigen()) {
+					listaTrayecto.add(i+1, elementoAux);
+					seInsertoEnLaLista = true;
+				}
+				i++;
+			}
+			
+			if(!seInsertoEnLaLista) {
+				listaTrayecto.add(elementoAux);
+			}
+			
+			
 			panelPadre.actualizar();
+			
 			
 		}catch (InputVacioException IVE) {
 		

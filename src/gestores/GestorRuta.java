@@ -130,5 +130,9 @@ public class GestorRuta {
 		rutaDAO.insertar(listaResultado);
 		return listaResultado;
 	}
+	
+	public void eliminarRutas(List<Ruta> rutasAEliminar) {
+		this.rutas.removeAll(rutasAEliminar);
+	}
 
 }

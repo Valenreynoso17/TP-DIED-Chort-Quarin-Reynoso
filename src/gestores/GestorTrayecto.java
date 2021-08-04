@@ -66,4 +66,10 @@ public class GestorTrayecto {
 		
 		return trayectoAux;
 	}
+	
+	public void eliminarTrayecto(Trayecto unTrayecto) {
+		GestorRuta gestorRuta = GestorRuta.getInstance();
+		gestorRuta.eliminarRutas(unTrayecto.getListaRutas());
+		this.listaTrayectos.remove(unTrayecto);
+	}
 }

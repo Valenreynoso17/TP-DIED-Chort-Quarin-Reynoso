@@ -43,4 +43,8 @@ public class LineaDeTransporte {
 		return this.getColor().getId();
 	}
 	
+	public Trayecto getTrayecto() {
+		return trayecto;
+	}
+	
 }
