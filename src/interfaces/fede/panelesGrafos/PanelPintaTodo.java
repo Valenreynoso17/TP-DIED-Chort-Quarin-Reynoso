@@ -11,21 +11,25 @@ import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
+import interfaces.fede.dialogs.DialogLeyenda;
 
 public class PanelPintaTodo extends PanelGrafico {
-	protected DialogInfoFlechaInactivosVisibles ventanaInfoFlecha;
 	public PanelPintaTodo() {
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
+				if (ventanaInfo == null || !ventanaInfo.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosVisibles(f);
-							ventanaInfoFlecha.setVisible(true);
+							ventanaInfo = new DialogInfoFlechaInactivosVisibles(f);
+							ventanaInfo.setVisible(true);
 						}
+					}
+					if (botonInfo.getHitbox().contains(e.getPoint())) {
+						ventanaInfo = new DialogLeyenda(descripcionPantalla);
+						ventanaInfo.setVisible(true);
 					}
 				}
 			}
@@ -42,6 +46,7 @@ public class PanelPintaTodo extends PanelGrafico {
 						break;
 					}
 				}
+				if (!existeAlguna && botonInfo.getHitbox().contains(e.getPoint())) existeAlguna = true;
 				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
 			}

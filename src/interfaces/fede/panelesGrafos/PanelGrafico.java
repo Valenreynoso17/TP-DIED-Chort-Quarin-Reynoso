@@ -8,8 +8,10 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import clases.BotonInfo;
 import clases.Dibujable;
 import clases.Estacion;
 import clases.Ruta;
@@ -18,15 +20,17 @@ import gestores.GestorFlecha;
 import gestores.GestorRuta;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
 
-public class PanelGrafico extends JPanel {
+public abstract class PanelGrafico extends JPanel {
 	protected Integer anchoVentana, altoVentana;
 	protected GestorEstacion gestorEstaciones;
 	protected GestorRuta gestorRutas;
 	protected GestorFlecha gestorFlechas;
 	protected static Integer radioEstaciones = 20;
-	protected DialogInfoFlechaInactivosNoVisibles ventanaInfoFlecha;
+	protected JDialog ventanaInfo;
 	protected List<Estacion> estaciones;
 	protected Integer margen = 10;
+	protected BotonInfo botonInfo;
+	protected String descripcionPantalla;
 
 	protected Float escala = 1.0f;
 	protected List<Dibujable> dibujables;
@@ -44,13 +48,14 @@ public class PanelGrafico extends JPanel {
 		gestorFlechas = new GestorFlecha();
 		
 		dibujables = new ArrayList<>();
+		botonInfo = new BotonInfo();
 		
 		Thread t1 = new Thread(() -> {
 			estaciones = gestorEstaciones.getEstaciones();
-			for (Estacion e : estaciones) {
-	 			synchronized (dibujables) {
-					dibujables.addAll(estaciones);
-				}
+			//for (Estacion e : estaciones) {
+	 		synchronized (dibujables) {
+				dibujables.addAll(estaciones);
+			//	}
 			}
 		});
 		Thread t2 = new Thread(() -> {
@@ -108,16 +113,16 @@ public class PanelGrafico extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarGrafo(g2d);
-		
+		botonInfo.dibujarse(g2d);
 
 	}
 	
-	protected void dibujarGrafo(Graphics2D g2d){
+	protected abstract void dibujarGrafo(Graphics2D g2d);/*{
 		for (Dibujable d : dibujables) {
 			d.dibujarse(g2d);
 			if (d instanceof Estacion) chequearPreferredSize((Estacion) d);
 		}
-	}
+	}*/
 	
 	protected void chequearPreferredSize(Estacion e) {
 		if (this.getPreferredSize().height <= e.getPosicion().y + radioEstaciones + margen) {
