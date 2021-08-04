@@ -34,6 +34,7 @@ import interfaces.fede.frames.FrameVentaBoleto2;
 import interfaces.fede.frames.FrameVentaBoleto3;
 import interfaces.fede.otros.ModeloTablaRecorridoExtendida;
 import interfaces.fede.otros.ModeloTablaRecorridos;
+import interfaces.fede.otros.RenderPrecios;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPermiteCambiarPosicion;
 import interfaces.fede.panelesGrafos.PanelPintaSoloVisibles;
@@ -57,7 +58,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWeights = new double[]{0.1, 0.8, 0.8, 0.1};
-		gbl.rowWeights = new double[]{0.1, 10.0, 0.1, 10.0, 0.1};
+		gbl.rowWeights = new double[]{0.1, 15.0, 0.1, 15.0, 0.1};
 		this.setLayout(gbl);
 		
 		List<Recorrido> recorridos = gestorRecorridos.getRecorridos(origen, destino);
@@ -70,7 +71,7 @@ public class PanelVentaBoleto2 extends JPanel {
 		gbc_spPanelGrafico.gridx = 2;
 		gbc_spPanelGrafico.gridy = 0;
 		gbc_spPanelGrafico.gridheight = 4;
-		gbc_spPanelGrafico.insets = new Insets(20, 10, 20, 10);
+		gbc_spPanelGrafico.insets = new Insets(20, 5, 20, 5);
 		gbc_spPanelGrafico.fill = GridBagConstraints.BOTH;
 		this.add(spPanelGrafico, gbc_spPanelGrafico);
 		
@@ -84,7 +85,9 @@ public class PanelVentaBoleto2 extends JPanel {
 		this.add(lblTablaRecorridos, gbc_lblTablaRecorridos);
 		
 		
-		JTable tablaRecorridos = new JTable(new ModeloTablaRecorridos(recorridos));
+		ModeloTablaRecorridos modeloTablaRecorrido = new ModeloTablaRecorridos(recorridos);
+		JTable tablaRecorridos = new JTable(modeloTablaRecorrido);
+		tablaRecorridos.setDefaultRenderer(Double.class, new RenderPrecios());
 		tablaRecorridos.setAutoCreateRowSorter(true);
 		tablaRecorridos.getTableHeader().setReorderingAllowed(false);
 		tablaRecorridos.setRowSelectionAllowed(true);

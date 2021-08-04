@@ -273,29 +273,34 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		
 	}
 	
-	public void actualizarPosicion(List<Estacion> estacion) {
+	@Override
+	public void actualizarPosicion(List<Estacion> estaciones) {
 		String modificacionEstacion = 	"UPDATE died.estacion "
 									+ 	"SET 	posicion_x = ?, "
 									+ 	"		posicion_y = ? "
 									+ 	"WHERE id = ?; ";
+		
+		String consulta = "";
+		
+		for (int i=0; i<estaciones.size(); i++) {
+			consulta += modificacionEstacion;
+		}
 		
 		Connection conn = null;
 		PreparedStatement st = null;
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+					
+			st = conn.prepareStatement(consulta);
 			
-			for (Estacion e : estacion) {
-				st = conn.prepareStatement(modificacionEstacion);
-				st.setInt(1, e.getPosicion().x);
-				st.setInt(2, e.getPosicion().y);	
-				st.setInt(3, e.getId());
-				st.executeUpdate();
-				st.close();
-				
+			for (int i=0; i<estaciones.size(); i++) {
+				st.setInt(1 + 3*i, estaciones.get(i).getPosicion().x);
+				st.setInt(2 + 3*i, estaciones.get(i).getPosicion().y);	
+				st.setInt(3 + 3*i, estaciones.get(i).getId());				
 			}
 			
-			
+			st.executeUpdate();
 		} 
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
