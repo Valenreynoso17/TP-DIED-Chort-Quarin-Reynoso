@@ -12,6 +12,7 @@ import dao.RutaDAO;
 import dao.RutaSQLImp;
 import enums.EstadoRuta;
 import interfaces.valen.otros.ElementoListaTrayecto;
+import interfaces.valen.paneles.ElementoListaEdicionLineaDeTransporte;
 
 public class GestorRuta {
 	private List<Ruta> rutas;
@@ -133,6 +134,25 @@ public class GestorRuta {
 	
 	public void eliminarRutas(List<Ruta> rutasAEliminar) {
 		this.rutas.removeAll(rutasAEliminar);
+	}
+	
+	public void editarRutas(List<ElementoListaEdicionLineaDeTransporte> listaElementos) {
+		Ruta rutaAEditar;
+		List<Ruta> listaRutasAEditar = new ArrayList<Ruta>();
+		
+		for(ElementoListaEdicionLineaDeTransporte unElemento : listaElementos) {
+			
+			rutaAEditar = unElemento.getRuta();
+			rutaAEditar.setDistancia(Integer.parseInt(unElemento.getDistancia()));
+			rutaAEditar.setDuracion(Integer.parseInt(unElemento.getDuracion()));
+			rutaAEditar.setCantMaxPasajeros(Integer.parseInt(unElemento.getCantMaxPasajeros()));
+			rutaAEditar.setEstado(unElemento.getEstado());
+			listaRutasAEditar.add(rutaAEditar);
+			
+		}
+		
+		rutaDAO.modificarRutas(listaRutasAEditar);
+		
 	}
 
 }

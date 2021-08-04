@@ -49,6 +49,14 @@ public class Ruta {
 		return destino;
 	}
 	
+	public String getStringOrigen() {
+		return origen.getNombre();
+	}
+	
+	public String getStringDestino() {
+		return destino.getNombre();
+	}
+	
 	public Double getCosto() {
 		return this.costo;
 	}
@@ -67,6 +75,10 @@ public class Ruta {
 	
 	public String getStringEstado() {
 		return this.estado.toString();
+	}
+	
+	public EstadoRuta getEstado() {
+		return this.estado;
 	}
 	
 	public Integer getIdEstacionOrigen() {
@@ -109,7 +121,6 @@ public class Ruta {
 		return null;
 	}
 
-	
 	// Para probar cositas. Hay que cambiarlo
 	public String getNombreLinea() throws TrayectoNoAsociadoException {
 		if (trayecto == null) throw new TrayectoNoAsociadoException("Esta ruta no tiene su entidad trayecto asociada");
@@ -134,6 +145,28 @@ public class Ruta {
 		
 		return null;
 	}
+
+	public void setDistancia(Integer distancia) {
+		this.distancia = distancia;
+	}
+
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
+
+	public void setCantMaxPasajeros(Integer cantMaxPasajeros) {
+		this.cantMaxPasajeros = cantMaxPasajeros;
+	}
+
+	public void setEstado(String estado) {
+		if(estado == "Activa") this.estado = EstadoRuta.ACTIVA;
+		else this.estado = EstadoRuta.NO_ACTIVA;
+	}
+
+	public void setCosto(double costo) {
+		this.costo = costo;
+	}
+	
 	
 
 	

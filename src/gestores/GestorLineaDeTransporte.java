@@ -11,6 +11,7 @@ import dao.LineaDeTransporteDAO;
 import dao.LineaDeTransporteSQLImp;
 import enums.EstadoLineaDeTransporte;
 import interfaces.valen.otros.ElementoListaTrayecto;
+import interfaces.valen.paneles.ElementoListaEdicionLineaDeTransporte;
 
 public class GestorLineaDeTransporte {
 
@@ -73,5 +74,19 @@ public class GestorLineaDeTransporte {
 	
 	public LineaDeTransporte buscarLineaPorId(Integer idLinea) {
 		return (lineasDeTransporte.stream().filter(lt -> lt.getId() == idLinea).findFirst()).get();
+	}
+	
+	public void editarLineaDeTransporte(LineaDeTransporte lineaDeTransporte, String nom, String est, CustomColor col, List<ElementoListaEdicionLineaDeTransporte> listaElementos) {
+		lineaDeTransporte.setNombre(nom);
+		lineaDeTransporte.setEstado(est);
+		lineaDeTransporte.setColor(col);
+		
+		Thread t1 = new Thread(() -> {
+			lineaDAO.modificar(lineaDeTransporte);
+		});
+		t1.run();
+		
+		GestorRuta gestorRuta = GestorRuta.getInstance();
+		gestorRuta.editarRutas(listaElementos);
 	}
 }

@@ -21,7 +21,7 @@ public class RutaSQLImp implements RutaDAO{
 	private GestorEstacion gestorEstacion;
 	
 	public RutaSQLImp() {
-		// TODO Cambiar datos si hace falta
+		
 		this.host = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
@@ -131,8 +131,52 @@ public class RutaSQLImp implements RutaDAO{
 	}
 
 	@Override
-	public void modificar() {
-		// TODO Auto-generated method stub
+	public void modificarRutas(List<Ruta> listaRutasAEditar) {
+		String modificarRuta = "UPDATE died.ruta "
+							 + "SET distancia = ?, duracion = ?, max_pasajeros = ?, estado = ?, costo = ?"
+							 + "WHERE id = ?; ";
+		String consulta = "";
+		
+		for (int i=0; i<listaRutasAEditar.size(); i++) {
+			consulta += modificarRuta;
+		}
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
+			conn.setAutoCommit(false);
+			
+			st = conn.prepareStatement(consulta);
+			
+			for (int i=0; i<listaRutasAEditar.size(); i++) {
+				st.setInt(1 + 6*i, listaRutasAEditar.get(i).getDistancia());
+				st.setInt(2 + 6*i, listaRutasAEditar.get(i).getDuracion());
+				st.setInt(3 + 6*i, listaRutasAEditar.get(i).getCantMaxPasajeros());
+				st.setString(4 + 6*i, listaRutasAEditar.get(i).getEstado().toString());
+				st.setDouble(5 + 6*i, listaRutasAEditar.get(i).getCosto());
+				st.setInt(6 + 6*i, listaRutasAEditar.get(i).getID());
+			}
+		
+			Integer val = st.executeUpdate();
+			conn.commit();
+		
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			} 
+		finally {
+			if (st != null) {try {st.close();} catch (Exception e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (Exception e) {e.printStackTrace();}}	
+		}
 		
 	}
 
