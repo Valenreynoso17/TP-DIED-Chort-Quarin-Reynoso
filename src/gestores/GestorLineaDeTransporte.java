@@ -55,9 +55,9 @@ public class GestorLineaDeTransporte {
 		gestorTrayecto = GestorTrayecto.getInstance();
 		Trayecto trayectoAux = gestorTrayecto.agregarNuevoTrayecto(siguienteIdLinea, listaTrayecto);
 		trayectoAux.asociarLinea(lineaAux);
+		lineaAux.asociarTrayecto(trayectoAux);
 		
 		siguienteIdLinea++;
-		
 	}
 	
 	public void borrarLineaDeTransporte(LineaDeTransporte lineaDeTransporte) {

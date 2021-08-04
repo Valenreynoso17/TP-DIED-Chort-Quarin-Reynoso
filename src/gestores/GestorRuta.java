@@ -114,10 +114,10 @@ public class GestorRuta {
 									EstadoRuta.ACTIVA, unElemento.getCosto());
 			} else {
 				rutaAux = new Ruta(siguienteIdRuta, idTrayecto,
-						gestorEstacion.getEstacionPorNombre(unElemento.getEstacionOrigen()),
-						gestorEstacion.getEstacionPorNombre(unElemento.getEstacionDestino()),
-						unElemento.getDistancia(), unElemento.getDuracion(), unElemento.getCantMaxPasajeros(),
-						EstadoRuta.NO_ACTIVA, unElemento.getCosto());
+									gestorEstacion.getEstacionPorNombre(unElemento.getEstacionOrigen()),
+									gestorEstacion.getEstacionPorNombre(unElemento.getEstacionDestino()),
+									unElemento.getDistancia(), unElemento.getDuracion(), unElemento.getCantMaxPasajeros(),
+									EstadoRuta.NO_ACTIVA, unElemento.getCosto());
 			}
 			
 			this.rutas.add(rutaAux);

@@ -47,4 +47,8 @@ public class LineaDeTransporte {
 		return trayecto;
 	}
 	
+	public void asociarTrayecto(Trayecto unTrayecto) {
+		this.trayecto = unTrayecto;
+	}
+	
 }
