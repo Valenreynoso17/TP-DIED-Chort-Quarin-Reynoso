@@ -8,18 +8,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import clases.Estacion;
-import clases.Recorrido;
+import clases.Mantenimiento;
 import enums.EstadoEstacion;
 
-public class EstacionPostgreSQLImpl implements EstacionDAO {
+public class MantenimientoPostgreSQLImpl implements MantenimientoDAO{
+	
 	private String host, port, usr, psw;
 	
-	public EstacionPostgreSQLImpl() {
+	public MantenimientoPostgreSQLImpl() {
 		this.host = "localhost";
 		this.port = "5432";
 		this.usr = "postgres";
@@ -27,11 +29,11 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	}
 
 	@Override
-	public List<Estacion> buscar() {
-		List<Estacion> estaciones = new ArrayList<>();
+	public List<Mantenimiento> buscar() {
+		List<Mantenimiento> mantenimientos = new ArrayList<>();
 		String consulta = "SELECT * "
-						+ "FROM died.estacion "
-						+ "ORDER BY 1"	;
+						+ "FROM died.mantenimiento "
+						+ "ORDER BY id"	;
 		
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -48,17 +50,18 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			
 			while(rs.next()) {				
 				Integer id = rs.getInt("id");
-				String nombre = rs.getString("nombre");
-				String estado = rs.getString("estado");
-				LocalTime horaApertura = rs.getTime("horarioapertura").toLocalTime();
-				LocalTime horaCierre = rs.getTime("horariocierre").toLocalTime();
-				Point posicion = new Point();
-				posicion.x = rs.getInt("posicion_x");
-				posicion.y = rs.getInt("posicion_y");
+				LocalDate fechaInicio = rs.getDate("fecha_inicio").toLocalDate();					
+				String nombre = rs.getString("observaciones");
+				Integer idEstacion = rs.getInt("id_estacion");
 				
-				// TODO falta agregarle que busque los mantenimientos
-				if (estado.equals("OPERATIVA")) estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.OPERATIVA, null));
-				else estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.EN_MANTENIMIENTO, null));
+				if(rs.getDate("fecha_fin") == null)
+					mantenimientos.add(new Mantenimiento(id, fechaInicio, nombre, idEstacion));
+				else {
+					LocalDate fechaFin = rs.getDate("fecha_fin").toLocalDate();
+					mantenimientos.add(new Mantenimiento(id, fechaInicio, fechaFin, nombre, idEstacion));
+				}
+				
+				//mantenimientos.add(new Mantenimiento(id, fechaInicio, fechaFin, nombre, idEstacion));
 			}
 			
 		} 
@@ -95,11 +98,11 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			}	
 		}
 		
-		return estaciones;
+		return mantenimientos;
 	}
 
 	@Override
-	public void eliminar(Estacion estacion) {
+	public void eliminar(Mantenimiento mantenimiento) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		
@@ -109,9 +112,9 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			conn.setAutoCommit(false);
 			
 			// Borrar una tupla de la tabla
-			st = conn.prepareStatement("DELETE FROM died.estacion " +
+			st = conn.prepareStatement("DELETE FROM died.mantenimiento " +
 									   "WHERE id = (?);");
-			st.setInt(1, estacion.getId());
+			st.setInt(1, mantenimiento.getId());
 			
 			Integer nro = st.executeUpdate();
 			conn.commit();
@@ -148,12 +151,12 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	}
 
 	@Override
-	public void insertar(Estacion estacion) {
+	public void insertar(Mantenimiento mantenimiento) {
 		//Tener en cuenta que copie y pegue de boleto
 		String obtenerID = 		"SELECT max(id)"
-							+ 	"FROM died.estacion;";
+							+ 	"FROM died.mantenimiento;";
 
-		String insercionEstacion = 	"INSERT INTO died.estacion "
+		String insercionEstacion = 	"INSERT INTO died.mantenimiento "
 								+ 	"VALUES (?, ?, ?, ?, ?);";
 		Integer id = null;
 		
@@ -178,10 +181,10 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			
 			st = conn.prepareStatement(insercionEstacion);
 			st.setInt(1, id);
-			st.setString(2, estacion.getNombre());
-			st.setString(3, estacion.getEstado().toString());
-			st.setTime(4, Time.valueOf(estacion.getHorarioApertura()));
-			st.setTime(5, Time.valueOf(estacion.getHorarioCierre()));	
+			st.setDate(2, Date.valueOf(mantenimiento.getFechaInicio()));
+			st.setString(3, mantenimiento.getObservaciones());
+			st.setInt(4, mantenimiento.getIdEstacion());
+			st.setDate(5, null);
 			st.executeUpdate();
 			
 		} 
@@ -221,13 +224,10 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 	}
 
 	@Override
-	public void modificar(Estacion estacion) {
+	public void modificar(Mantenimiento mantenimiento, LocalDate fF) {
 
-		String modificacionEstacion = 	"UPDATE died.estacion "
-									+ 	"SET 	nombre = ?, "
-									+ 	"		estado = ?, "
-									+ 	" 		horarioapertura = ?, "
-									+ 	"		horariocierre = ? "
+		String modificacionEstacion = 	"UPDATE died.mantenimiento "
+									+ 	"SET 	fecha_fin = ? "
 									+ 	"WHERE id = ?; ";
 		
 		Connection conn = null;
@@ -238,11 +238,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			
 			
 			st = conn.prepareStatement(modificacionEstacion);
-			st.setString(1, estacion.getNombre());
-			st.setString(2, estacion.getEstado().toString());
-			st.setTime(3, Time.valueOf(estacion.getHorarioApertura()));
-			st.setTime(4, Time.valueOf(estacion.getHorarioCierre()));	
-			st.setInt(5, estacion.getId());	
+			st.setDate(1, Date.valueOf(fF));
+			st.setInt(2, mantenimiento.getId());	
 			st.executeUpdate();
 			
 		} 
@@ -269,65 +266,14 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 					e.printStackTrace();
 				}
 			}	
-		}
+		}		
 		
 	}
-	
-	public void actualizarPosicion(List<Estacion> estacion) {
-		String modificacionEstacion = 	"UPDATE died.estacion "
-									+ 	"SET 	posicion_x = ?, "
-									+ 	"		posicion_y = ? "
-									+ 	"WHERE id = ?; ";
-		
-		Connection conn = null;
-		PreparedStatement st = null;
-		try {
-			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
-			
-			for (Estacion e : estacion) {
-				st = conn.prepareStatement(modificacionEstacion);
-				st.setInt(1, e.getPosicion().x);
-				st.setInt(2, e.getPosicion().y);	
-				st.setInt(3, e.getId());
-				st.executeUpdate();
-				st.close();
-				
-			}
-			
-			
-		} 
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		finally {
-			if (st != null) {
-				try {
-					st.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}	
-		}
-		
-	}
-	
+
 	@Override
-	public Integer getUltimoIdEstacion() {
+	public Integer getUltimoIdMantenimiento() {
 		String obtenerID = "SELECT max(id) "
-						+  "FROM died.estacion;";
+						+  "FROM died.mantenimiento;";
 		Integer id = null;
 		
 		Connection conn = null;
@@ -361,4 +307,5 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		return id;
 	}
 	
+
 }
