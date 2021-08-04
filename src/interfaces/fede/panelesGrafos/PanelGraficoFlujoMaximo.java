@@ -8,6 +8,7 @@ import java.util.List;
 import clases.Flecha;
 import clases.Recorrido;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
+import interfaces.fede.dialogs.DialogLeyenda;
 import interfaces.fede.otros.RenderInfoFlechaFlujoMaximo;
 
 public class PanelGraficoFlujoMaximo extends PanelSoloEntreOrigenDestino {
@@ -23,12 +24,17 @@ public class PanelGraficoFlujoMaximo extends PanelSoloEntreOrigenDestino {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
+				if (ventanaInfo == null || !ventanaInfo.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlechaFlujoMaximo<>());
-							ventanaInfoFlecha.setVisible(true);
+							ventanaInfo = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlechaFlujoMaximo<>());
+							ventanaInfo.setVisible(true);
 						}
+						
+					}
+					if (botonInfo.getHitbox().contains(e.getPoint())) {
+						ventanaInfo = new DialogLeyenda(descripcionPantalla);
+						ventanaInfo.setVisible(true);
 					}
 				}
 			}

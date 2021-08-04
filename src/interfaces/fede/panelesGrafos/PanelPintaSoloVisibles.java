@@ -11,6 +11,7 @@ import clases.Dibujable;
 import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosNoVisibles;
+import interfaces.fede.dialogs.DialogLeyenda;
 import interfaces.fede.otros.GamaColor;
 import interfaces.fede.otros.RenderInfoFlecha;
 
@@ -22,16 +23,25 @@ public class PanelPintaSoloVisibles extends PanelGrafico {
 		this.origen = origen;
 		this.destino = destino;
 		
+		this.descripcionPantalla = 		"- En esta pantalla se muestran todas las estaciones operativas y las rutas activas.\n"
+									+ 	"- Presione una flecha para ver las lineas que tienen ruta entre las estaciones y en la direccion de la flecha.\n"
+									+ 	"- Colores de flechas:\n"
+									+ 	"    Negra: varias lineas";
+		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
+				if (ventanaInfo == null || !ventanaInfo.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlecha<>());
-							ventanaInfoFlecha.setVisible(true);
+							ventanaInfo = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlecha<>());
+							ventanaInfo.setVisible(true);
 						}
+					}
+					if (botonInfo.getHitbox().contains(e.getPoint())) {
+						ventanaInfo = new DialogLeyenda(descripcionPantalla);
+						ventanaInfo.setVisible(true);
 					}
 				}
 			}
@@ -48,6 +58,7 @@ public class PanelPintaSoloVisibles extends PanelGrafico {
 						break;
 					}
 				}
+				if (!existeAlguna && botonInfo.getHitbox().contains(e.getPoint())) existeAlguna = true;
 				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				

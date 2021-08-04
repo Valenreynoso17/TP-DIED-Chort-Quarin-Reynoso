@@ -10,22 +10,24 @@ import java.awt.event.MouseMotionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import clases.Estacion;
 import clases.Flecha;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
+import interfaces.fede.dialogs.DialogLeyenda;
 
 
 
 public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
-	protected Estacion seleccionada;
+	protected Estacion seleccionada, nuevaEstacion;
 	protected Point puntoRelativoAgarre;
 	protected Map<Integer, Point> anterioresPosiciones;
 	
 	public PanelPermiteCambiarPosicion(Estacion nuevaEstacion) {
 		super();
 		if (nuevaEstacion != null) {
-			estaciones.add(nuevaEstacion);
+			this.nuevaEstacion = nuevaEstacion;
 			dibujables.add(nuevaEstacion);
 		}
 		
@@ -40,12 +42,16 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				List<Flecha> flechas = gestorFlechas.getFlechas();
-				if (ventanaInfoFlecha == null || !ventanaInfoFlecha.isVisible()) {
+				if (ventanaInfo == null || !ventanaInfo.isVisible()) {
 					for (Flecha f : flechas) {
 						if (f.getHitbox().contains(e.getPoint())) {
-							ventanaInfoFlecha = new DialogInfoFlechaInactivosVisibles(f);
-							ventanaInfoFlecha.setVisible(true);
+							ventanaInfo = new DialogInfoFlechaInactivosVisibles(f);
+							ventanaInfo.setVisible(true);
 						}
+					}
+					if (botonInfo.getHitbox().contains(e.getPoint())) {
+						ventanaInfo = new DialogLeyenda(descripcionPantalla);
+						ventanaInfo.setVisible(true);
 					}
 				}
 			}
@@ -60,6 +66,12 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 						
 						anterioresPosiciones.putIfAbsent(est.getId(), (Point) est.getPosicion().clone());
 					}
+				}
+				if (seleccionada == null && nuevaEstacion.getHitbox().contains(e.getPoint())) {
+					seleccionada = nuevaEstacion;
+					puntoRelativoAgarre = new Point(e.getPoint().x - nuevaEstacion.getPosicion().x, e.getPoint().y - nuevaEstacion.getPosicion().y);
+				
+					anterioresPosiciones.putIfAbsent(nuevaEstacion.getId(), (Point) nuevaEstacion.getPosicion().clone());
 				}
 			}
 			
@@ -96,6 +108,9 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 						}
 					}
 				}
+				if (!existeAlguna 
+						&& (botonInfo.getHitbox().contains(e.getPoint())) 
+						|| nuevaEstacion.getHitbox().contains(e.getPoint())) existeAlguna = true;
 				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
 			}
@@ -113,10 +128,12 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	}
 	
 	public void cancelarCambios() {
+		if (nuevaEstacion != null) anterioresPosiciones.remove(nuevaEstacion.getId());
 		gestorEstaciones.cancelarCambios(anterioresPosiciones);
 	}
 	
 	public void guardarCambios() {
-		gestorEstaciones.guardarCambios(anterioresPosiciones.keySet());
+		Set<Integer> setEstaciones = anterioresPosiciones.keySet();
+		gestorEstaciones.guardarCambios(setEstaciones);
 	}
 }
