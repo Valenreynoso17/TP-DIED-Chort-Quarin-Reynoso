@@ -273,6 +273,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 		
 	}
 	
+	@Override
 	public void actualizarPosicion(List<Estacion> estaciones) {
 		String modificacionEstacion = 	"UPDATE died.estacion "
 									+ 	"SET 	posicion_x = ?, "
