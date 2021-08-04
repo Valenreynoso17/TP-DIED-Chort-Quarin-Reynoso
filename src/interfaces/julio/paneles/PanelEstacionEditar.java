@@ -209,9 +209,6 @@ public class PanelEstacionEditar extends JPanel{
 					
 					gestorEstacion.getEstacionPorId((Integer) filaSeleccionada.elementAt(0)).setEstado(estadoActual);;
 					
-					
-					
-					
 				}
 			}
 		});
@@ -410,7 +407,7 @@ public class PanelEstacionEditar extends JPanel{
 		
 		gestorMantenimiento.agregarMantenimiento(fechaHoy, observaciones, (Integer) filaSeleccionada.elementAt(0));
 		
-		gestorEstacion.getEstacionPorId((Integer) filaSeleccionada.elementAt(0)).setEstado(estadoActual);;
+		gestorEstacion.cambiarEstadoEstacionPorId((Integer) filaSeleccionada.elementAt(0), estadoActual);
 	}
 	
 	public PanelEstacionEditar getFrame() {

@@ -70,8 +70,8 @@ public class GestorEstacion {
 	
 	public void eliminarEstacion(Integer id) {
 		Estacion e = this.getEstacionPorId(id);
-		estaciones.remove(e);
 		dao.eliminar(e);
+		estaciones.remove(e);
 	}
 	
 	public List<Estacion> getEstacionesOperativasAccesibles(Estacion estacion) throws SinEstacionesAccesiblesException {
@@ -183,6 +183,15 @@ public class GestorEstacion {
 		Estacion e = this.getEstacionPorId(Integer.parseInt(id));
 		
 		e.editarse(nombre, horarioApertura, horarioCierre, estado);
+		
+		dao.modificar(e);
+	}
+
+	public void cambiarEstadoEstacionPorId(Integer id, EstadoEstacion estadoActual) {
+		
+		Estacion e = this.getEstacionPorId(id);
+		
+		e.setEstado(estadoActual);
 		
 		dao.modificar(e);
 	}

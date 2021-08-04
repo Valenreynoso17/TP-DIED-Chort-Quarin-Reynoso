@@ -69,8 +69,6 @@ public class PopUpMantenimiento extends JFrame {
 		c.gridx = 0; c.gridy = 0;
 		contentPane.add(label, c);
 		
-		//c.anchor = GridBagConstraints.NONE;
-		
 		diaFechaInicio = new JTextField(((Integer) fechaHoy.getDayOfMonth()).toString());
 		diaFechaInicio.setEditable(false);
 		diaFechaInicio.setHorizontalAlignment(JTextField.CENTER);
@@ -126,8 +124,6 @@ public class PopUpMantenimiento extends JFrame {
 
 		contentPane.add(label, c);
 		
-		//c.anchor = GridBagConstraints.NONE;
-		
 		texto = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(texto);
 		texto.setLineWrap(true);
@@ -163,7 +159,7 @@ public class PopUpMantenimiento extends JFrame {
 			public void actionPerformed(ActionEvent e){
 			
 				frame.seCreoMantenimiento(filaSeleccionada, texto.getText());
-				dispose(); //TODO: Crear tupla de mantenimiento
+				dispose(); 
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

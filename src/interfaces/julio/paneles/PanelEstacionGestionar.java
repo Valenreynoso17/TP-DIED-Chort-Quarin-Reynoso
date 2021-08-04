@@ -29,8 +29,8 @@ public class PanelEstacionGestionar extends JPanel{
 	private JLabel label;
 	private JButton button;
 	private JTextField field;
-	private JPanel panelBusqueda;
-	//private JTable tabla;
+	private PanelEstacionBusqueda panelBusqueda;
+	private PanelEstacionTablaResultado panelTabla;
 	
 	private EstacionAlta frameAlta;
 	private MenuPrincipal frameAnterior;
@@ -43,27 +43,25 @@ public class PanelEstacionGestionar extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelBusqueda = new PanelEstacionBusqueda();
+		panelTabla = new PanelEstacionTablaResultado(frame);
 		c.fill = GridBagConstraints.BOTH;
-		//c.gridwidth = GridBagConstraints.BOTH;
-		c.gridheight = 1;
-		c.gridwidth = 3;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weighty = 0.1;
-		this.add(panelBusqueda, c);
-		c.fill = GridBagConstraints.NONE;
-		c.gridwidth = GridBagConstraints.NONE;
-		
-		panelBusqueda = new PanelEstacionTablaResultado(frame);
-		c.fill = GridBagConstraints.BOTH;
-		//c.gridwidth = GridBagConstraints.BOTH;
 		c.gridheight = 1;
 		c.gridwidth = 3;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weighty = 1;
 		c.weightx = 1;
+		this.add(panelTabla, c);
+		c.fill = GridBagConstraints.NONE;
+		c.gridwidth = GridBagConstraints.NONE;
+		
+		panelBusqueda = new PanelEstacionBusqueda(panelTabla);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridheight = 1;
+		c.gridwidth = 3;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weighty = 0.1;
 		this.add(panelBusqueda, c);
 		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = GridBagConstraints.NONE;

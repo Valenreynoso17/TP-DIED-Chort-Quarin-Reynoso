@@ -67,7 +67,7 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 						anterioresPosiciones.putIfAbsent(est.getId(), (Point) est.getPosicion().clone());
 					}
 				}
-				if (seleccionada == null && nuevaEstacion.getHitbox().contains(e.getPoint())) {
+				if (seleccionada == null && nuevaEstacion != null && nuevaEstacion.getHitbox().contains(e.getPoint())) {
 					seleccionada = nuevaEstacion;
 					puntoRelativoAgarre = new Point(e.getPoint().x - nuevaEstacion.getPosicion().x, e.getPoint().y - nuevaEstacion.getPosicion().y);
 				
@@ -110,7 +110,7 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 				}
 				if (!existeAlguna 
 						&& (botonInfo.getHitbox().contains(e.getPoint())) 
-						|| nuevaEstacion.getHitbox().contains(e.getPoint())) existeAlguna = true;
+						|| ((nuevaEstacion != null) && nuevaEstacion.getHitbox().contains(e.getPoint()))) existeAlguna = true;
 				if (existeAlguna) setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				else setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
 			}

@@ -8,9 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.time.LocalTime;
+import java.util.List;
 import java.util.Vector;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,29 +21,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import clases.Estacion;
-import enums.EstadoEstacion;
 import gestores.GestorEstacion;
 import interfaces.julio.frames.EstacionEditar;
 import interfaces.julio.frames.EstacionEditarGrafo;
 import interfaces.julio.frames.EstacionGestionar;
 import interfaces.julio.otros.ModeloTabla;
-import interfaces.valen.paneles.PanelGridListaGestionLineas;
 
-public class PanelEstacionTablaResultado extends JPanel /*implements DocumentListener*/{
+public class PanelEstacionTablaResultado extends JPanel{
 
 	private JLabel label;
 	private JButton botonEditar, botonBorrar, botonEditarGrafo;
 	private JTextField field;
 	private JPanel panelBusqueda;
 	private JTable tabla;
+	private ModeloTabla miModelo;
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -50,6 +47,8 @@ public class PanelEstacionTablaResultado extends JPanel /*implements DocumentLis
 	
 	private EstacionEditar frameEdicion;
 	private EstacionEditarGrafo frameEditarGrafo;
+	
+	Predicate<Estacion> filtroId, filtroNombre, filtroHoraApertura, filtroMinutoApertura, filtroHoraCierre, filtroMinutoCierre;
 	
 	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 	
@@ -60,7 +59,10 @@ public class PanelEstacionTablaResultado extends JPanel /*implements DocumentLis
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		ModeloTabla miModelo = new ModeloTabla();
+		miModelo = new ModeloTabla();
+		
+		miModelo.addColumn("Id"); miModelo.addColumn("Nombre"); miModelo.addColumn("Hora de apertura"); miModelo.addColumn("Hora de cierre"); miModelo.addColumn("Estado");
+		
 		cargarModelo(miModelo);
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
@@ -140,18 +142,15 @@ public class PanelEstacionTablaResultado extends JPanel /*implements DocumentLis
 				options,  //the titles of buttons
 				options[0]); //default button title
 				
-				if(n == 1) {
-					System.out.println("Apretó borrar");
+				if(n == 1) { //Apreta "borrar"					
+					gestorEstacion.eliminarEstacion((Integer) filaSeleccionada.elementAt(0));
+					
 					miModelo.removeRow(nroFilaSeleccionada);
 					filaSeleccionada = null;
 					botonEditar.setEnabled(false);
 					botonBorrar.setEnabled(false);
 				}
-				else {
-					System.out.println("Apretó cancelar o cerró la ventana");
-				}
 			}
-//			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 1;
@@ -172,44 +171,37 @@ public class PanelEstacionTablaResultado extends JPanel /*implements DocumentLis
 		this.add(botonEditarGrafo, c);
 	}
 	
-//	public void actualizarPanelGridLista() {
-//		this.remove(panelGridLista);
-//    	this.remove(panelScrollLista);
-//    	
-//    	this.revalidate();
-//    	this.repaint();
-//    	
-//    	gbc.weightx = 1.0;
-//		gbc.weighty = 1.0;
-//		gbc.fill = GridBagConstraints.BOTH;
-//		panelGridLista = new PanelGridListaGestionLineas(framePadre,this, checkBoxActiva.isSelected(), checkBoxNoActiva.isSelected(), textoBusqueda.getText(), colorPicker.getColor());		
-//		panelScrollLista = new JScrollPane(panelGridLista, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//		this.add(panelScrollLista, gbc);
-//
-//	}
-	
-//	@Override
-//	public void insertUpdate(DocumentEvent e) {
-//		this.actualizarPanelGridLista();
-//	}
-//
-//	@Override
-//	public void removeUpdate(DocumentEvent e) {
-//		this.actualizarPanelGridLista();
-//	}
-//
-//	@Override
-//	public void changedUpdate(DocumentEvent e) {
-//		this.actualizarPanelGridLista();
-//	}
+	public void actualizarTabla(String[] campos) {
+				
+		miModelo.setRowCount(0); //Elimino todas las filas de la tabla
+		
+		filtroId = (campos[0] == null) ? e -> true : e -> e.getId().toString().contains(campos[0]);
+		
+		filtroNombre = (campos[1] == null) ? e -> true : e -> e.getNombre().toUpperCase().contains(campos[1].toUpperCase()); 
+		
+		filtroHoraApertura = (campos[2] == null) ? e -> true : e -> e.getHorarioApertura().getHour() == (Integer.parseInt(campos[2]));
+		
+		filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> e.getHorarioApertura().getMinute() == (Integer.parseInt(campos[3]));
+		
+		filtroHoraCierre = (campos[4] == null) ? e -> true : e -> e.getHorarioCierre().getHour() == (Integer.parseInt(campos[4]));
+		
+		filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> e.getHorarioCierre().getMinute() == (Integer.parseInt(campos[5])); 
+		
+		List<Estacion> estaciones = gestorEstacion.getEstaciones().stream().filter(filtroId)
+																		   .filter(filtroNombre)
+																		   .filter(filtroHoraApertura)
+																		   .filter(filtroMinutoApertura)
+																		   .filter(filtroHoraCierre)
+																		   .filter(filtroMinutoCierre)
+																		   .collect(Collectors.toList());
+		
+		for(Estacion e : estaciones) {
+			miModelo.addRow(new Object[] {e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), e.getEstado()});
+		}
+		
+	}
 
 	public void cargarModelo(ModeloTabla miModelo) {
-	
-	miModelo.addColumn("Id");
-	miModelo.addColumn("Nombre");
-	miModelo.addColumn("Hora de apertura");
-	miModelo.addColumn("Hora de cierre");
-	miModelo.addColumn("Estado");
 	
 	for(Estacion e : gestorEstacion.getEstaciones()) {
 		miModelo.addRow(new Object[] {e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), e.getEstado()});

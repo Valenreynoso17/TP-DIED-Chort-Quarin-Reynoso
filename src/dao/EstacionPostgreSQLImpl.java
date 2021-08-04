@@ -108,10 +108,22 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
-			// Borrar una tupla de la tabla
-			st = conn.prepareStatement("DELETE FROM died.estacion " +
-									   "WHERE id = (?);");
+			// Borrar una tupla de la tabla implica borrar todas las instancias que la tengan como clave foránea
+			st = conn.prepareStatement( "DELETE FROM died.ruta " +
+										"WHERE id_estacion_origen = (?) OR id_estacion_destino = (?);" +
+	   				   					"DELETE FROM died.recorrido " +
+	   				   					"WHERE id_estacion_origen = (?) OR id_estacion_destino = (?);" +
+	   				   					"DELETE FROM died.mantenimiento " +
+					   				    "WHERE id_estacion = (?);" +
+									    "DELETE FROM died.estacion " +
+									    "WHERE id = (?);");
+			
 			st.setInt(1, estacion.getId());
+			st.setInt(2, estacion.getId());
+			st.setInt(3, estacion.getId());
+			st.setInt(4, estacion.getId());
+			st.setInt(5, estacion.getId());
+			st.setInt(6, estacion.getId());
 			
 			Integer nro = st.executeUpdate();
 			conn.commit();
