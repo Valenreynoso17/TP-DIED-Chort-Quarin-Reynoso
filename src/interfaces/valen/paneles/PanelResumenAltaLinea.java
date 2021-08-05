@@ -9,6 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import interfaces.valen.frames.VentanaSiguienteAltaLineaDeTransporte;
 import interfaces.valen.otros.ColorPicker;
@@ -21,7 +23,7 @@ public class PanelResumenAltaLinea extends JPanel{
 	
 	public PanelResumenAltaLinea(VentanaSiguienteAltaLineaDeTransporte frame, String nomLinea, String estadoLinea, Color colorLinea) {
 		
-		this.setBorder(BorderFactory.createTitledBorder("Resumen - Alta de línea"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Resumen - Alta de línea"));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		

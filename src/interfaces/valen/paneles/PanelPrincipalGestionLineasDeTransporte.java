@@ -1,18 +1,18 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
-import interfaces.fede.panelesGrafos.PanelGrafico;
 import interfaces.fede.panelesGrafos.PanelPintaTodo;
 import interfaces.julio.frames.MenuPrincipal;
 import interfaces.valen.frames.VentanaAltaLineaDeTransporte;
@@ -50,7 +50,7 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		gbc.weighty = 0.95;
 		panelGrafo = new PanelPintaTodo();
 		panelScrollGrafo = new JScrollPane(panelGrafo);
-		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
+		panelScrollGrafo.setBorder(new TitledBorder (new LineBorder (Color.black, 1),"Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
@@ -99,7 +99,7 @@ public class PanelPrincipalGestionLineasDeTransporte extends JPanel{
 		gbc.weighty = 0.95;
 		panelGrafo = new PanelPintaTodo();
 		panelScrollGrafo = new JScrollPane(panelGrafo);
-		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
+		panelScrollGrafo.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;

@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.CustomColor;
 import gestores.GestorColor;
@@ -40,7 +42,7 @@ public class PanelPrincipalDialogoColorPicker extends JPanel{
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		panelColores = new JPanel();
-		panelColores.setBorder(BorderFactory.createTitledBorder("Elige un color:"));
+		panelColores.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Elige un color:"));
 		
 		for(CustomColor color : gestorColor.getColores()) {
 			ElementoDialogoColorPicker elemAux = new ElementoDialogoColorPicker(color, dialogoPadre, panel);

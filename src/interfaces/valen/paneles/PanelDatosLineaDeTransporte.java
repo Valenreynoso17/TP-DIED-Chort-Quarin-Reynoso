@@ -14,6 +14,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.CustomColor;
 import clases.LineaDeTransporte;
@@ -40,7 +42,7 @@ public class PanelDatosLineaDeTransporte extends JPanel{
 		this.frame = frame;
 		this.lineaDeTransporte = lineaDeTransporte;
 		
-		this.setBorder(BorderFactory.createTitledBorder("Datos de la línea"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Datos de la línea"));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		

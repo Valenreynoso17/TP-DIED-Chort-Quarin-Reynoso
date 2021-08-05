@@ -1,5 +1,6 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.CustomColor;
 import clases.LineaDeTransporte;
@@ -60,7 +63,7 @@ public class PanelPrincipalEdicionLineaDeTransporte extends JPanel{
 		
 		panelDatosTrayecto = new PanelDatosTrayectoLineaDeTransporte(lineaDeTransporte);
 		JScrollPane panelScrollDatosTrayecto = new JScrollPane(panelDatosTrayecto, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panelScrollDatosTrayecto.setBorder(BorderFactory.createTitledBorder("Datos del trayecto"));
+		panelScrollDatosTrayecto.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Datos del trayecto"));
 		this.add(panelScrollDatosTrayecto, gbc);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weighty = 0.0;

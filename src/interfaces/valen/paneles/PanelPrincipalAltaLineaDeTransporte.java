@@ -1,5 +1,6 @@
 package interfaces.valen.paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.CustomColor;
 import clases.Estacion;
@@ -72,7 +75,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.gridheight = 3;
 		PanelPintaTodo panelGrafo = new PanelPintaTodo();
 		JScrollPane panelScrollGrafo = new JScrollPane(panelGrafo);
-		panelScrollGrafo.setBorder(BorderFactory.createTitledBorder("Líneas de transporte"));
+		panelScrollGrafo.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Líneas de transporte"));
 		this.add(panelScrollGrafo, gbc);
 		gbc.gridheight = 1;
 		gbc.weightx = 0.0;
