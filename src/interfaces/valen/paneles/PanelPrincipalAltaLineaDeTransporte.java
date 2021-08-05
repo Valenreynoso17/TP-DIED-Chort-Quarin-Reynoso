@@ -111,8 +111,7 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		gbc.weightx = 0.0;
 		gbc.weighty = 0.0;
 		botonCancelar = new JButton("Cancelar");
-		botonCancelar.addActionListener(e -> {frame.dispose();
-											  new VentanaGestionLineasDeTransporte();});
+		botonCancelar.addActionListener(e -> this.cancelar());
 		this.add(botonCancelar, gbc);
 		
 		// Boton Siguiente
@@ -172,6 +171,26 @@ public class PanelPrincipalAltaLineaDeTransporte extends JPanel{
 		panelRuta = new PanelRutaLineaDeTransporte(frame, this, listaTrayecto, unElemento);
 		this.add(panelRuta, gbc);
 		gbc.gridheight = 1;
+	}
+	
+	public void cancelar() {
+		//Custom JOptionPane
+				Object[] options = {"No",
+				                    "Si"};
+				int n = JOptionPane.showOptionDialog(frame,
+												     "¿Está seguro que desea cancelar el alta? \n" +
+												     "Todos los cambios realizados se perderán.",
+												     "Cancelar alta de línea",
+												     JOptionPane.YES_NO_OPTION,
+												     JOptionPane.QUESTION_MESSAGE,
+												     null,
+												     options,
+												     options[0]);
+				
+				if(n == JOptionPane.NO_OPTION){
+					frame.dispose();
+					 new VentanaGestionLineasDeTransporte();
+				}
 	}
 	
 	public void siguientePantalla() {

@@ -17,15 +17,9 @@ import enums.EstadoRuta;
 import gestores.GestorEstacion;
 
 public class RutaSQLImp implements RutaDAO{
-	private String host, port, usr, psw;
 	private GestorEstacion gestorEstacion;
 	
 	public RutaSQLImp() {
-		
-		this.host = "localhost";
-		this.port = "5432";
-		this.usr = "postgres";
-		this.psw = "ChortQuarinReynoso";
 		
 		gestorEstacion = GestorEstacion.getInstance();
 	}

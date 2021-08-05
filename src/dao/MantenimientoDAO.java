@@ -5,7 +5,7 @@ import java.util.List;
 
 import clases.Mantenimiento;
 
-public interface MantenimientoDAO {
+public interface MantenimientoDAO extends DAO{
 	public List<Mantenimiento> buscar();
 	public void eliminar(Mantenimiento mantenimiento);
 	public void insertar(Mantenimiento mantenimiento) ;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import clases.Ruta;
 
-public interface RutaDAO {
+public interface RutaDAO extends DAO{
 	public List<Ruta> buscar();
 	public void eliminar();
 	public void insertar(List<Ruta> ruta);

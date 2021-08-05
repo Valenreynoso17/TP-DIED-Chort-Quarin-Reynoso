@@ -13,14 +13,6 @@ import clases.Recorrido;
 import clases.Ruta;
 
 public class BoletoPostgreSQLImpl implements BoletoDAO {
-	private String ip, port, usr, psw;
-	
-	public BoletoPostgreSQLImpl() {
-		this.ip = "localhost";
-		this.port = "5432";
-		this.usr = "postgres";
-		this.psw = "ChortQuarinReynoso";
-	}
 
 	@Override
 	public void eliminar() {
@@ -47,7 +39,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		try {
 			// TODO Falta cargar la relacion con ruta
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(obtenerID);
@@ -140,7 +132,7 @@ public class BoletoPostgreSQLImpl implements BoletoDAO {
 		ResultSet rs = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ ip + ":" + port + "/", usr, psw);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(obtenerID);
