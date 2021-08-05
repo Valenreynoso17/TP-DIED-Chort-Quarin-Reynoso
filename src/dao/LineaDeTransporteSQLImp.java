@@ -19,10 +19,6 @@ import gestores.GestorTrayecto;
 
 public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
-	String host = "localhost";
-	String port = "5432";
-	String usr = "postgres";
-	String pass = "ChortQuarinReynoso";
 	GestorColor gestorColor;
 	GestorTrayecto gestorTrayecto;
 	
@@ -41,7 +37,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 		ResultSet rs = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 //			conn.setAutoCommit(false);
 			
 			// Consulta para obtener todas las lineas de trayecto
@@ -78,7 +74,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			// Borrar una tupla de la tabla
@@ -116,7 +112,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			st = conn.prepareStatement(consulta);
@@ -155,7 +151,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			st = conn.prepareStatement(consulta);
@@ -195,7 +191,7 @@ public class LineaDeTransporteSQLImp implements LineaDeTransporteDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente a la siguiente lineaDeTransporte
 			st = conn.prepareStatement(obtenerID);

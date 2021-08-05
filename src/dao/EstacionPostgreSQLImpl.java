@@ -17,14 +17,6 @@ import clases.Recorrido;
 import enums.EstadoEstacion;
 
 public class EstacionPostgreSQLImpl implements EstacionDAO {
-	private String host, port, usr, psw;
-	
-	public EstacionPostgreSQLImpl() {
-		this.host = "localhost";
-		this.port = "5432";
-		this.usr = "postgres";
-		this.psw = "ChortQuarinReynoso";
-	}
 
 	@Override
 	public List<Estacion> buscar() {

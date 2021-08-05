@@ -15,10 +15,6 @@ import gestores.GestorRuta;
 
 public class TrayectoSQLImp implements TrayectoDAO{
 	
-	String host = "localhost";
-	String port = "5432";
-	String usr = "postgres";
-	String pass = "ChortQuarinReynoso";
 	GestorRuta gestorRutas;
 	
 	public TrayectoSQLImp() {
@@ -36,7 +32,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			// Consulta para obtener todos los trayectos
@@ -86,7 +82,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			st = conn.prepareStatement(consulta);
@@ -133,7 +129,7 @@ public class TrayectoSQLImp implements TrayectoDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
 			// Se realiza una consulta para encontrar el id correspondiente al siguiente trayecto
 			st = conn.prepareStatement(obtenerID);

@@ -68,7 +68,7 @@ public class PanelBotonesEdicionLinea extends JPanel{
 		int n = JOptionPane.showOptionDialog(frame,
 										     "¿Está seguro que desea cancelar la edición? \n" +
 										     "Todos los cambios realizados se perderán.",
-										     "Confirmar edición de línea",
+										     "Cancelar edición de línea",
 										     JOptionPane.YES_NO_OPTION,
 										     JOptionPane.QUESTION_MESSAGE,
 										     null,

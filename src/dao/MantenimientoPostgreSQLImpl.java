@@ -18,15 +18,6 @@ import clases.Mantenimiento;
 import enums.EstadoEstacion;
 
 public class MantenimientoPostgreSQLImpl implements MantenimientoDAO{
-	
-	private String host, port, usr, psw;
-	
-	public MantenimientoPostgreSQLImpl() {
-		this.host = "localhost";
-		this.port = "5432";
-		this.usr = "postgres";
-		this.psw = "ChortQuarinReynoso";
-	}
 
 	@Override
 	public List<Mantenimiento> buscar() {

@@ -14,11 +14,6 @@ import clases.LineaDeTransporte;
 import enums.EstadoLineaDeTransporte;
 
 public class CustomColorSQLImp implements CustomColorDAO{
-
-	String host = "localhost";
-	String port = "5432";
-	String usr = "postgres";
-	String pass = "ChortQuarinReynoso";
 	
 	@Override
 	public List<CustomColor> buscar() {
@@ -29,7 +24,7 @@ public class CustomColorSQLImp implements CustomColorDAO{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, pass);
+			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			conn.setAutoCommit(false);
 			
 			// Consulta para obtener todas las lineas de trayecto
