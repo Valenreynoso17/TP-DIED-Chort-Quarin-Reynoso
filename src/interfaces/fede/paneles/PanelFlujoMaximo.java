@@ -88,14 +88,19 @@ public class PanelFlujoMaximo extends JPanel {
 		comboBoxDestino.setEnabled(false);
 		comboBoxDestino.addActionListener(e -> {
 			if (flujoMaximoMostrandose) {
-				int opcion = JOptionPane
-						.showConfirmDialog(getPadre(), 
-								"¿Desea seleccionar una nueva estacion?", 
-								"Cambio de estacion", 
-								JOptionPane.OK_CANCEL_OPTION, 
-								JOptionPane.QUESTION_MESSAGE);
-				System.out.println(opcion);
-				if (opcion == JOptionPane.OK_OPTION) {
+				
+				Object[] options = {"No", "Si"};
+				
+				int opcion = JOptionPane.showOptionDialog(getPadre(),
+				"¿Desea seleccionar una nueva estacion?",
+				"Cambio de estacion",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				null,     //do not use a custom Icon
+				options,  //the titles of buttons
+				options[0]); //default button title
+				
+				if (opcion == 1) {
 					scrollPane.setViewportView(panelSeleccion);
 					flujoMaximoMostrandose = false;
 					
@@ -127,14 +132,18 @@ public class PanelFlujoMaximo extends JPanel {
 		comboBoxOrigen.setSelectedItem(null);
 		comboBoxOrigen.addActionListener(e -> {
 			if (flujoMaximoMostrandose) {
-				int opcion = JOptionPane
-						.showConfirmDialog(getPadre(), 
-								"¿Desea seleccionar una nueva estacion?", 
-								"Cambio de estacion", 
-								JOptionPane.OK_CANCEL_OPTION, 
-								JOptionPane.QUESTION_MESSAGE);
-				System.out.println(opcion);
-				if (opcion == JOptionPane.OK_OPTION) {
+				Object[] options = {"No", "Si"};
+				
+				int opcion = JOptionPane.showOptionDialog(getPadre(),
+				"¿Desea seleccionar una nueva estacion?",
+				"Cambio de estacion",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				null,     //do not use a custom Icon
+				options,  //the titles of buttons
+				options[0]); //default button title	
+				
+				if (opcion == 1) {
 					scrollPane.setViewportView(panelSeleccion);
 					flujoMaximoMostrandose = false;
 					
