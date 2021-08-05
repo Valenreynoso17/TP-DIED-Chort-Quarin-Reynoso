@@ -37,8 +37,6 @@ public class PanelMenuPrincipal extends JPanel{
 	private ProximoMantenimiento frameProximoMantenimiento;	
 	
 	public PanelMenuPrincipal(MenuPrincipal frame) {
-		
-	this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Menú principal"));
 	
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
@@ -146,7 +144,7 @@ public class PanelMenuPrincipal extends JPanel{
 	c.gridy = 7;
 	this.add(button, c);
 	
-	Font fuente2 =new Font("Monospaced", Font.ITALIC, 10);	//TODO: Ver si se puede cambiar el tamaño de "fuente"
+	Font fuente2 =new Font("Monospaced", Font.ITALIC, 12);	
 
 	label = new JLabel("Chort Julio - Quarin Federico - Reynoso Valentín");
 	
@@ -155,6 +153,11 @@ public class PanelMenuPrincipal extends JPanel{
 	c.gridy = 0;
 	c.weighty = 0.0;
 	c.weightx = 0.0;
+	this.add(label, c);
+	
+	label = new JLabel("V1.0");
+	label.setFont(fuente2);
+	c.gridy = 8;
 	this.add(label, c);
 
 	}
