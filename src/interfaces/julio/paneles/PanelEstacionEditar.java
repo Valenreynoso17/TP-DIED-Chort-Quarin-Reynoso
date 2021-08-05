@@ -35,9 +35,7 @@ public class PanelEstacionEditar extends JPanel{
 
 	
 	private JComboBox<String> comboBox;
-	private JButton button;
-	private JButton inicioMantenimiento;
-	private JButton finMantenimiento;
+	private JButton button, inicioMantenimiento, finMantenimiento, botonCancelar;
 	private JTextField nombre;
 	private JTextField horaApertura;
 	private JTextField minutoApertura;
@@ -196,6 +194,7 @@ public class PanelEstacionEditar extends JPanel{
 				
 				if(n == 1) {				
 					finMantenimiento.setEnabled(false);
+					botonCancelar.setEnabled(false);
 						
 					estadoActual = EstadoEstacion.OPERATIVA;
 					
@@ -218,19 +217,18 @@ public class PanelEstacionEditar extends JPanel{
 		c.gridx = 5; c.gridy = 4;
 		this.add(finMantenimiento, c);
 		
-		button = new JButton("Cancelar");
-		button.addActionListener(new ActionListener() {
+		botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
 				frameAnterior = new EstacionGestionar();
-				frameAnterior.setVisible(true);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 0.5;
 		c.gridx = 0; c.gridy = 5;
-		this.add(button, c);
+		this.add(botonCancelar, c);
 		
 		button = new JButton("Confirmar edición");
 		button.addActionListener(new ActionListener() {
@@ -402,6 +400,7 @@ public class PanelEstacionEditar extends JPanel{
 	
 	public void seCreoMantenimiento(Vector filaSeleccionada, String observaciones) {
 		inicioMantenimiento.setEnabled(false);
+		botonCancelar.setEnabled(false);
 		
 		estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
 		

@@ -55,7 +55,7 @@ public class PanelEstacionGestionar extends JPanel{
 		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = GridBagConstraints.NONE;
 		
-		panelBusqueda = new PanelEstacionBusqueda(panelTabla);
+		panelBusqueda = new PanelEstacionBusqueda(panelTabla, frame);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridheight = 1;
 		c.gridwidth = 3;

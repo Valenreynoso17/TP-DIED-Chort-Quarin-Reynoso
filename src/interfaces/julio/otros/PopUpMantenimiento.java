@@ -62,8 +62,6 @@ public class PopUpMantenimiento extends JFrame {
 		contentPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		System.out.println(fechaHoy);
-		
 		label = new JLabel("Fecha de inicio: ");
 		c.anchor = GridBagConstraints.EAST;
 		c.gridx = 0; c.gridy = 0;
