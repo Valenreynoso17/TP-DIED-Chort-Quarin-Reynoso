@@ -42,18 +42,18 @@ public class PanelBotonesEdicionLinea extends JPanel{
 	
 	public void editarDatos(PanelPrincipalEdicionLineaDeTransporte panelPrincipal) {
 		//Custom JOptionPane
-		Object[] options = {"Confirmar",
-		                    "Cancelar"};
+		Object[] options = {"Cancelar",
+		                    "Confirmar"};
 		int n = JOptionPane.showOptionDialog(frame,
 										     "¿Está seguro que desea confirmar los cambios realizados?",
 										     "Confirmar edición de línea",
-										     JOptionPane.OK_CANCEL_OPTION,
+										     JOptionPane.YES_NO_OPTION,
 										     JOptionPane.QUESTION_MESSAGE,
 										     null,
 										     options,
-										     options[1]);
+										     options[0]);
 		
-		if(n==0) {
+		if(n == JOptionPane.NO_OPTION) {
 			frame.dispose();
 			panelPrincipal.actualizarDatos();
 			new VentanaGestionLineasDeTransporte();
@@ -63,19 +63,19 @@ public class PanelBotonesEdicionLinea extends JPanel{
 	
 	public void cancelarEdicion() {
 		//Custom JOptionPane
-		Object[] options = {"Si",
-		                    "No"};
+		Object[] options = {"No",
+		                    "Si"};
 		int n = JOptionPane.showOptionDialog(frame,
 										     "¿Está seguro que desea cancelar la edición? \n" +
 										     "Todos los cambios realizados se perderán.",
 										     "Confirmar edición de línea",
-										     JOptionPane.OK_CANCEL_OPTION,
+										     JOptionPane.YES_NO_OPTION,
 										     JOptionPane.QUESTION_MESSAGE,
 										     null,
 										     options,
-										     options[1]);
+										     options[0]);
 		
-		if(n==0) {
+		if(n == JOptionPane.NO_OPTION){
 			frame.dispose();
 			new VentanaGestionLineasDeTransporte();
 		}

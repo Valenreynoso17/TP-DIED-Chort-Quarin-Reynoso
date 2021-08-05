@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.CustomColor;
 import gestores.GestorColor;
@@ -38,7 +40,7 @@ public class PanelAltaLineaDeTransporte extends JPanel{
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		this.setBorder(BorderFactory.createTitledBorder("Alta de una nueva línea"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Alta de una nueva línea"));
 		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.WEST;

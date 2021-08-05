@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import clases.Estacion;
 import excepciones.InputInvalidaException;
@@ -65,7 +67,7 @@ public class PanelRutaLineaDeTransporte extends JPanel{
 		
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		this.setBorder(BorderFactory.createTitledBorder("Ruta"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1),"Ruta"));
 		
 		// Componentes
 		labelSeleccione = new JLabel("Seleccione una ruta");

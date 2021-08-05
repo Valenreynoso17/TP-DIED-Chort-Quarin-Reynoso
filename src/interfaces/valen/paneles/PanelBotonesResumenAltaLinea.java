@@ -39,19 +39,19 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 		// TODO: tengo que poner un JOptionPane para que pregunte si desea cancelar el alta
 		botonCancelar.addActionListener(e -> {
 			//Custom JOptionPane
-			Object[] options = {"Si",
-			                    "No"};
+			Object[] options = {"No",
+			                    "Si"};
 			int n = JOptionPane.showOptionDialog(framePadre,
 			    "¿Está seguro que desea cancelar el alta de la línea? \n" +
 			    "Si sale ahora perderá los datos guardados hasta ahora.",
 			    "Cancelar alta de línea",
-			    JOptionPane.OK_CANCEL_OPTION,
+			    JOptionPane.YES_NO_OPTION,
 			    JOptionPane.QUESTION_MESSAGE,
 			    null,
 			    options,
-			    options[1]);
+			    options[0]);
 			
-			if(n==0) {
+			if(n == JOptionPane.NO_OPTION) {
 				framePadre.dispose();
 				new VentanaGestionLineasDeTransporte();
 			} 
@@ -81,18 +81,18 @@ public class PanelBotonesResumenAltaLinea extends JPanel{
 	
 	private void confirmarYGuardar() {
 		//Custom JOptionPane
-		Object[] options = {"Confirmar",
-		                    "Cancelar"};
+		Object[] options = {"Cancelar",
+		                    "Confirmar"};
 		int n = JOptionPane.showOptionDialog(framePadre,
 		    "¿Está seguro que desea agregar esta línea al sistema?",
 		    "Confirmar alta de línea",
-		    JOptionPane.OK_CANCEL_OPTION,
+		    JOptionPane.YES_NO_OPTION,
 		    JOptionPane.QUESTION_MESSAGE,
 		    null,
 		    options,
-		    options[1]);
+		    options[0]);
 		
-		if(n==0) {
+		if(n == JOptionPane.NO_OPTION) {
 			framePadre.dispose();
 			panel.guardarNuevaLinea();
 			new VentanaGestionLineasDeTransporte();

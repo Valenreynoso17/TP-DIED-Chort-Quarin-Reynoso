@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -52,7 +54,7 @@ public class PanelListadoGestionLineas extends JPanel implements ItemListener, D
 		panelPadre = panel;
 		gestorColor = GestorColor.getInstance();
 		
-		this.setBorder(BorderFactory.createTitledBorder("Listado"));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Listado"));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		
