@@ -65,20 +65,27 @@ public class Flecha implements Dibujable{
 		
 	}
 	
+	public Ruta getPrimeraRutaActiva() {
+		for (Ruta r : rutas) {
+			if (r.activa()) return r;
+		}
+		return null;
+	}
+	
 	public void agregarRuta(Ruta r) {
 		rutas.add(r);
 		Integer rutasActivas = this.rutasActivas();
 		
 		if (rutasActivas == 1) {
 			try {
-				color = r.getColorLinea();
+				color = this.getPrimeraRutaActiva().getColorLinea();
 			}
 			catch (TrayectoNoAsociadoException exc1) {
 				GestorRuta gestorRutas = GestorRuta.getInstance();
 				gestorRutas.asociarATrayectos();
 				
 				try {
-					color = r.getColorLinea();
+					color = this.getPrimeraRutaActiva().getColorLinea();
 				}
 				catch (TrayectoNoAsociadoException exc2) {
 					exc2.printStackTrace();
