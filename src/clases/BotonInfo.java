@@ -50,4 +50,6 @@ public class BotonInfo implements Dibujable {
 		return new Ellipse2D.Double(posSuperior.getX(), posSuperior.getY(), tam.getX(), tam.getY());
 	}
 
+
+
 }

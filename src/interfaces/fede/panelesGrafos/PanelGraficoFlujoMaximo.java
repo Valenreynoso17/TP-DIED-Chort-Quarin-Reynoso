@@ -32,7 +32,7 @@ public class PanelGraficoFlujoMaximo extends PanelSoloEntreOrigenDestino {
 				List<Flecha> flechas = gestorFlechas.getFlechas();
 				if (ventanaInfo == null || !ventanaInfo.isVisible()) {
 					for (Flecha f : flechas) {
-						if (f.getHitbox().contains(e.getPoint())) {
+						if (estRecorridas.contains(f.getEstacionOrigen()) && estRecorridas.contains(f.getEstacionDestino()) && f.getHitbox().contains(e.getPoint())) {
 							ventanaInfo = new DialogInfoFlechaInactivosNoVisibles(f, new RenderInfoFlechaFlujoMaximo<>());
 							ventanaInfo.setVisible(true);
 						}
