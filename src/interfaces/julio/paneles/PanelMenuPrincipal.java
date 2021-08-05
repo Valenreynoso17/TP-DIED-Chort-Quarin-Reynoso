@@ -105,7 +105,7 @@ public class PanelMenuPrincipal extends JPanel{
 	c.gridy = 4;
 	this.add(button, c);
 	
-	button = new JButton("Page Rank de Estaciones");
+	button = new JButton("Page Rank de estaciones");
 	button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			

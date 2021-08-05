@@ -30,7 +30,7 @@ import gestores.GestorEstacion;
 import interfaces.julio.frames.EstacionEditar;
 import interfaces.julio.frames.EstacionEditarGrafo;
 import interfaces.julio.frames.EstacionGestionar;
-import interfaces.julio.otros.ModeloTabla;
+import interfaces.julio.otros.ModeloTablaEstaciones;
 
 public class PanelEstacionTablaResultado extends JPanel{
 
@@ -39,7 +39,7 @@ public class PanelEstacionTablaResultado extends JPanel{
 	private JTextField field;
 	private JPanel panelBusqueda;
 	private JTable tabla;
-	private ModeloTabla miModelo;
+	private ModeloTablaEstaciones miModelo;
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -59,11 +59,10 @@ public class PanelEstacionTablaResultado extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloTabla();
+		miModelo = new ModeloTablaEstaciones();
 		
-		miModelo.addColumn("Id"); miModelo.addColumn("Nombre"); miModelo.addColumn("Hora de apertura"); miModelo.addColumn("Hora de cierre"); miModelo.addColumn("Estado");
+		miModelo.cargarEstaciones(gestorEstacion.getEstaciones());
 		
-		cargarModelo(miModelo);
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
@@ -135,7 +134,9 @@ public class PanelEstacionTablaResultado extends JPanel{
 				Object[] options = {"Cancelar", "Borrar"};
 				
 				int n = JOptionPane.showOptionDialog(frame,
-				"¿Realmente desea borrar la estación "+filaSeleccionada.elementAt(1)+" del sistema?",
+				"¿Realmente desea borrar la estación "+filaSeleccionada.elementAt(1)+" del sistema?\n" +
+				"Tenga en cuenta que esto va a eliminar TODAS las rutas que lleguen\n" +
+				"o salgan de la estación seleccionada y sus mantenimientos pasados/actuales.",
 				"Borrar Estación",
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE,
@@ -173,20 +174,20 @@ public class PanelEstacionTablaResultado extends JPanel{
 	}
 	
 	public void actualizarTabla(String[] campos) {
-				
-		miModelo.setRowCount(0); //Elimino todas las filas de la tabla
+		
+		miModelo.limpiarTabla();
 		
 		filtroId = (campos[0] == null) ? e -> true : e -> e.getId().toString().contains(campos[0]);
 		
 		filtroNombre = (campos[1] == null) ? e -> true : e -> e.getNombre().toUpperCase().contains(campos[1].toUpperCase()); 
 		
-		filtroHoraApertura = (campos[2] == null) ? e -> true : e -> e.getHorarioApertura().getHour() == (Integer.parseInt(campos[2]));
+		filtroHoraApertura = (campos[2] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getHour()).toString().contains(campos[2]); // == (Integer.parseInt(campos[2]));
 		
-		filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> e.getHorarioApertura().getMinute() == (Integer.parseInt(campos[3]));
+		filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getMinute()).toString().contains(campos[3]); // == (Integer.parseInt(campos[3]));
 		
-		filtroHoraCierre = (campos[4] == null) ? e -> true : e -> e.getHorarioCierre().getHour() == (Integer.parseInt(campos[4]));
+		filtroHoraCierre = (campos[4] == null) ? e -> true : e -> ((Integer) e.getHorarioCierre().getHour()).toString().contains(campos[4]); // == (Integer.parseInt(campos[4]));
 		
-		filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> e.getHorarioCierre().getMinute() == (Integer.parseInt(campos[5])); 
+		filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> ((Integer)e.getHorarioCierre().getMinute()).toString().contains(campos[5]); // == (Integer.parseInt(campos[5])); 
 		
 		List<Estacion> estaciones = gestorEstacion.getEstaciones().stream().filter(filtroId)
 																		   .filter(filtroNombre)
@@ -195,19 +196,8 @@ public class PanelEstacionTablaResultado extends JPanel{
 																		   .filter(filtroHoraCierre)
 																		   .filter(filtroMinutoCierre)
 																		   .collect(Collectors.toList());
-		
-		for(Estacion e : estaciones) {
-			miModelo.addRow(new Object[] {e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), e.getEstado()});
-		}
+		miModelo.cargarEstaciones(estaciones);
 		
 	}
-
-	public void cargarModelo(ModeloTabla miModelo) {
-	
-	for(Estacion e : gestorEstacion.getEstaciones()) {
-		miModelo.addRow(new Object[] {e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), e.getEstado()});
-	}
-
-}
 
 }

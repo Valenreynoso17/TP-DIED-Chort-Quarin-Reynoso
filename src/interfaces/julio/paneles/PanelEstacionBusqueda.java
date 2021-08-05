@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import excepciones.InputInvalidaException;
 import interfaces.valen.paneles.PanelGridListaGestionLineas;
 
 public class PanelEstacionBusqueda extends JPanel{
@@ -28,7 +31,7 @@ public class PanelEstacionBusqueda extends JPanel{
 	
 	private JTextField id, nombre, horaApertura, minutoApertura, horaCierre, minutoCierre;
 	
-	public PanelEstacionBusqueda(PanelEstacionTablaResultado panelTabla) {
+	public PanelEstacionBusqueda(PanelEstacionTablaResultado panelTabla, JFrame frame) {
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Búsqueda de Estaciones"));
 		
@@ -118,7 +121,20 @@ public class PanelEstacionBusqueda extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				panelTabla.actualizarTabla(camposNoVacios());
+					try {
+						inputEsValida(camposNoVacios());
+						panelTabla.actualizarTabla(camposNoVacios());
+						
+					}catch (InputInvalidaException IIE) {
+						
+						JOptionPane.showMessageDialog(frame,
+								IIE.getMessage()+"- El id es obligatoriamente un número entero mayor a 0.\n"+
+										  "- El nombre puede tener como máximo 30 caracteres de longitud. \n"+
+										  "- La hora debe encontrarse en el intervalo [0, 23]. \n"+
+										  "- Los minutos deben encontrarse en el intervalo [0,59].\n",	
+							    "Error",
+							    JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -146,24 +162,104 @@ public class PanelEstacionBusqueda extends JPanel{
 		return campos;
 	}
 	
-	public List<String> camposNoVacios2() {
+	public void inputEsValida(String[] campos) throws InputInvalidaException{
 		
-		List<String> campos = new ArrayList<String>();
-		
-		if(id.getText().isEmpty())
-			campos.add(id.getText());
-		if(nombre.getText().isEmpty())
-			campos.add(nombre.getText());
-		if(horaApertura.getText().isEmpty())
-			campos.add(horaApertura.getText());
-		if(minutoApertura.getText().isEmpty())
-			campos.add(minutoApertura.getText());
-		if(horaCierre.getText().isEmpty())
-			campos.add(horaCierre.getText());
-		if(minutoCierre.getText().isEmpty())
-			campos.add(minutoCierre.getText());
-		
-		return campos;
+		if(campos[0] != null) {
+			if(!validarId(id))
+				throw new InputInvalidaException();
+		}
+		if(campos[1] != null) {
+			if(!validarNombre(nombre))
+				throw new InputInvalidaException();
+		}
+		if(campos[2] != null) {
+			if(!validarHora(horaApertura))
+				throw new InputInvalidaException();
+		}
+		if(campos[3] != null) {
+			if(!validarMinuto(minutoApertura))
+				throw new InputInvalidaException();
+		}
+		if(campos[4] != null) {
+			if(!validarHora(horaCierre))
+				throw new InputInvalidaException();
+		}
+		if(campos[5] != null) {
+			if(!validarMinuto(minutoCierre))
+				throw new InputInvalidaException();
+		}
+
 	}
+	
+	public boolean validarId(JTextField field) { //Retorna false si no es integer o si es menor o igual a 0
+		
+		try {
+			Integer id = Integer.parseInt(field.getText());
+			
+			if(id > 0) {
+				
+				return true; 
+			}
+			else {
+				
+				return false;
+			}
+			
+		} catch(NumberFormatException e) {
+			
+			return false;
+		}
+	}
+	
+	public boolean validarHora(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 23]
+		
+		try {
+			Integer hora = Integer.parseInt(field.getText());
+			
+			if(hora > -1 && hora < 24) {
+				
+				return true; 
+			}
+			else {
+				
+				return false;
+			}
+			
+		} catch(NumberFormatException e) {
+			
+			return false;
+		}
+	}
+	
+	public boolean validarMinuto(JTextField field) { //Retorna false si no es integer o si no se encuentra en el rango [0, 59]
+		
+		try {
+			
+			Integer minuto = Integer.parseInt(field.getText());
+			
+			if(minuto > -1 && minuto < 60) {
+				
+				return true; 
+			}
+			else {
+				
+				return false;
+			}
+			
+		} catch(NumberFormatException e) {
+			
+			return false;
+		}
+	}
+	
+	public boolean validarNombre(JTextField field) { //Retorna false si la longitud del string es mayor a 30
+		
+		if(field.getText().length() > 30)
+			return false;
+		
+		return true;
+	}
+	
+	
 
 }
