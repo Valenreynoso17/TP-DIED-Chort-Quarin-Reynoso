@@ -34,7 +34,6 @@ public class MantenimientoPostgreSQLImpl implements MantenimientoDAO{
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
-			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(consulta);
 			rs = st.executeQuery();
 			

@@ -5,15 +5,18 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import enums.EstadoEstacion;
 import interfaces.fede.otros.GamaColor;
 import interfaces.fede.panelesGrafos.PanelGrafico;
 
-public class Estacion implements Dibujable, Cloneable {
+public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 	
 	private Integer id;
 	private String nombre;
@@ -24,7 +27,7 @@ public class Estacion implements Dibujable, Cloneable {
 	
 	private List<Mantenimiento> mantenimientos;
 	
-	private Point posicion; //VER 
+	private Point posicion;
 	
 	public Estacion(Integer i, String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
 		this.id = i;
@@ -68,8 +71,6 @@ public class Estacion implements Dibujable, Cloneable {
 		this.horarioCierre = hC;
 		this.estado = e;
 	}
-	
-	
 	
 	public Integer getId() {
 		return id;
@@ -255,5 +256,47 @@ public class Estacion implements Dibujable, Cloneable {
 		return this.operativa();
 	}
 	
+	public Optional<LocalDate> getFechaInicioUltimoMantenimiento(){
+		return this.mantenimientos.stream().max(Comparator.comparing(m -> m.getFechaInicio())).map(m -> m.getFechaInicio());
+	}
+	
+	public Optional<LocalDate> getFechaUltimoMantenimientoRealizado() {
+		// 1) Si devuelve un valor, significa que el ultimo mantenimiento ya terminó -> Prioridad media
+		// Si devuelve null, significa una de dos: 2) Tiene un mantenimiento activo -> Mínima prioridad
+		//										   3) Nunca se realizó un mantenimiento en la estación -> Maxima prioridad
+		return this.mantenimientos.stream().max(Comparator.comparing(m -> m.getFechaInicio())).map(m -> m.getFechaFin());
+	}
 
+	@Override
+	public int compareTo(Estacion e) {
+		Optional<LocalDate> fechaThis = this.getFechaUltimoMantenimientoRealizado();
+		Optional<LocalDate> fechaE = e.getFechaUltimoMantenimientoRealizado();
+		
+		// Comparando dos estacione cuyos ultimos mantenimientos ya terminaron
+		// El orden queda determinado por las fechas (1)
+		if (fechaThis.isPresent() && fechaE.isPresent()) return fechaThis.get().compareTo(fechaE.get());
+		
+		if (fechaThis.isPresent()) {
+			// e nunca tuvo mantenimiento
+			if(e.mantenimientos.isEmpty()) return 1;
+			// tiene un mantenimiento activo
+			return -1;
+		}
+		
+		// else - los dos devolvieron null
+		if (this.mantenimientos.isEmpty()) {
+			if(e.mantenimientos.isEmpty()) return 1; // Los dos tienen la misma prioridad (Con 0 se rompía)
+			return -1; // e tiene un mantenimiento activo y this nunca tuvo mantenimiento
+		}
+		
+		if (e.mantenimientos.isEmpty()) {
+			// This tiene un mantenimiento activo y e nunca tuvo
+			return 1;
+		}
+		
+		// Los dos tienen un mantenimiento activo (Con 0 se rompía)
+		return 1;
+		
+		
+	}
 }

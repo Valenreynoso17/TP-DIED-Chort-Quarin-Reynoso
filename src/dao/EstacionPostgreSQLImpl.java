@@ -15,9 +15,19 @@ import java.util.List;
 import clases.Estacion;
 import clases.Recorrido;
 import enums.EstadoEstacion;
+import gestores.GestorMantenimiento;
 
 public class EstacionPostgreSQLImpl implements EstacionDAO {
 
+	GestorMantenimiento gestorMantenimiento;
+	
+	public EstacionPostgreSQLImpl() {
+		Thread t1 = new Thread(() -> {
+			gestorMantenimiento = GestorMantenimiento.getInstance();
+		});
+		t1.run();
+	}
+	
 	@Override
 	public List<Estacion> buscar() {
 		List<Estacion> estaciones = new ArrayList<>();
@@ -33,10 +43,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
-			// Se realiza una consulta para encontrar el id correspondiente al siguiente recorrido
 			st = conn.prepareStatement(consulta);
 			rs = st.executeQuery();
-			
 			
 			while(rs.next()) {				
 				Integer id = rs.getInt("id");
@@ -49,8 +57,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 				posicion.y = rs.getInt("posicion_y");
 				
 				// TODO falta agregarle que busque los mantenimientos
-				if (estado.equals("OPERATIVA")) estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.OPERATIVA, null));
-				else estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.EN_MANTENIMIENTO, null));
+				if (estado.equals("OPERATIVA")) estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.OPERATIVA, gestorMantenimiento.buscarMantenimientosAsociadosAEstacionPorId(id)));
+				else estaciones.add(new Estacion(id, nombre, horaApertura, horaCierre, posicion, EstadoEstacion.EN_MANTENIMIENTO, gestorMantenimiento.buscarMantenimientosAsociadosAEstacionPorId(id)));
 			}
 			
 		} 

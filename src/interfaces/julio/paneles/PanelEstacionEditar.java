@@ -404,9 +404,9 @@ public class PanelEstacionEditar extends JPanel{
 		
 		estadoActual = EstadoEstacion.EN_MANTENIMIENTO;
 		
-		gestorMantenimiento.agregarMantenimiento(fechaHoy, observaciones, (Integer) filaSeleccionada.elementAt(0));
+		Mantenimiento mantAux = gestorMantenimiento.agregarMantenimiento(fechaHoy, observaciones, (Integer) filaSeleccionada.elementAt(0));
 		
-		gestorEstacion.cambiarEstadoEstacionPorId((Integer) filaSeleccionada.elementAt(0), estadoActual);
+		gestorEstacion.cambiarEstadoAgregarMantenimientoPorId((Integer) filaSeleccionada.elementAt(0), estadoActual, mantAux);
 	}
 	
 	public PanelEstacionEditar getFrame() {

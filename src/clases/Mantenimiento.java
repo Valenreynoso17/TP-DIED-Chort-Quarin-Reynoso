@@ -7,6 +7,7 @@ public class Mantenimiento {
 	private LocalDate fechaFin;
 	private String observaciones;
 	private Integer id;
+	private Boolean finalizado;
 	
 	public Integer getIdEstacion() {
 		return idEstacion;
@@ -23,6 +24,7 @@ public class Mantenimiento {
 		this.fechaInicio = fI;
 		this.observaciones = o;
 		this.idEstacion = iE;
+		this.finalizado = false;
 	}
 	
 	public Mantenimiento(Integer i, LocalDate fI, LocalDate fF, String o, Integer iE) {
@@ -31,6 +33,7 @@ public class Mantenimiento {
 		this.observaciones = o;
 		this.fechaFin = fF;
 		this.idEstacion = iE;
+		this.finalizado = true;
 	}
 
 	public LocalDate getFechaInicio() {
@@ -66,7 +69,19 @@ public class Mantenimiento {
 	}
 
 	public void finalizarMantenimiento(LocalDate fF) {
+		this.finalizado = true;
 		this.fechaFin = fF;
 	}
+	
+	public Boolean finalizado() {
+		return this.finalizado;
+	}
 
+	@Override
+	public String toString() {
+		return "Mantenimiento [fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", observaciones="
+				+ observaciones + ", id=" + id + ", finalizado=" + finalizado + ", idEstacion=" + idEstacion + "]";
+	}
+	
+	
 }
