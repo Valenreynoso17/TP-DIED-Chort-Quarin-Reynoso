@@ -40,7 +40,7 @@ public class PanelDatosVentaBoleto extends JPanel {
 		this.recorrido = recorrido;
 		this.gestorBoletos = GestorBoleto.getInstance();
 		
-		this.setPreferredSize(new Dimension(800, 600));
+		this.setPreferredSize(new Dimension(800, 500));
 		this.setBorder(new TitledBorder(new LineBorder(Color.black, 1) , "Datos de la venta"));
 		
 		GridBagLayout gbl = new GridBagLayout();

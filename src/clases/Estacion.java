@@ -70,7 +70,8 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
 		this.estado = e;
-	
+	}
+		
 	public Integer getId() {
 		return id;
 	}

@@ -24,8 +24,9 @@ public class PanelVentaBoleto3 extends JPanel {
 		
 		PanelDatosVentaBoleto panelDatos = new PanelDatosVentaBoleto(recorrido);	
 		GridBagConstraints gbc_panelDatos = new GridBagConstraints();
-		gbc_panelDatos.gridx = 1;
+		gbc_panelDatos.gridx = 0;
 		gbc_panelDatos.gridy = 0;
+		gbc_panelDatos.gridwidth = 3;
 		gbc_panelDatos.insets = new Insets(5, 5, 5, 5);
 		this.add(panelDatos, gbc_panelDatos);
 		

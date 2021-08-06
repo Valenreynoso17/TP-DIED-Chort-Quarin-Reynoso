@@ -31,7 +31,7 @@ public class FrameVentaBoleto3 extends JFrame {
 		this.setContentPane(panel);
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setBounds(100, 100, 1280, 720);
+		this.setSize(1024, 600);
 		
 		this.setLocationRelativeTo(null);
 	}
