@@ -38,7 +38,7 @@ public class Estacion implements Dibujable, Cloneable {
 		this.escala = 1.0f;
 	}
 	
-	public Estacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+	public Estacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {	//Para crear una estación momentáneamente
 		this.id = -1;
 		this.nombre = n;
 		this.horarioApertura = hA;
@@ -67,9 +67,7 @@ public class Estacion implements Dibujable, Cloneable {
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
 		this.estado = e;
-	}
-	
-	
+	}	
 	
 	public Integer getId() {
 		return id;
