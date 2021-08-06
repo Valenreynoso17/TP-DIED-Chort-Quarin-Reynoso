@@ -15,6 +15,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import clases.Estacion;
+import clases.Mantenimiento;
 import clases.Ruta;
 import dao.EstacionDAO;
 import dao.EstacionPostgreSQLImpl;
@@ -52,16 +53,12 @@ public class GestorEstacion {
 	public List<Estacion> getEstacionesOperativas() {
 		return this.estaciones.stream().filter(e -> e.operativa()).collect(Collectors.toList());
 	}
-	
-//	public void agregarEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee, Point pos) {
-//		Estacion e = new Estacion(siguienteIdEstacion, n, hA, hC, ee);
-//		estaciones.add(e);
-//		dao.insertar(e);
-//	}
+
 	
 	public void agregarEstacion(Estacion e) {
 		estaciones.add(e);
 		dao.insertar(e);
+		GestorMantenimiento gestorMantenimiento = GestorMantenimiento.getInstance();
 	}
 	
 	public Estacion crearEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
@@ -93,8 +90,6 @@ public class GestorEstacion {
 		return resultado;
 	}
 	
-
-	
 	private List<Estacion> getEstacionesOperativasAccesiblesAux(Estacion estacion, HashSet<Estacion> marcados) {
 		Stack<Estacion> pendientes = new Stack<>();
 		List<Estacion> resultado = new ArrayList<>();
@@ -119,7 +114,7 @@ public class GestorEstacion {
 		
 	}
 	
-	List<Estacion> getAdyacentesRutasActivas(Estacion estacion) {
+	public List<Estacion> getAdyacentesRutasActivas(Estacion estacion) {
 		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
 		List<Estacion> resultado = new ArrayList<>();
@@ -132,7 +127,7 @@ public class GestorEstacion {
 		return resultado;
 	}
 	
-	List<Estacion> getAdyacentes(Estacion estacion) {
+	public List<Estacion> getAdyacentes(Estacion estacion) {
 		gestorRutas = GestorRuta.getInstance();
 		List<Ruta> rutas = gestorRutas.getRutas();
 		List<Estacion> resultado = new ArrayList<>();
@@ -157,7 +152,6 @@ public class GestorEstacion {
 		return (estaciones.stream().filter(e -> e.getNombre() == nombreEstacion).findFirst()).get();
 	}
 
-
 	public void cancelarCambios(Map<Integer, Point> anterioresPosiciones) {
 		Set<Integer> ids = anterioresPosiciones.keySet();
 		for (Integer id : ids) {
@@ -165,7 +159,6 @@ public class GestorEstacion {
 			est.setPosicion(anterioresPosiciones.get(id));
 		}
 	}
-
 	
 	public void guardarCambios(Set<Integer> modificadas) {
 		List<Estacion> estacionesModificadas = modificadas.stream().map(id -> getEstacionPorId(id)).collect(Collectors.toList());
@@ -176,8 +169,7 @@ public class GestorEstacion {
 		Estacion nueva = new Estacion(e.getId(), e.getNombre(), e.getHorarioApertura(), e.getHorarioCierre(), (Point) e.getPosicion().clone(), e.getEstado(), e.getMantenimientos());
 		return nueva;
 	}
-	
-	
+		
 	public void editarEstacion(String id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoEstacion estado) {
 		
 		Estacion e = this.getEstacionPorId(Integer.parseInt(id));
@@ -187,12 +179,12 @@ public class GestorEstacion {
 		dao.modificar(e);
 	}
 
-	public void cambiarEstadoEstacionPorId(Integer id, EstadoEstacion estadoActual) {
+	public void cambiarEstadoAgregarMantenimientoPorId(Integer id, EstadoEstacion estadoActual, Mantenimiento mant) {
 		
 		Estacion e = this.getEstacionPorId(id);
 		
 		e.setEstado(estadoActual);
-		
+		e.aniadirMantenimiento(mant);
 		dao.modificar(e);
 	}
 

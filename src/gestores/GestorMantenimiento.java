@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import clases.Estacion;
 import clases.Mantenimiento;
@@ -42,16 +43,21 @@ public class GestorMantenimiento {
 		return mantenimientos;
 	}
 	
-	public void agregarMantenimiento(LocalDate fI, String o, Integer iE) {
+	public Mantenimiento agregarMantenimiento(LocalDate fI, String o, Integer iE) {
 		Mantenimiento m = new Mantenimiento(siguienteIdMantenimiento, fI, o, iE);
 		mantenimientos.add(m);
 		dao.insertar(m);
+		return m;
 	}
 	
 	public void modificarFechaFin(Mantenimiento m, LocalDate fF) {
 		
 		m.setFechaFin(fF);
 		dao.modificar(m, fF);
+	}
+	
+	public List<Mantenimiento> buscarMantenimientosAsociadosAEstacionPorId(Integer idEst){
+		return mantenimientos.stream().filter(r -> r.getIdEstacion() == idEst).collect(Collectors.toList());
 	}
 	
 	
