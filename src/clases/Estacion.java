@@ -41,7 +41,7 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 		this.escala = 1.0f;
 	}
 	
-	public Estacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+	public Estacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {	//Para crear una estaci√≥n moment√°neamente
 		this.id = -1;
 		this.nombre = n;
 		this.horarioApertura = hA;
@@ -70,7 +70,6 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 		this.horarioApertura = hA;
 		this.horarioCierre = hC;
 		this.estado = e;
-	}
 	
 	public Integer getId() {
 		return id;
@@ -261,9 +260,9 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 	}
 	
 	public Optional<LocalDate> getFechaUltimoMantenimientoRealizado() {
-		// 1) Si devuelve un valor, significa que el ultimo mantenimiento ya terminÛ -> Prioridad media
-		// Si devuelve null, significa una de dos: 2) Tiene un mantenimiento activo -> MÌnima prioridad
-		//										   3) Nunca se realizÛ un mantenimiento en la estaciÛn -> Maxima prioridad
+		// 1) Si devuelve un valor, significa que el ultimo mantenimiento ya termin√≥ -> Prioridad media
+		// Si devuelve null, significa una de dos: 2) Tiene un mantenimiento activo -> M√≠nima prioridad
+		//										   3) Nunca se realiz√≥ un mantenimiento en la estaci√≥n -> Maxima prioridad
 		return this.mantenimientos.stream().max(Comparator.comparing(m -> m.getFechaInicio())).map(m -> m.getFechaFin());
 	}
 
@@ -285,7 +284,7 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 		
 		// else - los dos devolvieron null
 		if (this.mantenimientos.isEmpty()) {
-			if(e.mantenimientos.isEmpty()) return 1; // Los dos tienen la misma prioridad (Con 0 se rompÌa)
+			if(e.mantenimientos.isEmpty()) return 1; // Los dos tienen la misma prioridad (Con 0 se romp√≠a)
 			return -1; // e tiene un mantenimiento activo y this nunca tuvo mantenimiento
 		}
 		
@@ -294,7 +293,7 @@ public class Estacion implements Dibujable, Cloneable, Comparable<Estacion>{
 			return 1;
 		}
 		
-		// Los dos tienen un mantenimiento activo (Con 0 se rompÌa)
+		// Los dos tienen un mantenimiento activo (Con 0 se romp√≠a)
 		return 1;
 		
 		

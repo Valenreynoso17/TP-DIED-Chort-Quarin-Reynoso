@@ -85,6 +85,16 @@ public class GestorRuta {
 		return retorno;
 	}
 	
+	public List<Ruta> getRutasEntrantesA(Estacion e) {
+		List<Ruta> retorno = new ArrayList<>();
+		
+		for (Ruta r : rutas) {
+			if (r.activa() && r.getDestino().equals(e)) retorno.add(r);
+		}
+		
+		return retorno;
+	}
+	
 	public List<Ruta> buscarRutasAsociadasATrayectoPorID(Integer idTrayecto){
 		return rutas.stream().filter(r -> r.getIdTrayecto() == idTrayecto).collect(Collectors.toList());
 	}
