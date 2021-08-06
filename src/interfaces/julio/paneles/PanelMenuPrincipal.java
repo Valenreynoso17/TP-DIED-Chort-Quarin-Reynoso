@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -84,7 +85,7 @@ public class PanelMenuPrincipal extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			
 			frame.dispose();
-			frameVentaBoleto = new FrameVentaBoleto();
+			frameVentaBoleto = new FrameVentaBoleto(getPadre());
 			frameVentaBoleto.setVisible(true);
 		}
 	});
@@ -160,6 +161,10 @@ public class PanelMenuPrincipal extends JPanel{
 	c.gridy = 8;
 	this.add(label, c);
 
+	}
+	
+	public JFrame getPadre() {
+		return (JFrame) this.getTopLevelAncestor();
 	}
 	
 }

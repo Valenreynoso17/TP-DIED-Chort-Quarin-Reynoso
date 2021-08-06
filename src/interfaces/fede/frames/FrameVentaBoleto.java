@@ -16,11 +16,12 @@ public class FrameVentaBoleto extends JFrame {
 	private JPanel contentPane;
 	private JFrame padre;
 
-	public FrameVentaBoleto() {
+	public FrameVentaBoleto(JFrame padre) {
+		this.padre = padre;
 		this.setTitle("Sistema de Gestión de Transporte Multimodal");
 		//this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 1280, 720);
+		this.setSize(1024, 600);
 		contentPane = new PanelVentaBoleto();
 		this.setContentPane(contentPane);
 		
