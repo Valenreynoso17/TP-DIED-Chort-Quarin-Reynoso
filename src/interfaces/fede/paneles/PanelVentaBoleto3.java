@@ -56,7 +56,9 @@ public class PanelVentaBoleto3 extends JPanel {
 				JOptionPane.showMessageDialog(getPadre(),"Faltan completar los siguientes campos:" + exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			catch (InputInvalidaException exc) {
-				JOptionPane.showMessageDialog(getPadre(),exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(getPadre(),exc.getMessage()+
+						"- El nombre debe contener únicamente letras.\n"+
+						"- El correo debe tener un formato válido con @.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});

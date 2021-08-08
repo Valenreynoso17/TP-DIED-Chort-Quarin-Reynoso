@@ -26,8 +26,7 @@ public class PanelEstacionAltaGrafo extends JPanel{
 	private JButton button;
 	
 	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
-	
-	private EstacionGestionar frameGestionar;
+
 	private PanelPermiteCambiarPosicion panelGrafo;
 	
 	public PanelEstacionAltaGrafo(EstacionAltaGrafo frame, EstacionAlta frameAnterior, Estacion futuraEstacion) {
@@ -77,7 +76,7 @@ public class PanelEstacionAltaGrafo extends JPanel{
 				panelGrafo.guardarCambios();
 				
 				frame.dispose();
-				frameGestionar = new EstacionGestionar();
+				new EstacionGestionar();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
