@@ -6,136 +6,110 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
-import clases.Estacion;
-import enums.EstadoEstacion;
-import gestores.GestorEstacion;
-import interfaces.julio.frames.EstacionAlta;
-import interfaces.julio.frames.EstacionEditar;
-import interfaces.julio.frames.EstacionGestionar;
+import excepciones.InputPageRankInvalidaException;
 import interfaces.julio.frames.MenuPrincipal;
 import interfaces.julio.frames.PageRank;
-import interfaces.julio.otros.ModeloTablaEstaciones;
-import interfaces.julio.otros.ModeloTablaPageRank;
 
 public class PanelPageRank extends JPanel{
 
-	private JComboBox<String> comboBox;
 	private JButton button;
 	private JLabel label;
 
-	private JTable tabla;
-	private JScrollPane tableContainer;
-	private ModeloTablaPageRank miModelo;
+	private GridBagConstraints gbc;
+	private PanelGroupBoxPageRank panelGroupBoxPageRank;
+	private PanelTablaPageRank panelTablaPageRank;
+	private Insets insets = new Insets(10, 10, 10, 10);
 	
-	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
+	private PageRank frameAnterior;
 	
 	public PanelPageRank(PageRank frame) {
+		
+		frameAnterior = frame;
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 3), "Page Rank de las estaciones"));
 		
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 		
-		miModelo = new ModeloTablaPageRank();
+		gbc.gridx = 0;
+		gbc.gridy = GridBagConstraints.RELATIVE;
+		gbc.fill = GridBagConstraints.BOTH;
 		
-		miModelo.cargarTablaPageRank(gestorEstacion.getEstaciones());
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.insets = insets;
+		panelGroupBoxPageRank = new PanelGroupBoxPageRank(this);
+		this.add(panelGroupBoxPageRank, gbc);
 		
-		tabla = new JTable(miModelo);
-		tableContainer = new JScrollPane(tabla);
-		
-		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
-		
-		tabla.setRowSelectionAllowed(true);
-		tabla.setColumnSelectionAllowed(false);
-		
-		tabla.setFocusable(false); //Para que no seleccione una sola columna
-		
-		tabla.getTableHeader().setResizingAllowed(false);	//Para que no puedas cambiar el tamaño de las columnas
-		
-		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		//tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
-		
-		ordenarTablaPorPageRank();
-			
-		tabla.getColumnModel().getColumn(3).setMinWidth(500);	//Para que el nombre de la columna se vea bien
-
-		//PARA CENTRAR
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabla.setDefaultRenderer(Object.class, centerRenderer);
-		tabla.setDefaultRenderer(Integer.class, centerRenderer); //Por alguna razon no lo toma sin esto
-//		
-		c.fill = GridBagConstraints.BOTH;
-//		label = new JLabel("Para la próxima versión.");
-//		c.anchor = GridBagConstraints.CENTER;
-		c.insets = new Insets(30, 30, 30, 30);
-		c.weightx = 1.0;
-		c.weighty = 1.0;
-		c.gridwidth = 3;
-		c.gridx = 0;
-		c.gridy = 0;
-		this.add(tableContainer, c);
-		c.fill = GridBagConstraints.NONE;
-		c.weightx = 0.1;
-		c.weighty = 0.2;
-		c.gridwidth = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.insets = insets;
+		panelTablaPageRank = new PanelTablaPageRank();
+		this.add(panelTablaPageRank, gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.weighty = 0.1;
 		
 		
 		button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
+				frameAnterior.dispose();
 				new MenuPrincipal();
 			}
 		});
-		c.insets = new Insets(0,100,20,0);
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 0;
-		c.gridy = 1;
-		this.add(button, c);
+		gbc.insets = new Insets(0,100,15,0);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		this.add(button, gbc);
 		
 		
 	}
 	
-	
-	public void ordenarTablaPorPageRank() {
+	public void ingresoNuevoValorDeAmortiguacion(JTextField campo) {
 		
-		TableRowSorter<TableModel> sorter = new TableRowSorter<>(miModelo);
-		tabla.setRowSorter(sorter);
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-		
-		sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
-		 
-		sorter.setSortKeys(sortKeys);
-		sorter.sort();
-		
+			try {
+				
+				if(campo.getText().isEmpty()) {		//Si es nulo que tome el valor 0.85
+					panelTablaPageRank.setNuevoValorDeAmortiguacion(0.85);
+				}
+				else {
+				
+					inputEsValido(campo);
+					
+					panelTablaPageRank.setNuevoValorDeAmortiguacion(Double.parseDouble(campo.getText()));
+				}
+			
+			} catch (InputPageRankInvalidaException IPRIE) {
+				
+				JOptionPane.showMessageDialog(frameAnterior,
+						IPRIE.getMessage(),
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+			}
 	}
 
-	
+	public void inputEsValido(JTextField campo) throws InputPageRankInvalidaException{ //Retorna false si no es integer o si no se encuentra en el rango [0, 23]
+		
+		try {
+			Double valorAmortiguacion = Double.parseDouble(campo.getText());
+			
+			if(valorAmortiguacion < 0 || valorAmortiguacion > 1)
+				throw new InputPageRankInvalidaException();
+			
+		} catch(NumberFormatException e) {
+			
+			throw new InputPageRankInvalidaException();
+		}
+	}
 }

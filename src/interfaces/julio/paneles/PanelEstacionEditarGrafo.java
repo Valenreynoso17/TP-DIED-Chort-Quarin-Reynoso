@@ -18,7 +18,6 @@ import interfaces.julio.frames.EstacionGestionar;
 
 public class PanelEstacionEditarGrafo extends JPanel{
 	
-	private EstacionGestionar frameAnterior;
 	private PanelPermiteCambiarPosicion panelGrafo;
 	
 	private JButton button;
@@ -52,7 +51,7 @@ public class PanelEstacionEditarGrafo extends JPanel{
 				
 				panelGrafo.cancelarCambios();
 				frame.dispose();
-				frameAnterior = new EstacionGestionar();
+				new EstacionGestionar();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -66,7 +65,7 @@ public class PanelEstacionEditarGrafo extends JPanel{
 				
 				panelGrafo.guardarCambios();
 				frame.dispose();
-				frameAnterior = new EstacionGestionar();
+				new EstacionGestionar();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

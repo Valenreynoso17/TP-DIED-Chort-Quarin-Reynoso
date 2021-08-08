@@ -306,6 +306,8 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 					
 			st = conn.prepareStatement(consulta);
 			
+			System.out.println("Llego a modificar posicion estacion");
+			
 			for (int i=0; i<estaciones.size(); i++) {
 				st.setInt(1 + 3*i, estaciones.get(i).getPosicion().x);
 				st.setInt(2 + 3*i, estaciones.get(i).getPosicion().y);	

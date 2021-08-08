@@ -14,6 +14,7 @@ import java.util.Set;
 
 import clases.Estacion;
 import clases.Flecha;
+import gestores.GestorEstacion;
 import interfaces.fede.dialogs.DialogInfoFlechaInactivosVisibles;
 import interfaces.fede.dialogs.DialogLeyenda;
 
@@ -23,6 +24,8 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	protected Estacion seleccionada, nuevaEstacion;
 	protected Point puntoRelativoAgarre;
 	protected Map<Integer, Point> anterioresPosiciones;
+	
+	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 	
 	public PanelPermiteCambiarPosicion(Estacion nuevaEstacion) {
 		super();
@@ -143,6 +146,10 @@ public class PanelPermiteCambiarPosicion extends PanelPintaTodo {
 	
 	public void guardarCambios() {
 		Set<Integer> setEstaciones = anterioresPosiciones.keySet();
+		System.out.println("Estaciones: "+setEstaciones);
+//		for(Integer i : setEstaciones) {
+//			gestorEstacion.getEstacionPorId(i).setPosicion(puntoRelativoAgarre);
+//		}
 		gestorEstaciones.guardarCambios(setEstaciones);
 	}
 }
