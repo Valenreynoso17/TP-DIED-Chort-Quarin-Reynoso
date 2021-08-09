@@ -32,10 +32,6 @@ public class GestorEstacion {
 	private GestorEstacion() {
 		dao = new EstacionPostgreSQLImpl();
 		estaciones = new ArrayList<>(dao.buscar());
-		Thread t1 = new Thread(() -> {
-			siguienteIdEstacion = dao.getUltimoIdEstacion() + 1;
-		});
-		t1.run();
 	}
 	
 	public static GestorEstacion getInstance() {
@@ -62,6 +58,8 @@ public class GestorEstacion {
 	}
 	
 	public Estacion crearEstacion(String n, LocalTime hA, LocalTime hC, EstadoEstacion ee) {
+		siguienteIdEstacion = dao.getUltimoIdEstacion() + 1;
+		System.out.println("SIGUIENTE ESTACION " +siguienteIdEstacion);
 		return new Estacion(siguienteIdEstacion, n, hA, hC, ee);
 	}
 	

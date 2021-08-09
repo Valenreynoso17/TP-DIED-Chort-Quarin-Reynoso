@@ -161,13 +161,9 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 
 	@Override
 	public void insertar(Estacion estacion) {
-		//Tener en cuenta que copie y pegue de boleto
-		String obtenerID = 		"SELECT max(id)"
-							+ 	"FROM died.estacion;";
 
 		String insercionEstacion = 	"INSERT INTO died.estacion "
 								+ 	"VALUES (?, ?, ?, ?, ?);";
-		Integer id = null;
 		
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -177,19 +173,9 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection("jdbc:postgresql://"+ host + ":" + port + "/", usr, psw);
 			
-			// Se realiza una consulta para encontrar el id correspondiente a la siguiente estación
-			st = conn.prepareStatement(obtenerID);
-			rs = st.executeQuery();
-			rs.next();
-			id = rs.getInt("max");
-			if (rs.wasNull()) id = 1;
-			else id += 1;
-			rs.close();
-			st.close();
-			
 			
 			st = conn.prepareStatement(insercionEstacion);
-			st.setInt(1, id);
+			st.setInt(1, this.getUltimoIdEstacion()+1);
 			st.setString(2, estacion.getNombre());
 			st.setString(3, estacion.getEstado().toString());
 			st.setTime(4, Time.valueOf(estacion.getHorarioApertura()));
@@ -362,7 +348,7 @@ public class EstacionPostgreSQLImpl implements EstacionDAO {
 			rs = st.executeQuery();
 			rs.next();
 			id = rs.getInt("max");
-			if (rs.wasNull()) id = 1;
+			if (rs.wasNull()) id = 0;
 			rs.close();
 			st.close();
 		

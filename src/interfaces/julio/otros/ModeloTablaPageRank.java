@@ -73,7 +73,7 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 //			   random_walk = d / n
 //			   self.pagerank = random_walk + (1-d) * pagerank_sum
 		   
-		   Hashtable<Integer, Double> tablaAnterior = tablaHashImportancia;
+		   Hashtable<Integer, Double> tablaAnterior = (Hashtable<Integer, Double>) tablaHashImportancia.clone();
 		   List<Ruta> rutasEntrantes;
 		   Double caminata;
 		   Double sumaPageRank;
@@ -82,7 +82,7 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 		   
 		   do {
 			   
-			   System.out.println("Iteracion numero: " + i);
+			   System.out.println("Estacion: "+ e.getNombre()+" iteracion: "+ i);
 		   
 			   rutasEntrantes = gestorRuta.getRutasEntrantesA(e);
 			   
@@ -90,41 +90,57 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 			   
 			   sumaPageRank = 0.0;
 			   
-			   tablaAnterior = tablaHashImportancia; //Se copian los valores para comparar luego con la tolerancia
+			   tablaAnterior.replace(e.getId(), tablaHashImportancia.get(e.getId())); //Se copian los valores para comparar luego con la tolerancia
+			   
+			   System.out.println(tablaAnterior.toString());
 			   
 			   for(Ruta r : rutasEntrantes) {
-				   
+
 				   sumaPageRank += tablaHashImportancia.get(r.getOrigen().getId()) / gestorRuta.getRutasSaliente(r.getOrigen()).size();
 			   }
 			   
 			   tablaHashImportancia.replace(e.getId(), caminata + (1-d) * sumaPageRank);
+			   System.out.println(tablaHashImportancia.toString());
+			   System.out.println("Cambio de valor: "+ tablaHashImportancia.get(e.getId()));
 			   
 			   i++;
 			   
-		   } while(i < maximasIteraciones && toleranciaAceptada(tablaAnterior, tablaHashImportancia));
+		   } while(i < maximasIteraciones && toleranciaAceptada(tablaAnterior.get(e.getId()), tablaHashImportancia.get(e.getId())));
 		   
 	}
 	   
-	   private boolean toleranciaAceptada(Hashtable<Integer, Double> anterior, Hashtable<Integer, Double> actual) {
-		boolean toleranciaAlcanzada = true;
-		
-		Integer contadorDePosicionesIguales = 0;
-		
-			for(Integer i : anterior.keySet()) {
-				
-				if(Math.abs(anterior.get(i)-actual.get(i)) < tolerancia) {
-					contadorDePosicionesIguales++;
-				}
-			}
-			
-			System.out.println("Contador: " + contadorDePosicionesIguales);
-			
-			if(contadorDePosicionesIguales == anterior.keySet().size()) {	//Si todas las posiciones violan la tolerancia establecida
-				toleranciaAlcanzada = false;
-			}
-		
-		return toleranciaAlcanzada;
-	}
+//	   public boolean toleranciaAceptada(Hashtable<Integer, Double> anterior, Hashtable<Integer, Double> actual) {
+//		boolean toleranciaAlcanzada = true;
+//		
+//		Integer contadorDePosicionesIguales = 0;
+//		
+//			for(Integer i : anterior.keySet()) {
+//				
+//				System.out.println("Anterior: " + anterior.get(i));
+//				System.out.println("Actual: " + actual.get(i));
+//				if(Math.abs(anterior.get(i)-actual.get(i)) < tolerancia) {
+//					contadorDePosicionesIguales++;
+//				}
+//			}
+//			
+//			System.out.println("Contador: " + contadorDePosicionesIguales);
+//			
+//			if(contadorDePosicionesIguales == anterior.keySet().size()) {	//Si todas las posiciones violan la tolerancia establecida
+//				toleranciaAlcanzada = false;
+//			}
+//		
+//		return toleranciaAlcanzada;
+//	}
+	   
+	   public boolean toleranciaAceptada(Double anterior, Double actual) {
+		   
+		   System.out.println(anterior);
+		   System.out.println(actual);
+		   System.out.println(anterior-actual);
+		   System.out.println(Math.abs(anterior-actual));
+		   System.out.println(Math.abs(anterior-actual) < tolerancia);
+		   return !(Math.abs(anterior-actual) < tolerancia);
+	   }
 
 	public void limpiarTabla() {
 
