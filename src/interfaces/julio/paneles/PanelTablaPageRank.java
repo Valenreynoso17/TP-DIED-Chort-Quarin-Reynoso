@@ -42,7 +42,7 @@ public class PanelTablaPageRank extends JPanel{
 	
 			miModelo = new ModeloTablaPageRank();
 			
-			miModelo.cargarTablaPageRank(gestorEstacion.getEstaciones(), 0.85);
+			miModelo.cargarTablaPageRank2(gestorEstacion.getEstaciones(), 0.85);
 			
 			tabla = new JTable(miModelo);
 			tableContainer = new JScrollPane(tabla);
@@ -109,7 +109,7 @@ public class PanelTablaPageRank extends JPanel{
 	public void setNuevoValorDeAmortiguacion(Double nuevoValor) {
 		
 		miModelo.limpiarTabla();
-		miModelo.cargarTablaPageRank(gestorEstacion.getEstaciones(), nuevoValor);
+		miModelo.cargarTablaPageRank2(gestorEstacion.getEstaciones(), nuevoValor);
 	}
 
 }

@@ -48,13 +48,89 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 	      return Object.class;
 	   }
 	
-	   public void cargarTablaPageRank(List<Estacion> estaciones, Double amortiguacion) {
+//	   public void cargarTablaPageRank(List<Estacion> estaciones, Double amortiguacion) {
+//		   
+//		   this.iniciarTablaHashImportancia(estaciones);
+//		
+//		   for(Estacion e : estaciones) {
+//				
+//				this.calcularPageRank(e, estaciones, amortiguacion);
+//				
+//				this.addRow(new Object[] {e.getId()
+//										, e.getNombre()
+//										, e.getEstado()
+//										, this.rutasEntrantesA(e)
+//										, String.format("%.3f", tablaHashImportancia.get(e.getId()) /*tablaHashImportancia.get(e.getId()*/)});
+//		   }
+//
+//	}
+//	   
+//	   private void calcularPageRank(Estacion e, List<Estacion> estaciones, Double d) {
+//		
+////		   def update_pagerank(self, d, n):
+////			   in_neighbors = self.parents
+////			   pagerank_sum = sum((node.pagerank / len(node.children)) for node in in_neighbors)
+////			   random_walk = d / n
+////			   self.pagerank = random_walk + (1-d) * pagerank_sum
+//		   
+//		   Hashtable<Integer, Double> tablaAnterior = (Hashtable<Integer, Double>) tablaHashImportancia.clone();
+//		   List<Ruta> rutasEntrantes;
+//		   Double caminata;
+//		   Double sumaPageRank;
+//		   
+//		   int i = 0;
+//		   
+//		   rutasEntrantes = gestorRuta.getRutasEntrantesA(e);
+//		   
+//		   caminata = d / estaciones.size();
+//		   
+//		   do {
+//			   
+//			   sumaPageRank = 0.0;
+//			   
+//			   System.out.println("Estacion: "+ e.getNombre()+" iteracion: "+ i);
+//			   
+//			   tablaAnterior.replace(e.getId(), tablaHashImportancia.get(e.getId())); //Se copian los valores para comparar luego con la tolerancia
+//			   
+//			   System.out.println(tablaAnterior.toString());
+//			   
+//			   for(Ruta r : rutasEntrantes) {
+//
+//				   sumaPageRank += tablaHashImportancia.get(r.getOrigen().getId()) / gestorRuta.getRutasSaliente(r.getOrigen()).size();
+//			   }
+//			   
+//			   tablaHashImportancia.replace(e.getId(), caminata + (1-d) * sumaPageRank);
+//			   System.out.println(tablaHashImportancia.toString());
+//			   System.out.println("Cambio de valor: "+ tablaHashImportancia.get(e.getId()));
+//			   
+//			   i++;
+//			   
+//		   } while(i < maximasIteraciones && toleranciaAceptada(tablaAnterior.get(e.getId()), tablaHashImportancia.get(e.getId())));
+//		   
+//	}
+	   
+   public void cargarTablaPageRank2(List<Estacion> estaciones, Double amortiguacion) {
 		   
 		   this.iniciarTablaHashImportancia(estaciones);
+		   
+		   Hashtable<Integer, Double> tablaAnterior;
+		   
+		   int i = 0;
+		   
+		   do {
+			   
+			   tablaAnterior = (Hashtable<Integer, Double>) tablaHashImportancia.clone();
+			   
+			   for(Estacion e : estaciones) {
+				   //System.out.println(e.getNombre() + ": "+tablaHashImportancia.toString());
+				   tablaHashImportancia = actualizarPageRank(e, estaciones, amortiguacion);
+			   }
+			   
+			   i++;
+			   
+		   } while(i < maximasIteraciones && toleranciaAceptadaTablas(tablaAnterior, tablaHashImportancia));
 		
 		   for(Estacion e : estaciones) {
-				
-				this.calcularPageRank(e, estaciones, amortiguacion);
 				
 				this.addRow(new Object[] {e.getId()
 										, e.getNombre()
@@ -65,7 +141,20 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 
 	}
 	   
-	   private void calcularPageRank(Estacion e, List<Estacion> estaciones, Double d) {
+	   private boolean toleranciaAceptadaTablas(Hashtable<Integer, Double> tablaAnterior,
+			   Hashtable<Integer, Double> tablaHashImportancia2) {
+		   
+		   for(Integer i : tablaAnterior.keySet()) {
+			   
+			   if(!tablaAnterior.get(i).equals(tablaHashImportancia2.get(i))) {
+				   return true;
+			   }
+		   }
+		   
+		   return false;
+	   }
+
+	private Hashtable<Integer, Double> actualizarPageRank(Estacion e, List<Estacion> estaciones, Double d) {
 		
 //		   def update_pagerank(self, d, n):
 //			   in_neighbors = self.parents
@@ -73,58 +162,29 @@ public class ModeloTablaPageRank extends DefaultTableModel{
 //			   random_walk = d / n
 //			   self.pagerank = random_walk + (1-d) * pagerank_sum
 		   
-		   Hashtable<Integer, Double> tablaAnterior = tablaHashImportancia;
-		   List<Ruta> rutasEntrantes;
-		   Double caminata;
-		   Double sumaPageRank;
-		   
-		   int i = 0;
-		   
-		   do {
+		   List<Ruta> rutasEntrantes = gestorRuta.getRutasEntrantesA(e);
+		   Double caminata = d / estaciones.size();
+		   Double sumaPageRank = 0.0;
 			   
-			   System.out.println("Iteracion numero: " + i);
-		   
-			   rutasEntrantes = gestorRuta.getRutasEntrantesA(e);
+		   for(Ruta r : rutasEntrantes) {
+
+			   sumaPageRank += tablaHashImportancia.get(r.getOrigen().getId()) / gestorRuta.getRutasSaliente(r.getOrigen()).size();
+		   }
 			   
-			   caminata = d / estaciones.size();
+		   tablaHashImportancia.replace(e.getId(), caminata + (1-d) * sumaPageRank);
 			   
-			   sumaPageRank = 0.0;
-			   
-			   tablaAnterior = tablaHashImportancia; //Se copian los valores para comparar luego con la tolerancia
-			   
-			   for(Ruta r : rutasEntrantes) {
-				   
-				   sumaPageRank += tablaHashImportancia.get(r.getOrigen().getId()) / gestorRuta.getRutasSaliente(r.getOrigen()).size();
-			   }
-			   
-			   tablaHashImportancia.replace(e.getId(), caminata + (1-d) * sumaPageRank);
-			   
-			   i++;
-			   
-		   } while(i < maximasIteraciones && toleranciaAceptada(tablaAnterior, tablaHashImportancia));
-		   
-	}
+		return tablaHashImportancia;		   
+	}   
 	   
-	   private boolean toleranciaAceptada(Hashtable<Integer, Double> anterior, Hashtable<Integer, Double> actual) {
-		boolean toleranciaAlcanzada = true;
-		
-		Integer contadorDePosicionesIguales = 0;
-		
-			for(Integer i : anterior.keySet()) {
-				
-				if(Math.abs(anterior.get(i)-actual.get(i)) < tolerancia) {
-					contadorDePosicionesIguales++;
-				}
-			}
-			
-			System.out.println("Contador: " + contadorDePosicionesIguales);
-			
-			if(contadorDePosicionesIguales == anterior.keySet().size()) {	//Si todas las posiciones violan la tolerancia establecida
-				toleranciaAlcanzada = false;
-			}
-		
-		return toleranciaAlcanzada;
-	}
+//	   public boolean toleranciaAceptada(Double anterior, Double actual) {
+//		   
+//		   System.out.println(anterior);
+//		   System.out.println(actual);
+//		   System.out.println(anterior-actual);
+//		   System.out.println(Math.abs(anterior-actual));
+//		   System.out.println(Math.abs(anterior-actual) < tolerancia);
+//		   return !(Math.abs(anterior-actual) < tolerancia);
+//	   }
 
 	public void limpiarTabla() {
 
